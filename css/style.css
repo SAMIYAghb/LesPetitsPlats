@@ -3,7 +3,17 @@
   padding: 0;
   margin: 0;
 }
-
+h1,
+h2,
+h3{
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+p{
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+}
 /* :root{
     --main-color: #FFD15B;
 } */
@@ -46,3 +56,14 @@ header{
 /* .dropdown-toggle::after{
     content:""
 } */
+.img-card{
+    position: relative;
+}
+.minutes{
+    position: absolute;
+    background-color: #FFD15B;
+    top: 15px;
+    right: 15px;
+    border-radius: 20px;
+    padding: 3px 12px;
+}
