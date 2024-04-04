@@ -29,14 +29,17 @@
     <div class="content">
       <h1 class="text-center main-color ">CHERCHEZ PARMI PLUS DE 1500 RECETTES
         DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
-      <div class="input-group pt-3">
-
-        <input type="text" class="form-control p-3" placeholder="Rechercher une recette, un ingrédient, ...">
-
-        <div class="input-group-text p-3 bg-dark text-white">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
+        
+     
+      <div class="input-group mb-3">
+        
+        <input type="text" class="form-control" placeholder="Rechercher une recette, un ingrédient, ..." aria-label="search" aria-describedby="basic-addon1">
+        <span class="input-group-text bg-black rounded search-btn" id="basic-addon1"><i class="fa-solid fa-magnifying-glass text-light glass-icon"></i></span>
       </div>
+
+      
+
+      
     </div>
   </header>
   <div class="main bg-second-color pb-5">
@@ -59,7 +62,7 @@
           <div id="myDropdown" class="dropdown-content">
             <div class="serch-input">
               <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-              <i class="fa-solid fa-magnifying-glass"></i>
+              <i class="fa-solid fa-magnifying-glass filter-icon"></i>
             </div>
             <a href="#about">About</a>
             <a href="#base">Base</a>

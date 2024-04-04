@@ -48,7 +48,7 @@
     align-items: center;
     position: relative;
   }
-  .fa-solid.fa-magnifying-glass{
+  .filter-icon{
     position: absolute;
     right: 24px;
     color: #d6d6d6;

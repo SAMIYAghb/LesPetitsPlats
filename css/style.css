@@ -41,7 +41,8 @@ p{
 
 
 .logo{
-    width: 250px;
+    width: 300px;
+
 }
 header{
     background-image: url("../assets/background.jpg");
@@ -52,7 +53,7 @@ header{
 }
 .content{
     position: relative;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 60%;
@@ -85,3 +86,53 @@ header{
     color: #7A7A7A; 
 }
 
+/* .fa-solid.fa-magnifying-glass{
+    width: 40px;
+    height: 47px;
+    position: absolute;
+    right: 4px;
+
+    bottom: 4px;
+    border-radius: 5px;
+       
+    
+} */
+/* .serach-btn{
+    position: relative;
+    
+}
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback){
+    width: 40px;
+} 
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-radius: 5px;
+}
+.fa-solid.fa-magnifying-glass{
+    color: black;
+position: absolute;
+
+} */
+/* .input-group{
+    position: relative;
+} */
+
+.form-control{
+ position: relative;
+}
+.search-btn{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+
+    height: 80%;
+    width: 35px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+   /* margin: 5px; */
+}
+.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control, .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select, .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating) {
+    border-radius: 5px;
+padding: 10px;
+}
