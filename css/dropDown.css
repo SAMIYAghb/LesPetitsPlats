@@ -32,7 +32,7 @@
   }
   
   /* The search field */
-  #myInput {
+  #ingredientInput, #appareilInput, #ustensilInput{
     box-sizing: border-box;
     background-position: 14px 12px;
     font-size: 16px;
@@ -86,8 +86,8 @@
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #FFD15B;
-    }
+  /* .dropdown-content a:hover {background-color: #FFD15B;
+    } */
   
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
   .show {display:block;}
@@ -95,9 +95,9 @@
   /* .li-style{
      padding: 10px; 
   } */
-  .li-style:first-child{
+  .li-ingredient:first-child, .li-appliance:first-child, .li-ustensil:first-child{
     margin-top: 10px;
   }
-  .li-style:hover{
+  .li-ingredient:hover, .li-appliance:hover, .li-ustensil:hover{
     background-color: #FFD15B;
   }

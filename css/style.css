@@ -124,15 +124,31 @@ position: absolute;
     right: 5px;
     top: 5px;
     bottom: 5px;
-
     height: 80%;
     width: 35px;
+    background-color: #000;
     /* display: flex;
     justify-content: center;
     align-items: center; */
    /* margin: 5px; */
 }
+.search-btn:hover{
+    background-color: #FFD15B;
+}
 .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control, .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select, .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating) {
     border-radius: 5px;
 padding: 10px;
+}
+
+.tag{
+    background-color: #FFD15B;
+    color: #000;
+    width: fit-content;
+    /* height: 50px; */
+    padding: 12px 15px;
+    border-radius: 15px;
+    display: none;
+}
+.tag-element{
+    padding-right: 10px;
 }

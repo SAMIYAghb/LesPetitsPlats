@@ -29,32 +29,35 @@
     <div class="content">
       <h1 class="text-center main-color ">CHERCHEZ PARMI PLUS DE 1500 RECETTES
         DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
-        
-     
+
+
       <div class="input-group mb-3">
-        
-        <input type="text" class="form-control" placeholder="Rechercher une recette, un ingrédient, ..." aria-label="search" aria-describedby="basic-addon1">
-        <button class="input-group-text bg-black rounded search-btn" id="basic-addon1"><i class="fa-solid fa-magnifying-glass text-light glass-icon"></i></button>
+
+        <input type="text" class="form-control" placeholder="Rechercher une recette, un ingrédient, ..."
+          aria-label="search" aria-describedby="basic-addon1">
+        <button class="input-group-text rounded search-btn" id="basic-addon1"><i
+            class="fa-solid fa-magnifying-glass text-light glass-icon"></i></button>
       </div>
 
-      
 
-      
+
+
     </div>
   </header>
   <div class="main bg-second-color pb-5">
     <div class="container">
       <section class="filters py-5">
-       
+
         <div class="row gy-5">
           <div class="col-md-7">
             <div class="row gy-5">
-              <div class="col ">
+              <div class="col-md ">
                 <div class="dropdown">
-                  <button onclick="myFunction1()" class="dropbtn">Ingrédients<i class="fa-solid fa-angle-down"></i></button>
+                  <button onclick="myFunction1()" class="dropbtn">Ingrédients<i
+                      class="fa-solid fa-angle-down"></i></button>
                   <div id="myDropdown1" class="dropdown-content">
                     <div class="serch-input">
-                      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                      <input type="text" placeholder="Search.." id="ingredientInput">
                       <i class="fa-solid fa-magnifying-glass filter-icon"></i>
                     </div>
                     <ul class="list-unstyled" id="ingredientList">
@@ -64,12 +67,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col">
+              <div class="col-md">
                 <div class="dropdown">
-                  <button onclick="myFunction2()" class="dropbtn">Appareils<i class="fa-solid fa-angle-down"></i></button>
+                  <button onclick="myFunction2()" class="dropbtn">Appareils<i
+                      class="fa-solid fa-angle-down"></i></button>
                   <div id="myDropdown2" class="dropdown-content">
                     <div class="serch-input">
-                      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                      <input type="text" placeholder="Search.." id="appareilInput">
                       <i class="fa-solid fa-magnifying-glass filter-icon"></i>
                     </div>
                     <ul class="list-unstyled" id="applianceList">
@@ -79,12 +83,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col">
+              <div class="col-md ">
                 <div class="dropdown">
-                  <button onclick="myFunction3()" class="dropbtn">Ustensiles<i class="fa-solid fa-angle-down"></i></button>
+                  <button onclick="myFunction3()" class="dropbtn">Ustensiles<i
+                      class="fa-solid fa-angle-down"></i></button>
                   <div id="myDropdown3" class="dropdown-content">
                     <div class="serch-input">
-                      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                      <input type="text" placeholder="Search.." id="ustensilInput">
                       <i class="fa-solid fa-magnifying-glass filter-icon"></i>
                     </div>
                     <ul class="list-unstyled" id="ustensilList">
@@ -101,14 +106,24 @@
               ggg
             </div>
           </div>
-          
+
+
+        </div>
+      </section>
+
+      <section class="tag-container pb-4">
+        <div class="row">
+          <div class="tag my-2">
+            <span class="tag-element"></span>
+            <i class="fa-solid fa-x"></i>
+          </div>
           
         </div>
       </section>
 
       <section class="cards">
         <div class="row cards-container gy-5">
-        <!-- <div class="row">
+          <!-- <div class="row">
           <div class=" col-sm-6 col-md-4">
             <div class="card rounded-5 border-0">
               <img class="img-card rounded-top-5" src="./assets/recette/Recette01.jpg" alt="">
@@ -214,7 +229,7 @@
             </div>
           </div>
         </div> -->
-      </div>
+        </div>
       </section>
     </div>
   </div>
@@ -222,7 +237,7 @@
 
 
 
-<script type="module" src="./scripts/page/index.js"></script>
+  <script type="module" src="./scripts/page/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
