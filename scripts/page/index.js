@@ -1,27 +1,59 @@
-import RecipeFactory from "../factories/RecipeFactory.js";
+// import RecipeFactory from "../factories/RecipeFactory.js";
+import displayCard from '../librairies/view.js'
 
 const getRecipes = async () => {
   const response = await fetch("../../data/recipes.json");
   const data = await response.json();
   return data;
 };
+
+// async function displayData(recipes) {
+//   const recipePromises = recipes.map((data) => {
+//     const recipe = RecipeFactory.createRecipe(data);
+//     // console.log(recipe)
+//     // displayRecipe(recipe); // Afficher chaque recette
+//     return recipe;
+//   });
+//   // console.log(recipes)
+//   // console.log(recipePromises)
+//   const recipeSection = document.querySelector(".cards-container");
+//   recipePromises.forEach((element) => {
+//     // const recipe = RecipeFactory.createRecipe(recipes);
+//     const recipeCardDOM = element.getRecipeCardDom();
+//     // console.log(recipeCardDOM);
+//     recipeSection.appendChild(recipeCardDOM);
+//   });
+//   return recipePromises;
+// }
 async function displayData(recipes) {
-  const recipePromises = recipes.map((data) => {
-    const recipe = RecipeFactory.createRecipe(data);
+  console.log(recipes)
+  const recipeSection = document.querySelector(".cards-container");
+  // Nettoyez le conteneur avant d'ajouter de nouvelles cartes (si nécessaire)
+  recipeSection.innerHTML = '';
+  recipes.forEach((recipe) => {
+    const card = displayCard(recipe); // Appelez displayCard pour obtenir la carte HTML de la recette
+    console.log(card)
+    recipeSection.appendChild(card); // Ajoutez la carte au conteneu
+    
+  })
+  // console.log(recipeSection)
+  // const recipePromises = recipes.map((data) => {
+    // console.log(recipePromises)
+    // const recipe = RecipeFactory.createRecipe(data);
     // console.log(recipe)
     // displayRecipe(recipe); // Afficher chaque recette
-    return recipe;
-  });
+    // return recipe;
+  // });
   // console.log(recipes)
   // console.log(recipePromises)
-  const recipeSection = document.querySelector(".cards-container");
-  recipePromises.forEach((element) => {
-    // const recipe = RecipeFactory.createRecipe(recipes);
-    const recipeCardDOM = element.getRecipeCardDom();
-    // console.log(recipeCardDOM);
-    recipeSection.appendChild(recipeCardDOM);
-  });
-  return recipePromises;
+  // const recipeSection = document.querySelector(".cards-container");
+  // recipePromises.forEach((element) => {
+  //   // const recipe = RecipeFactory.createRecipe(recipes);
+  //   const recipeCardDOM = element.getRecipeCardDom();
+  //   // console.log(recipeCardDOM);
+  //   recipeSection.appendChild(recipeCardDOM);
+  // });
+  // return recipePromises;
 }
 
 // console.log(recipeSection)
@@ -44,273 +76,276 @@ async function displayData(recipes) {
 
 const init = async () => {
   const recipes = await getRecipes();
+  // console.log(recipes)
+  displayData(recipes);
   // console.log(recipes[0].ingredients)
 
-  const recipe = await displayData(recipes); // Attendre que displayRecipes termine
-  // console.log(recipe, 'from init');
+  // const recipe = await displayData(recipes); 
+//   // Attendre que displayRecipes termine
+  //  console.log(recipe, 'from init');
 
-  // const tagContainer = document.getElementById("tag-container");
-  // console.log(tagContainer)
-  // const div = document.createElement("div");
-  // div.classList.add("tag-element");
-  // tagContainer.appendChild(div);
+//   // const tagContainer = document.getElementById("tag-container");
+//   // console.log(tagContainer)
+//   // const div = document.createElement("div");
+//   // div.classList.add("tag-element");
+//   // tagContainer.appendChild(div);
 
-  //************** */
-  //************** */
-  //**************start ingredient*/
-  //************** */
-  //************** */
+//   //************** */
+//   //************** */
+//   //**************start ingredient*/
+//   //************** */
+//   //************** */
 
-  //****afficher le tag ingredient selectionné
-  // Ajouter un écouteur d'événements de clic à chaque lien
-  // Définir la fonction qui ajoutera les écouteurs d'événements une fois que les éléments seront prêts
-  function addClickListenersToLinks() {
-    const links = document.querySelectorAll(".link-ingredient");
-    // console.log(links);
-    links.forEach((link) => {
-      //  console.log(link)
-      link.addEventListener("click", selectIngredientTag);
-    });
-  }
+//   //****afficher le tag ingredient selectionné
+//   // Ajouter un écouteur d'événements de clic à chaque lien
+//   // Définir la fonction qui ajoutera les écouteurs d'événements une fois que les éléments seront prêts
+//   function addClickListenersToLinks() {
+//     const links = document.querySelectorAll(".link-ingredient");
+//     // console.log(links);
+//     links.forEach((link) => {
+//       //  console.log(link)
+//       link.addEventListener("click", selectIngredientTag);
+//     });
+//   }
 
-  //
-  let ingredientTags = [];
-  const selectIngredientTag = (event) => {
-    event.preventDefault();
-    // console.log(event.target);
-    // Récupère l'élément qui a déclenché l'événement
-    const clickedElement = event.target; 
-    // console.log(clickedElement.textContent);
-    const clickedElementContent = clickedElement.textContent;
-    // console.log(clickedElementContent)
-    ingredientTags.push(clickedElementContent);
-    // console.log(ingredientTags)
+//   //
+//   let ingredientTags = [];
+//   const selectIngredientTag = (event) => {
+//     event.preventDefault();
+//     // console.log(event.target);
+//     // Récupère l'élément qui a déclenché l'événement
+//     const clickedElement = event.target; 
+//     // console.log(clickedElement.textContent);
+//     const clickedElementContent = clickedElement.textContent;
+//     // console.log(clickedElementContent)
+//     ingredientTags.push(clickedElementContent);
+//     // console.log(ingredientTags)
 
-    // const tagContainer = document.querySelector('.tag-container');
+//     // const tagContainer = document.querySelector('.tag-container');
 
-    // Effacer le contenu précédent pour éviter les doublons
-    // tagContainer.innerHTML = '';
+//     // Effacer le contenu précédent pour éviter les doublons
+//     // tagContainer.innerHTML = '';
 
-    const tag = document.querySelector('.tag')
-    const htmlTag = document.querySelector('.tag-element')
-    // console.log(htmlTag);
-    // htmlTag.textContent= clickedElementContent;
-    // for(let i =0; i<= ingredientTags.length -1; i++){
-    //   // console.log(i)
-    //   console.log(ingredientTags[i])
-    //   tag.style.display = 'block';
-    //   // htmlTag.textContent= clickedElementContent;
-    //   htmlTag.textContent= ingredientTags[i];
+//     const tag = document.querySelector('.tag')
+//     const htmlTag = document.querySelector('.tag-element')
+//     // console.log(htmlTag);
+//     // htmlTag.textContent= clickedElementContent;
+//     // for(let i =0; i<= ingredientTags.length -1; i++){
+//     //   // console.log(i)
+//     //   console.log(ingredientTags[i])
+//     //   tag.style.display = 'block';
+//     //   // htmlTag.textContent= clickedElementContent;
+//     //   htmlTag.textContent= ingredientTags[i];
 
-    // }
-    for(const ingredient of ingredientTags) {
-      // console.log(ingredient);
-      tag.style.display = 'block';
-      htmlTag.textContent = ingredient;
-  }
+//     // }
+//     for(const ingredient of ingredientTags) {
+//       // console.log(ingredient);
+//       tag.style.display = 'block';
+//       htmlTag.textContent = ingredient;
+//   }
 
-  // ingredientTags.forEach(tag => {
-  //   const tagElement = document.createElement('div');
-  //   tagElement.classList.add('row');
-  //   tagElement.innerHTML = `
-  //       <div class="tag my-2">
-  //           <span class="tag-element">${tag}</span>
-  //           <i class="fa-solid fa-x"></i>
-  //       </div>
-  //   `;
-  //   tagContainer.appendChild(tagElement);
-// });
+//   // ingredientTags.forEach(tag => {
+//   //   const tagElement = document.createElement('div');
+//   //   tagElement.classList.add('row');
+//   //   tagElement.innerHTML = `
+//   //       <div class="tag my-2">
+//   //           <span class="tag-element">${tag}</span>
+//   //           <i class="fa-solid fa-x"></i>
+//   //       </div>
+//   //   `;
+//   //   tagContainer.appendChild(tagElement);
+// // });
 
-  };
+//   };
 
-  //*****Recuperer tous les filtres sans doublons
-  let filteredIngredientsArray;
-  const getIngredients = (recipes) => {
-    // console.log(recipes)
-    const ingredients = [];
-    // console.log('gg')
-    recipes.forEach((recipe) => {
-      // console.log(recipe)
-      // console.log(recipe.ingredients)
-      const recipeIngredients = recipe.ingredients;
-      // console.log(recipeIngredients)
-      recipeIngredients.forEach((ingredient) => {
-        // console.log(ingredient)
-        // console.log(ingredient.ingredient)
-        const ingredientElements = ingredient.ingredient;
-        // console.log(ingredientElements)
-        ingredients.push(ingredientElements);
-      });
-    });
-    // const filteredIngredients = ingredients.reduce((accumulator, currentValue) => {
-    //     if (!accumulator.includes(currentValue)) {
-    //         accumulator.push(currentValue);
-    //     }
-    //     return accumulator;
-    // }, []);
-    // console.log( filteredIngredients)
-    // return filteredIngredients;
-    // Convertir le tableau en ensemble (Set) pour éliminer les doublons
-    const filteredIngredients = new Set(ingredients);
-    // Convertir l'ensemble (Set) en tableau
-    filteredIngredientsArray = Array.from(filteredIngredients);
-    // console.log(filteredIngredientsArray);
-    return filteredIngredientsArray;
-  };
-  getIngredients(recipes);
+//   //*****Recuperer tous les filtres sans doublons
+//   let filteredIngredientsArray;
+//   const getIngredients = (recipes) => {
+//     // console.log(recipes)
+//     const ingredients = [];
+//     // console.log('gg')
+//     recipes.forEach((recipe) => {
+//       // console.log(recipe)
+//       // console.log(recipe.ingredients)
+//       const recipeIngredients = recipe.ingredients;
+//       // console.log(recipeIngredients)
+//       recipeIngredients.forEach((ingredient) => {
+//         // console.log(ingredient)
+//         // console.log(ingredient.ingredient)
+//         const ingredientElements = ingredient.ingredient;
+//         // console.log(ingredientElements)
+//         ingredients.push(ingredientElements);
+//       });
+//     });
+//     // const filteredIngredients = ingredients.reduce((accumulator, currentValue) => {
+//     //     if (!accumulator.includes(currentValue)) {
+//     //         accumulator.push(currentValue);
+//     //     }
+//     //     return accumulator;
+//     // }, []);
+//     // console.log( filteredIngredients)
+//     // return filteredIngredients;
+//     // Convertir le tableau en ensemble (Set) pour éliminer les doublons
+//     const filteredIngredients = new Set(ingredients);
+//     // Convertir l'ensemble (Set) en tableau
+//     filteredIngredientsArray = Array.from(filteredIngredients);
+//     // console.log(filteredIngredientsArray);
+//     return filteredIngredientsArray;
+//   };
+//   getIngredients(recipes);
 
-  //*****afficher les ingredients dans le dropDown menu
-  // Récupère la liste ul où les ingrédients seront ajoutés
-  const ingredientList = document.getElementById("ingredientList");
-  // console.log(ingredientList);
+//   //*****afficher les ingredients dans le dropDown menu
+//   // Récupère la liste ul où les ingrédients seront ajoutés
+//   const ingredientList = document.getElementById("ingredientList");
+//   // console.log(ingredientList);
 
-  filteredIngredientsArray.forEach((ingredient) => {
-    // console.log(ingredient)
-    const li = document.createElement("li");
-    li.classList.add("li-ingredient");
-    // li.setAttribute("id", "li-ingredient");
+//   filteredIngredientsArray.forEach((ingredient) => {
+//     // console.log(ingredient)
+//     const li = document.createElement("li");
+//     li.classList.add("li-ingredient");
+//     // li.setAttribute("id", "li-ingredient");
 
-    // Crée un nouvel élément a
-    const link = document.createElement("a");
-    link.textContent = `${ingredient}`;
-    link.setAttribute("href", "#");
-    link.classList.add("link-ingredient");
-    // link.addEventListener('click', selectIngredientTag);
-    li.appendChild(link);
-    ingredientList.appendChild(li);
-  });
+//     // Crée un nouvel élément a
+//     const link = document.createElement("a");
+//     link.textContent = `${ingredient}`;
+//     link.setAttribute("href", "#");
+//     link.classList.add("link-ingredient");
+//     // link.addEventListener('click', selectIngredientTag);
+//     li.appendChild(link);
+//     ingredientList.appendChild(li);
+//   });
 
-  addClickListenersToLinks();
+//   addClickListenersToLinks();
 
-  //************** */
-  //************** */
-  //**************end ingredient*/
-  //************** */
-  //************** */
+//   //************** */
+//   //************** */
+//   //**************end ingredient*/
+//   //************** */
+//   //************** */
 
-  //************** */
-  //************** */
-  //************** start appareils*/
-  //************** */
-  //************** */
-  //*****récuperer tous les appareils sans doublons
-  let filteredappliancesArray;
-  const getAppliance = (recipes) => {
-    // console.log(recipes);
-    const appliances = [];
+//   //************** */
+//   //************** */
+//   //************** start appareils*/
+//   //************** */
+//   //************** */
+//   //*****récuperer tous les appareils sans doublons
+//   let filteredappliancesArray;
+//   const getAppliance = (recipes) => {
+//     // console.log(recipes);
+//     const appliances = [];
 
-    recipes.forEach((recipe) => {
-      // console.log(recipe)
-      const appliance = recipe.appliance;
-      // console.log(appliance);
-      appliances.push(appliance);
-      // console.log(appliances);
-    });
-    const filteredappliances = new Set(appliances);
-    // console.log(filteredappliances);
+//     recipes.forEach((recipe) => {
+//       // console.log(recipe)
+//       const appliance = recipe.appliance;
+//       // console.log(appliance);
+//       appliances.push(appliance);
+//       // console.log(appliances);
+//     });
+//     const filteredappliances = new Set(appliances);
+//     // console.log(filteredappliances);
 
-    filteredappliancesArray = Array.from(filteredappliances);
-    // console.log(filteredappliancesArray)
-    return filteredappliancesArray;
-  };
-  getAppliance(recipes);
+//     filteredappliancesArray = Array.from(filteredappliances);
+//     // console.log(filteredappliancesArray)
+//     return filteredappliancesArray;
+//   };
+//   getAppliance(recipes);
 
-  //****Afficher les appareils dans le dropDownMenu
-  const applianceList = document.getElementById("applianceList");
-  // console.log(applianceList);
+//   //****Afficher les appareils dans le dropDownMenu
+//   const applianceList = document.getElementById("applianceList");
+//   // console.log(applianceList);
 
-  filteredappliancesArray.forEach((appliance) => {
-    // console.log(appliance);
+//   filteredappliancesArray.forEach((appliance) => {
+//     // console.log(appliance);
 
-    const li = document.createElement("li");
-    li.classList.add("li-appliance");
-    // Crée un nouvel élément a
-    const link = document.createElement("a");
-    link.textContent = `${appliance}`;
-    link.setAttribute("href", "#");
-    li.appendChild(link);
-    applianceList.appendChild(li);
-  });
+//     const li = document.createElement("li");
+//     li.classList.add("li-appliance");
+//     // Crée un nouvel élément a
+//     const link = document.createElement("a");
+//     link.textContent = `${appliance}`;
+//     link.setAttribute("href", "#");
+//     li.appendChild(link);
+//     applianceList.appendChild(li);
+//   });
 
-  //*****récuperer tous les ustensils sans doublons
-  let filteredUstensilsArray;
-  const getUstensil = (recipes) => {
-    const ustensilsArray = [];
+//   //*****récuperer tous les ustensils sans doublons
+//   let filteredUstensilsArray;
+//   const getUstensil = (recipes) => {
+//     const ustensilsArray = [];
 
-    recipes.forEach((recipe) => {
-      // console.log(recipe)
-      const ustensils = recipe.ustensils;
-      // console.log(ustensils);
+//     recipes.forEach((recipe) => {
+//       // console.log(recipe)
+//       const ustensils = recipe.ustensils;
+//       // console.log(ustensils);
 
-      ustensils.forEach((ustensil) => {
-        // console.log(ustensil)
-        ustensilsArray.push(ustensil);
-        // console.log(ustensilsArray)
-      });
-    });
-    const filteredUstensils = new Set(ustensilsArray);
-    // console.log(filteredUstensils);
-    filteredUstensilsArray = Array.from(filteredUstensils);
-    // console.log(filteredUstensilsArray)
-    return filteredUstensilsArray;
-  };
-  getUstensil(recipes);
+//       ustensils.forEach((ustensil) => {
+//         // console.log(ustensil)
+//         ustensilsArray.push(ustensil);
+//         // console.log(ustensilsArray)
+//       });
+//     });
+//     const filteredUstensils = new Set(ustensilsArray);
+//     // console.log(filteredUstensils);
+//     filteredUstensilsArray = Array.from(filteredUstensils);
+//     // console.log(filteredUstensilsArray)
+//     return filteredUstensilsArray;
+//   };
+//   getUstensil(recipes);
 
-  //************** */
-  //************** */
-  //************** end appareils*/
-  //************** */
-  //************** */
+//   //************** */
+//   //************** */
+//   //************** end appareils*/
+//   //************** */
+//   //************** */
 
-  //************** */
-  //************** */
-  //************** start ustensils*/
-  //************** */
-  //************** */
+//   //************** */
+//   //************** */
+//   //************** start ustensils*/
+//   //************** */
+//   //************** */
 
-  //****Afficher les ustensils dans le dropDownMenu
-  const ustensilList = document.getElementById("ustensilList");
-  // console.log(ustensilList);
+//   //****Afficher les ustensils dans le dropDownMenu
+//   const ustensilList = document.getElementById("ustensilList");
+//   // console.log(ustensilList);
 
-  filteredUstensilsArray.forEach((ustensil) => {
-    // console.log(ustensil)
-    const li = document.createElement("li");
-    li.classList.add("li-ustensil");
-    // Crée un nouvel élément a
-    const link = document.createElement("a");
-    link.textContent = `${ustensil}`;
-    link.setAttribute("href", "#");
-    li.appendChild(link);
-    ustensilList.appendChild(li);
-  });
+//   filteredUstensilsArray.forEach((ustensil) => {
+//     // console.log(ustensil)
+//     const li = document.createElement("li");
+//     li.classList.add("li-ustensil");
+//     // Crée un nouvel élément a
+//     const link = document.createElement("a");
+//     link.textContent = `${ustensil}`;
+//     link.setAttribute("href", "#");
+//     li.appendChild(link);
+//     ustensilList.appendChild(li);
+//   });
 
-  //************** */
-  //************** */
-  //************** end ustensils*/
-  //************** */
-  //************** */
+//   //************** */
+//   //************** */
+//   //************** end ustensils*/
+//   //************** */
+//   //************** */
 
-  //***cherche recette par Ingredients
-  const ingredientInput = document.getElementById("ingredientInput");
+//   //***cherche recette par Ingredients
+//   const ingredientInput = document.getElementById("ingredientInput");
 
-  //    const filterIngredients = () => {
-  //       // console.log('ggg');
-  //       const filter = ingredientInput.value;
-  //       // console.log(filter);
-  //       // console.log(filteredIngredientsArray);
+//   //    const filterIngredients = () => {
+//   //       // console.log('ggg');
+//   //       const filter = ingredientInput.value;
+//   //       // console.log(filter);
+//   //       // console.log(filteredIngredientsArray);
 
-  //       for(let i = 0; i <= filteredIngredientsArray.length; i++){
-  //         console.log(i)
-  //         // Comparer l'élément actuel avec la chaîne de caractères saisi
-  //         if(filteredIngredientsArray[i] ){
-  // console.groupEnd(filteredIngredientsArray[i] )
-  // console.log(filter)
-  //         }
-  //       }
-  //    }
+//   //       for(let i = 0; i <= filteredIngredientsArray.length; i++){
+//   //         console.log(i)
+//   //         // Comparer l'élément actuel avec la chaîne de caractères saisi
+//   //         if(filteredIngredientsArray[i] ){
+//   // console.groupEnd(filteredIngredientsArray[i] )
+//   // console.log(filter)
+//   //         }
+//   //       }
+//   //    }
 
-  // console.log(ingredientInput)
-  // ingredientInput.addEventListener('keyup', filterIngredients);
+//   // console.log(ingredientInput)
+//   // ingredientInput.addEventListener('keyup', filterIngredients);
 };
 init();
 
