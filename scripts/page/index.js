@@ -1,5 +1,6 @@
 // import RecipeFactory from "../factories/RecipeFactory.js";
 import displayCard from '../librairies/view.js'
+import {displayIngredientTag, selectIngredientTag} from '../librairies/displayIngredientTag.js'
 
 const getRecipes = async () => {
   const response = await fetch("../../data/recipes.json");
@@ -7,53 +8,18 @@ const getRecipes = async () => {
   return data;
 };
 
-// async function displayData(recipes) {
-//   const recipePromises = recipes.map((data) => {
-//     const recipe = RecipeFactory.createRecipe(data);
-//     // console.log(recipe)
-//     // displayRecipe(recipe); // Afficher chaque recette
-//     return recipe;
-//   });
-//   // console.log(recipes)
-//   // console.log(recipePromises)
-//   const recipeSection = document.querySelector(".cards-container");
-//   recipePromises.forEach((element) => {
-//     // const recipe = RecipeFactory.createRecipe(recipes);
-//     const recipeCardDOM = element.getRecipeCardDom();
-//     // console.log(recipeCardDOM);
-//     recipeSection.appendChild(recipeCardDOM);
-//   });
-//   return recipePromises;
-// }
-async function displayData(recipes) {
-  console.log(recipes)
+function displayData(recipes) {
+  // console.log(recipes)
   const recipeSection = document.querySelector(".cards-container");
   // Nettoyez le conteneur avant d'ajouter de nouvelles cartes (si nécessaire)
   recipeSection.innerHTML = '';
   recipes.forEach((recipe) => {
     const card = displayCard(recipe); // Appelez displayCard pour obtenir la carte HTML de la recette
-    console.log(card)
+    // console.log(card)
     recipeSection.appendChild(card); // Ajoutez la carte au conteneu
     
   })
-  // console.log(recipeSection)
-  // const recipePromises = recipes.map((data) => {
-    // console.log(recipePromises)
-    // const recipe = RecipeFactory.createRecipe(data);
-    // console.log(recipe)
-    // displayRecipe(recipe); // Afficher chaque recette
-    // return recipe;
-  // });
-  // console.log(recipes)
-  // console.log(recipePromises)
-  // const recipeSection = document.querySelector(".cards-container");
-  // recipePromises.forEach((element) => {
-  //   // const recipe = RecipeFactory.createRecipe(recipes);
-  //   const recipeCardDOM = element.getRecipeCardDom();
-  //   // console.log(recipeCardDOM);
-  //   recipeSection.appendChild(recipeCardDOM);
-  // });
-  // return recipePromises;
+
 }
 
 // console.log(recipeSection)
@@ -80,11 +46,11 @@ const init = async () => {
   displayData(recipes);
   // console.log(recipes[0].ingredients)
 
-  // const recipe = await displayData(recipes); 
+  // const recipe = displayData(recipes); 
 //   // Attendre que displayRecipes termine
   //  console.log(recipe, 'from init');
 
-//   // const tagContainer = document.getElementById("tag-container");
+  // const tagContainer = document.getElementById("tag-container");
 //   // console.log(tagContainer)
 //   // const div = document.createElement("div");
 //   // div.classList.add("tag-element");
@@ -99,123 +65,51 @@ const init = async () => {
 //   //****afficher le tag ingredient selectionné
 //   // Ajouter un écouteur d'événements de clic à chaque lien
 //   // Définir la fonction qui ajoutera les écouteurs d'événements une fois que les éléments seront prêts
-//   function addClickListenersToLinks() {
-//     const links = document.querySelectorAll(".link-ingredient");
-//     // console.log(links);
-//     links.forEach((link) => {
-//       //  console.log(link)
-//       link.addEventListener("click", selectIngredientTag);
-//     });
-//   }
+  function addClickListenersToLinks() {
+    const links = document.querySelectorAll(".link-ingredient");
+    // console.log(links);
+    links.forEach((link) => {
+      //  console.log(link)
+      link.addEventListener("click", selectIngredientTag);
+    });
+  }
 
-//   //
-//   let ingredientTags = [];
-//   const selectIngredientTag = (event) => {
-//     event.preventDefault();
-//     // console.log(event.target);
-//     // Récupère l'élément qui a déclenché l'événement
-//     const clickedElement = event.target; 
-//     // console.log(clickedElement.textContent);
-//     const clickedElementContent = clickedElement.textContent;
-//     // console.log(clickedElementContent)
-//     ingredientTags.push(clickedElementContent);
-//     // console.log(ingredientTags)
+  //*****Recuperer tous les filtres sans doublons
+  let filteredIngredientsArray;
+  const getIngredients = (recipes) => {
+    // console.log(recipes)
+    const ingredients = [];
+    // console.log('gg')
+    recipes.forEach((recipe) => {
+      // console.log(recipe)
+      // console.log(recipe.ingredients)
+      const recipeIngredients = recipe.ingredients;
+      // console.log(recipeIngredients)
+      recipeIngredients.forEach((ingredient) => {
+        // console.log(ingredient)
+        // console.log(ingredient.ingredient)
+        const ingredientElements = ingredient.ingredient;
+        // console.log(ingredientElements)
+        ingredients.push(ingredientElements);
+      });
+    });
+    
+    // Convertir le tableau en ensemble (Set) pour éliminer les doublons
+    const filteredIngredients = new Set(ingredients);
+    // Convertir l'ensemble (Set) en tableau
+    filteredIngredientsArray = Array.from(filteredIngredients);
+    // console.log(filteredIngredientsArray);
+    return filteredIngredientsArray;
+  };
+  getIngredients(recipes);
 
-//     // const tagContainer = document.querySelector('.tag-container');
+  //*****afficher les ingredients dans le dropDown menu
+  filteredIngredientsArray.forEach((ingredient) => {
+    displayIngredientTag(ingredient);
+  });
 
-//     // Effacer le contenu précédent pour éviter les doublons
-//     // tagContainer.innerHTML = '';
-
-//     const tag = document.querySelector('.tag')
-//     const htmlTag = document.querySelector('.tag-element')
-//     // console.log(htmlTag);
-//     // htmlTag.textContent= clickedElementContent;
-//     // for(let i =0; i<= ingredientTags.length -1; i++){
-//     //   // console.log(i)
-//     //   console.log(ingredientTags[i])
-//     //   tag.style.display = 'block';
-//     //   // htmlTag.textContent= clickedElementContent;
-//     //   htmlTag.textContent= ingredientTags[i];
-
-//     // }
-//     for(const ingredient of ingredientTags) {
-//       // console.log(ingredient);
-//       tag.style.display = 'block';
-//       htmlTag.textContent = ingredient;
-//   }
-
-//   // ingredientTags.forEach(tag => {
-//   //   const tagElement = document.createElement('div');
-//   //   tagElement.classList.add('row');
-//   //   tagElement.innerHTML = `
-//   //       <div class="tag my-2">
-//   //           <span class="tag-element">${tag}</span>
-//   //           <i class="fa-solid fa-x"></i>
-//   //       </div>
-//   //   `;
-//   //   tagContainer.appendChild(tagElement);
-// // });
-
-//   };
-
-//   //*****Recuperer tous les filtres sans doublons
-//   let filteredIngredientsArray;
-//   const getIngredients = (recipes) => {
-//     // console.log(recipes)
-//     const ingredients = [];
-//     // console.log('gg')
-//     recipes.forEach((recipe) => {
-//       // console.log(recipe)
-//       // console.log(recipe.ingredients)
-//       const recipeIngredients = recipe.ingredients;
-//       // console.log(recipeIngredients)
-//       recipeIngredients.forEach((ingredient) => {
-//         // console.log(ingredient)
-//         // console.log(ingredient.ingredient)
-//         const ingredientElements = ingredient.ingredient;
-//         // console.log(ingredientElements)
-//         ingredients.push(ingredientElements);
-//       });
-//     });
-//     // const filteredIngredients = ingredients.reduce((accumulator, currentValue) => {
-//     //     if (!accumulator.includes(currentValue)) {
-//     //         accumulator.push(currentValue);
-//     //     }
-//     //     return accumulator;
-//     // }, []);
-//     // console.log( filteredIngredients)
-//     // return filteredIngredients;
-//     // Convertir le tableau en ensemble (Set) pour éliminer les doublons
-//     const filteredIngredients = new Set(ingredients);
-//     // Convertir l'ensemble (Set) en tableau
-//     filteredIngredientsArray = Array.from(filteredIngredients);
-//     // console.log(filteredIngredientsArray);
-//     return filteredIngredientsArray;
-//   };
-//   getIngredients(recipes);
-
-//   //*****afficher les ingredients dans le dropDown menu
-//   // Récupère la liste ul où les ingrédients seront ajoutés
-//   const ingredientList = document.getElementById("ingredientList");
-//   // console.log(ingredientList);
-
-//   filteredIngredientsArray.forEach((ingredient) => {
-//     // console.log(ingredient)
-//     const li = document.createElement("li");
-//     li.classList.add("li-ingredient");
-//     // li.setAttribute("id", "li-ingredient");
-
-//     // Crée un nouvel élément a
-//     const link = document.createElement("a");
-//     link.textContent = `${ingredient}`;
-//     link.setAttribute("href", "#");
-//     link.classList.add("link-ingredient");
-//     // link.addEventListener('click', selectIngredientTag);
-//     li.appendChild(link);
-//     ingredientList.appendChild(li);
-//   });
-
-//   addClickListenersToLinks();
+  addClickListenersToLinks();
+  
 
 //   //************** */
 //   //************** */
