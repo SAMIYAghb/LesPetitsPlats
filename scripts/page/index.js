@@ -65,7 +65,7 @@ const init = async () => {
 //   //****afficher le tag ingredient selectionné
 //   // Ajouter un écouteur d'événements de clic à chaque lien
 //   // Définir la fonction qui ajoutera les écouteurs d'événements une fois que les éléments seront prêts
-  function addClickListenersToLinks() {
+  function addClickListenersToingredientLinks() {
     const links = document.querySelectorAll(".link-ingredient");
     // console.log(links);
     links.forEach((link) => {
@@ -108,7 +108,7 @@ const init = async () => {
     displayIngredientTag(ingredient);
   });
 
-  addClickListenersToLinks();
+  addClickListenersToingredientLinks();
   
 
 //   //************** */
