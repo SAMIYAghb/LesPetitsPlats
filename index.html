@@ -33,9 +33,9 @@
 
       <div class="input-group mb-3">
 
-        <input type="text" class="form-control" placeholder="Rechercher une recette, un ingrédient, ..."
+        <input id="searchInput" type="text" class="form-control" placeholder="Rechercher une recette, un ingrédient, ..."
           aria-label="search" aria-describedby="basic-addon1">
-        <button class="input-group-text rounded search-btn" id="basic-addon1"><i
+        <button class="input-group-text rounded search-btn" id=""><i
             class="fa-solid fa-magnifying-glass text-light glass-icon"></i></button>
       </div>
 
@@ -73,7 +73,7 @@
                       class="fa-solid fa-angle-down"></i></button>
                   <div id="myDropdown2" class="dropdown-content">
                     <div class="serch-input">
-                      <input type="text" placeholder="Search.." id="appareilInput">
+                      <input type="text" placeholder="Search.." id="appareilInput" onkeyup="filterAppareils()">
                       <i class="fa-solid fa-magnifying-glass filter-icon"></i>
                     </div>
                     <ul class="list-unstyled" id="applianceList">
@@ -110,8 +110,37 @@
 
         </div>
       </section>
-
       <section class="tag-container pb-4">
+        <div class="row gy-5">
+          <div class="col-md-7">
+            <div class="row gy-5">
+              <div class="col-md ">
+                <div class="ingredient-tag my-2 tag">
+                  <!-- <span class="tag-element"></span>
+                  <i class="fa-solid fa-x"></i> -->
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="appliance-tag my-2 tag">
+                  <span class="tag-element"></span>
+                  <i class="fa-solid fa-x"></i>
+                </div>
+              </div>
+              <div class="col-md ">
+                <div class="ustensil-tag my-2  tag">
+                  <span class="tag-element"></span>
+                  <i class="fa-solid fa-x"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </section>
+
+      <!-- <section class="tag-container pb-4">
         <div class="row">
           <div class="tag my-2">
             <span class="tag-element"></span>
@@ -119,7 +148,7 @@
           </div>
           
         </div>
-      </section>
+      </section> -->
 
       <section class="cards">
         <div class="row cards-container gy-5">
@@ -238,6 +267,7 @@
 
 
   <script type="module" src="./scripts/page/index.js"></script>
+  <script type="module" src="./scripts/librairies/search.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

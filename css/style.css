@@ -131,6 +131,7 @@ position: absolute;
     justify-content: center;
     align-items: center; */
    /* margin: 5px; */
+   z-index: 10;
 }
 .search-btn:hover{
     background-color: #FFD15B;
@@ -152,3 +153,15 @@ padding: 10px;
 .tag-element{
     padding-right: 10px;
 }
+/* .ingredient{
+    background-color: blue;
+}
+.appliance{
+    background-color: aquamarine;
+}
+.ustensil{
+    background-color: brown;
+} */
+/* input:focus {
+    outline: none;
+  } */
