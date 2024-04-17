@@ -4,7 +4,7 @@
 function deleteAccents(texte) {
       return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-
+// console.log(deleteAccents('éééé'))
 
 export const searchRecipe = (recipes, searchValue, tagArray) => {
   // Vérifier si la longueur de la valeur de recherche est supérieure ou égale à 3
@@ -12,32 +12,33 @@ export const searchRecipe = (recipes, searchValue, tagArray) => {
 if (!searchValue || searchValue.length < 3) {
     return recipes; // Si la valeur de recherche est vide ou inférieure à 3 caractères, retourner toutes les recettes
 }
-
-  
     // Filtrer les recettes en fonction de la valeur de recherche
     const filteredRecipes = recipes.filter((recipe) => {
       // Vérifier si le titre de la recette contient la valeur de recherche
       if (
-        recipe.name
+        deleteAccents(recipe.name)
           .toLowerCase()
           .trim()
-          .includes(searchValue.toLowerCase().trim())
+          .replace(/\s/g, "")
+          .includes(deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, ""))
       ) {
+        console.log(recipe.name)
         return true; // Si c'est le cas, garder cette recette
       }
       // Vérifier si la description de la recette contient la valeur de recherche
       if (
-        recipe.description
+        deleteAccents(recipe.description)
           .toLowerCase()
           .trim()
-          .includes(searchValue.toLowerCase().trim())
+          .replace(/\s/g, "")
+          .includes(deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, ""))
       ) {
         return true;
       }
         // Vérifier si l'ingredient de la recette contient la valeur de recherche
         if (recipe.ingredients.some(ingredientObj => {
             if (typeof ingredientObj === 'object' && 'ingredient' in ingredientObj) {
-                return ingredientObj.ingredient.toLowerCase().includes(searchValue.toLowerCase());
+                return deleteAccents(ingredientObj.ingredient).toLowerCase().trim().replace(/\s/g, "").includes(deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, ""));
             }
             return false;
         })) {
