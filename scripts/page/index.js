@@ -175,7 +175,9 @@ const init = async () => {
       displayData(recipesSearch);
   })
 
-  
+};
+init();
+
   // const displayTags = (tags, type, container) => {
   //   tags.forEach(tag => {
   //       const tagElement = document.createElement('div');
@@ -214,8 +216,6 @@ const init = async () => {
 
   //   // console.log(ingredientInput)
   //   // ingredientInput.addEventListener('keyup', filterIngredients);
-};
-init();
 
 
 // const displayTags = (tags, type, container) => {

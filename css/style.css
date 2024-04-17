@@ -141,27 +141,20 @@ position: absolute;
 padding: 10px;
 }
 
-.tag{
-    background-color: #FFD15B;
-    color: #000;
-    width: fit-content;
-    /* height: 50px; */
-    padding: 12px 15px;
-    border-radius: 15px;
-    display: none;
+.tag-container{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-wrap: wrap;
 }
 .tag-element{
+    background-color: #FFD15B;
     padding-right: 10px;
+    color: #000;
+    /* width: fit-content; */
+    padding: 10px 13px;
+    border-radius: 15px;
+    margin-right: 5px;
+    white-space: nowrap;
+    margin-bottom: 5px;
 }
-/* .ingredient{
-    background-color: blue;
-}
-.appliance{
-    background-color: aquamarine;
-}
-.ustensil{
-    background-color: brown;
-} */
-/* input:focus {
-    outline: none;
-  } */
