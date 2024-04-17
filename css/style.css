@@ -37,7 +37,9 @@ p{
 .shadow{
     box-shadow: 0px 4px 34px 30px #0000000A;
 }
-
+a{
+    cursor: pointer;
+}
 
 
 .logo{
@@ -157,4 +159,10 @@ padding: 10px;
     margin-right: 5px;
     white-space: nowrap;
     margin-bottom: 5px;
+}
+
+.disabled-link {
+    pointer-events: none; /* Désactive les clics */
+    opacity: 0.5; 
+    color: #999; /* change la couleur pour indiquer qu'il est désactivé */
 }

@@ -25,28 +25,24 @@ export const selectUstensilTag = (event) => {
     // console.log(clickedElement.textContent);
     const clickedElementContent = clickedElement.textContent;
     // console.log(clickedElementContent)
+    // Vérifier si l'élément a déjà été sélectionné
+if (!ustensilTags.includes(clickedElementContent)) {
     ustensilTags.push(clickedElementContent);
    
-
-//     const tag = document.querySelector('.tag')
-//     const htmlTag = document.querySelector('.tag-element')
-    
-//     for(const ustensil of ustensilTags) {
-//       tag.style.display = 'block';
-//       htmlTag.textContent = ustensil;
-//   }
-
 const tagContainer = document.querySelector('.tag-container');
 
 // // Effacer le contenu précédent pour éviter les doublons
-tagContainer.innerHTML = '';
+// tagContainer.innerHTML = '';
+
+
 // Ajoute chaque tag sélectionné au conteneur de tags
-ustensilTags.forEach(ustensil => {
-    const tagElement = document.createElement('div');
-    tagElement.classList.add('tag', 'ustensil');
-    tagElement.textContent = ustensil;
-    tagContainer.appendChild(tagElement);
-});
 
+    const newTag = document.createElement('span');
+    newTag.textContent = clickedElementContent;
+    newTag.classList.add('tag-element');
+    tagContainer.appendChild(newTag);
 
-  };
+clickedElement.classList.add('disabled-link');
+
+  }; 
+}

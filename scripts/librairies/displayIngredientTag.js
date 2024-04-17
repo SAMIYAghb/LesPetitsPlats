@@ -16,6 +16,7 @@ export const displayIngredientTag = (ingredient) => {
   li.appendChild(link);
   ingredientList.appendChild(li);
 };
+
 let ingredientTags = [];
 export const selectIngredientTag = (event) => {
   event.preventDefault();
@@ -25,21 +26,7 @@ export const selectIngredientTag = (event) => {
   // console.log(clickedElement.textContent);
   const clickedElementContent = clickedElement.textContent;
   // console.log(clickedElementContent)
-//   ingredientTags.push(clickedElementContent);
-// //   console.log(ingredientTags);
 
-  
-//   const tagContainer = document.querySelector(".tag-container");
-//   // Effacer le contenu précédent du conteneur de tags
-//   tagContainer.innerHTML = "";
-//   for (const ingredient of ingredientTags) {
-//     const newTag = document.createElement("span");
-//     newTag.textContent = ingredient;
-//     newTag.classList.add("tag-element");
-
-//     // Ajouter cet élément au conteneur de tag
-//     tagContainer.appendChild(newTag);
-//   }
 
     // Vérifier si l'élément a déjà été sélectionné
     if (!ingredientTags.includes(clickedElementContent)) {
@@ -50,18 +37,25 @@ export const selectIngredientTag = (event) => {
         const tagContainer = document.querySelector('.tag-container');
         
         // Effacer le contenu précédent du conteneur de tags
-        tagContainer.innerHTML = '';
+        // tagContainer.inne-rHTML = '';
 
         // Ajouter chaque ingrédient sélectionné au conteneur de tags
-        for(const ingredient of ingredientTags) {
-            const newTag = document.createElement('span');
-            newTag.textContent = ingredient;
-            newTag.classList.add('tag-element');
-            tagContainer.appendChild(newTag);
-        }
+        // for(const ingredient of ingredientTags) {
+        //     const newTag = document.createElement('span');
+        //     newTag.textContent = ingredient;
+        //     newTag.classList.add('tag-element');
+        //     tagContainer.appendChild(newTag);
+        // }
 
+                // Ajoute chaque ingrédient sélectionné au conteneur de tags
+
+        const newTag = document.createElement('span');
+        newTag.textContent = clickedElementContent;
+        newTag.classList.add('tag-element');
+        tagContainer.appendChild(newTag);
         // Désactiver l'élément cliqué
         clickedElement.disabled = true;
+        clickedElement.classList.add('disabled-link');
     } else {
         console.log("Ce tag a déjà été sélectionné.");
     }

@@ -26,29 +26,26 @@ export const selectApplianceTag = (event) => {
     // console.log(clickedElement.textContent);
     const clickedElementContent = clickedElement.textContent;
     // console.log(clickedElementContent)
+    // Vérifier si l'élément a déjà été sélectionné
+if (!applianceTags.includes(clickedElementContent)) {
     applianceTags.push(clickedElementContent);
     // console.log(ingredientTags)
-
-
-//     const tag = document.querySelector('.tag')
-//     const htmlTag = document.querySelector('.tag-element')
-    
-//     for(const appliance of applianceTags) {
-//       // console.log(ingredient);
-//       tag.style.display = 'block';
-//       htmlTag.textContent = appliance;
-//   }
 const tagContainer = document.querySelector('.tag-container');
 
 // // Effacer le contenu précédent pour éviter les doublons
-tagContainer.innerHTML = '';
+// tagContainer.innerHTML = '';
+
 // Ajoute chaque tag sélectionné au conteneur de tags
-applianceTags.forEach(appliance => {
-    const tagElement = document.createElement('div');
-    tagElement.classList.add('tag', 'appliance');
-    tagElement.textContent = appliance;
-    tagContainer.appendChild(tagElement);
-});
-  
+
+    const newTag = document.createElement('span');
+            newTag.textContent = clickedElementContent;
+            newTag.classList.add('tag-element');
+            tagContainer.appendChild(newTag);
+        
+
+//  // Désactive le lien <a> après le clic
+//   clickedElement.removeEventListener('click', selectApplianceTag);
+  clickedElement.classList.add('disabled-link');
 
   };
+}
