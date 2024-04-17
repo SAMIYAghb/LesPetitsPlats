@@ -37,10 +37,22 @@ const tagContainer = document.querySelector('.tag-container');
 
 // Ajoute chaque tag sélectionné au conteneur de tags
 
-    const newTag = document.createElement('span');
-    newTag.textContent = clickedElementContent;
-    newTag.classList.add('tag-element');
-    tagContainer.appendChild(newTag);
+const tag = document.createElement("div");
+tag.classList.add('tag');
+tagContainer.appendChild(tag);
+tag.addEventListener('click', ()=>{
+    tag.style.display ='none';
+    clickedElement.classList.remove('disabled-link');
+  })
+
+const newTag = document.createElement("span");
+newTag.textContent = clickedElementContent;
+newTag.classList.add("tag-element");
+tag.appendChild(newTag);
+
+const closeTag = document.createElement("i");
+closeTag.classList.add("fa-solid", "fa-circle-xmark");
+tag.appendChild(closeTag);
 
 clickedElement.classList.add('disabled-link');
 

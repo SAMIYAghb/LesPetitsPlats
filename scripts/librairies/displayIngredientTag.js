@@ -1,4 +1,4 @@
-// import { updateTags } from '../page/index.js';
+
 export const displayIngredientTag = (ingredient) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
   const ingredientList = document.getElementById("ingredientList");
@@ -32,32 +32,37 @@ export const selectIngredientTag = (event) => {
     if (!ingredientTags.includes(clickedElementContent)) {
         // Ajouter l'élément cliqué à la liste des ingrédients sélectionnés
         ingredientTags.push(clickedElementContent);
-        console.log(ingredientTags);
-
+        // console.log(ingredientTags);
+      
         const tagContainer = document.querySelector('.tag-container');
         
         // Effacer le contenu précédent du conteneur de tags
         // tagContainer.inne-rHTML = '';
-
-        // Ajouter chaque ingrédient sélectionné au conteneur de tags
-        // for(const ingredient of ingredientTags) {
-        //     const newTag = document.createElement('span');
-        //     newTag.textContent = ingredient;
-        //     newTag.classList.add('tag-element');
-        //     tagContainer.appendChild(newTag);
-        // }
-
+        
                 // Ajoute chaque ingrédient sélectionné au conteneur de tags
 
-        const newTag = document.createElement('span');
-        newTag.textContent = clickedElementContent;
-        newTag.classList.add('tag-element');
-        tagContainer.appendChild(newTag);
+                const tag = document.createElement("div");
+                tag.classList.add('tag');
+                tagContainer.appendChild(tag);
+                tag.addEventListener('click', ()=>{
+                  tag.style.display ='none';
+                  clickedElement.disabled = false;
+                  clickedElement.classList.remove('disabled-link');
+                })
+            
+                const newTag = document.createElement("span");
+                newTag.textContent = clickedElementContent;
+                newTag.classList.add("tag-element");
+                tag.appendChild(newTag);
+                
+                const closeTag = document.createElement("i");
+                closeTag.classList.add("fa-solid", "fa-circle-xmark");
+                tag.appendChild(closeTag);
         // Désactiver l'élément cliqué
-        clickedElement.disabled = true;
+    //     clickedElement.disabled = true;
         clickedElement.classList.add('disabled-link');
-    } else {
-        console.log("Ce tag a déjà été sélectionné.");
+    // } else {
+    //     console.log("Ce tag a déjà été sélectionné.");
     }
 
 };

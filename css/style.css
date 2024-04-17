@@ -149,18 +149,25 @@ padding: 10px;
     align-items: center;
     flex-wrap: wrap;
 }
-.tag-element{
+.tag{
     background-color: #FFD15B;
-    padding-right: 10px;
-    color: #000;
-    /* width: fit-content; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 13px;
     border-radius: 15px;
     margin-right: 5px;
-    white-space: nowrap;
+    cursor: pointer;
     margin-bottom: 5px;
 }
-
+.tag-element{   
+    padding-right: 10px;
+    color: #000;
+    white-space: nowrap;  
+}
+.fa-solid.fa-circle-xmark {
+    font-size: 12px;
+}
 .disabled-link {
     pointer-events: none; /* Désactive les clics */
     opacity: 0.5; 
