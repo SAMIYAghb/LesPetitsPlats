@@ -12,9 +12,11 @@ export const displayIngredientTag = (ingredient) => {
   link.textContent = `${ingredient}`;
   link.setAttribute("href", "#");
   link.classList.add("link-ingredient");
-  // link.addEventListener('click', selectIngredientTag);
   li.appendChild(link);
   ingredientList.appendChild(li);
+  // Ajoute chaque nouvel élément au début de la liste
+  // ingredientList.insertBefore(li, ingredientList.firstChild);
+  // li.appendChild(link);
 };
 
 let ingredientTags = [];

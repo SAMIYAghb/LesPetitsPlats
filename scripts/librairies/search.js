@@ -48,6 +48,7 @@ if (!searchValue || searchValue.length < 3) {
       // if (recipe.tags.some(tag => tag.toLowerCase().includes(searchValue.toLowerCase()))) {
       //     return true; // Si c'est le cas, garder cette recette
       // }
+      
 
       //Si la recette ne correspond à aucun critère de recherche, la rejeter
       return false;

@@ -1,4 +1,3 @@
-// import RecipeFactory from "../factories/RecipeFactory.js";
 import displayCard from "../librairies/view.js";
 import {
   displayIngredientTag,
@@ -14,11 +13,10 @@ import {
 } from "../librairies/displayUstencilTag.js";
 
 import { searchRecipe, deleteAccents } from "../librairies/search.js";
-const getRecipes = async () => {
-  const response = await fetch("../../data/recipes.json");
-  const data = await response.json();
-  return data;
-};
+
+import { getRecipes, recipes } from "../utils/api.js";
+// import { searchIngredientTag } from "./ingredients.js";
+// import { getAppliances } from "./appliances.js";
 
 function displayData(recipes) {
   // console.log(recipes)
@@ -32,7 +30,6 @@ function displayData(recipes) {
   });
 }
 
-const recipes = await getRecipes();
 //   //**************start ingredient*/
 //   //**************start ingredient*/
 
@@ -70,49 +67,79 @@ const getIngredients = (recipes) => {
 getIngredients(recipes);
 
 //*****afficher les ingredients dans le dropDown menu
-filteredIngredientsArray.sort((a, b) => a.localeCompare(b, "fr")).forEach((ingredient) => {
-  displayIngredientTag(ingredient);
-});
+filteredIngredientsArray
+  .sort((a, b) => a.localeCompare(b, "fr"))
+  .forEach((ingredient) => {
+    displayIngredientTag(ingredient);
+  });
 
+// Affichage des ingrédients triés dans le dropdown menu
+// filteredIngredientsArray
+//   .sort((a, b) => a.localeCompare(b, "fr"))
+//   .forEach((ingredient) => {
+//     displayIngredientTag(ingredient);
+//   });
 addClickListenersToIngredientLinks();
 
 export const ingredientTag = getIngredients(recipes);
-console.log(ingredientTag);
+// console.log(ingredientTag);
 
 //   //**************search ingredient*/
 const ingredientInput = document.getElementById("ingredientInput");
 const searchIngredientTag = () => {
+  // clearDropdown();
   const inputValue = deleteAccents(ingredientInput.value)
     .toLowerCase()
     .trim()
     .replace(/\s/g, "");
   // console.log(inputValue)
-  // if (transformedArray.includes(inputValue)) {
-  //   console.log("yes");
-  // }
+
   // Recherche à partir du premier caractère
   if (inputValue.length > 0) {
-    // Vérifie si un tag correspond à l'entrée de l'utilisateur
-    // const matchingTag = transformedArray.find(tag => tag.startsWith(inputValue));
-    // if (matchingTag) {
-    //   // Afficher le premier tag correspondant dans la liste
-    //   displayIngredientTag(matchingTag);
+    //Vérifie si un tag correspond à l'entrée de l'utilisateur
+
+    const matchingTags = transformedArray.filter((tag) =>
+      tag.includes(inputValue)
+    );
+    console.log(matchingTags)
+    // console.log(matchingTags.sort((a, b) => a.localeCompare(b, "fr")));
+    if (matchingTags.length > 0) {
+      clearDropdown();
+      matchingTags.forEach((tag) => displayIngredientTag(tag));
+    // } else if (matchingTags.length = 0){
+    //   filteredIngredientsArray
+    //     .sort((a, b) => a.localeCompare(b, "fr"))
+    //     .forEach((ingredient) => {
+    //       displayIngredientTag(ingredient);
+    //     });
     // }
-  }
+  }else if (inputValue.length = 0){
+      filteredIngredientsArray
+        .sort((a, b) => a.localeCompare(b, "fr"))
+        .forEach((ingredient) => {
+          displayIngredientTag(ingredient);
+        });
+    }
+    }
 };
+
 //le tableau
 //   // Appliquer les transformations à chaque élément du tableau
 // console.log(ingredientTag)
 const transformedArray = ingredientTag.map((ingredient) => {
-  const trimmedIngredient = deleteAccents(ingredient)
-    .toLowerCase()
-    .trim()
-    .replace(/\s/g, "");
+  const trimmedIngredient = deleteAccents(ingredient).toLowerCase().trim();
+  // .replace(/\s/g, "");
   // console.log(trimmedIngredient);
 
   return trimmedIngredient;
 });
 // console.log(transformedArray)
+
+// Fonction pour effacer tous les éléments du dropdown
+const clearDropdown = () => {
+  const ingredientList = document.getElementById("ingredientList");
+  ingredientList.innerHTML = ""; // Supprime tous les éléments enfants
+};
 
 //   //**************end ingredient*/
 //   //**************end ingredient*/
@@ -145,9 +172,11 @@ const getAppliance = (recipes) => {
 getAppliance(recipes);
 
 //****Afficher les appareils dans le dropDownMenu
-filteredappliancesArray.sort((a, b) => a.localeCompare(b, "fr")).forEach((appliance) => {
-  displayApplianceTag(appliance);
-});
+filteredappliancesArray
+  .sort((a, b) => a.localeCompare(b, "fr"))
+  .forEach((appliance) => {
+    displayApplianceTag(appliance);
+  });
 addClickListenersToApplianceLinks();
 //   //************** end  appareils*/
 //   //************** end  appareils*/
@@ -185,27 +214,36 @@ getUstensil(recipes);
 
 //****Afficher les ustensils dans le dropDownMenu
 
-filteredUstensilsArray.sort((a, b) => a.localeCompare(b, "fr")).forEach((ustensil) => {
-  displayUstensilTag(ustensil);
-});
+filteredUstensilsArray
+  .sort((a, b) => a.localeCompare(b, "fr"))
+  .forEach((ustensil) => {
+    displayUstensilTag(ustensil);
+  });
 addClickListenersToUstensilLinks();
 //   //************** end ustensils*/
 //   //************** end ustensils*/
 
+
+
+const searchInput = document.getElementById("searchInput");
 const init = async () => {
   const recipes = await getRecipes();
   // console.log(recipes)
+  // const appliances = getAppliances(recipes);
   // const recipesSearch = searchRecipe(recipes);
 
   // displayData(recipesSearch);
 
   displayData(recipes);
 
-  const searchInput = document.getElementById("searchInput");
-  // // console.log(searchInput)
+  // // console.log(searchInput)deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, "")
   searchInput.addEventListener("input", () => {
     //       // console.log(event.currentTarget.value)
-    const searchValue = searchInput.value.trim();
+    // const searchValue = searchInput.value.trim();
+    const searchValue = deleteAccents(searchInput.value)
+      .toLowerCase()
+      .trim()
+      .replace(/\s/g, "");
     //       // const serachedItem = event.currentTarget.value.trim().toLowerCase();
     //       //   console.log(serachedItem)
     const recipesSearch = searchRecipe(recipes, searchValue);
@@ -218,23 +256,6 @@ const init = async () => {
 };
 init();
 
-// const displayTags = (tags, type, container) => {
-//   tags.forEach(tag => {
-//       const tagElement = document.createElement('div');
-//       tagElement.classList.add('tag', type);
-//       tagElement.textContent = tag;
-//       container.appendChild(tagElement);
-//   });
-// };
-// const updateTags = () => {
-//   const tagContainer = document.querySelector('.tag-container');
-//   tagContainer.innerHTML = '';
-
-//   displayTags(ingredientTags, 'ingredient', tagContainer);
-//   displayTags(ustensilTags, 'ustensil', tagContainer);
-//   displayTags(appareilTags, 'appareil', tagContainer);
-// };
-// return updateTags;
 //   //***cherche recette par Ingredients
 //   const ingredientInput = document.getElementById("ingredientInput");
 
@@ -273,4 +294,11 @@ init();
 
 // // Afficher le tableau trié
 // console.log(tableau);
-// //En utilisant localeCompare() avec l'option 'fr' (pour le français), le tri sera effectué en tenant compte des caractères spéciaux selon les règles de l'ordre alphabétique français.
+// //En utilisant localeCompare() avec l'option 'fr' (pour le français), le tri sera effectué en tenant compte des caractères spéciaux selon les règles de l'ordre alphabétique français
+
+// const tags = ["huile d'olive", "huile d'olives", 'olives'];
+
+// // Trie le tableau selon l'ordre alphabétique français
+// const sortedTags = tags.sort((a, b) => a.localeCompare(b, "fr"));
+
+// console.log(sortedTags);
