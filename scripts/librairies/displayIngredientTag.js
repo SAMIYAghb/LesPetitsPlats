@@ -37,9 +37,7 @@ export const selectIngredientTag = (event) => {
         // console.log(ingredientTags);
       
         const tagContainer = document.querySelector('.tag-container');
-        
-        // Effacer le contenu précédent du conteneur de tags
-        // tagContainer.inne-rHTML = '';
+      
         
                 // Ajoute chaque ingrédient sélectionné au conteneur de tags
 
@@ -61,7 +59,7 @@ export const selectIngredientTag = (event) => {
                 closeTag.classList.add("fa-solid", "fa-circle-xmark");
                 tag.appendChild(closeTag);
         // Désactiver l'élément cliqué
-    //     clickedElement.disabled = true;
+
         clickedElement.classList.add('disabled-link');
     // } else {
     //     console.log("Ce tag a déjà été sélectionné.");
