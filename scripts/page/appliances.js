@@ -54,6 +54,7 @@ import {
     selectApplianceTag,
   } from "../librairies/displayApplianceTag.js";
   import { recipes } from "../utils/api.js";
+import { displayData } from "./index.js";
 //   console.log(recipes)
 
 //   //************** start appareils*/
@@ -73,6 +74,7 @@ function addClickListenersToApplianceLinks() {
       event.preventDefault();
       const clickedElementContent = link.textContent.trim();
       selectApplianceTag(clickedElementContent, link);
+      filterRecipesByApplianceTag(clickedElementContent);
     });
   });
 }
@@ -105,4 +107,15 @@ function addClickListenersToApplianceLinks() {
   //   //************** end  appareils*/
   //   //************** end  appareils*/
 
-   // Filtrer les recettes en fonction du tag sélectionné
+  //  Filtrer les recettes en fonction du tag sélectionné
+   function filterRecipesByApplianceTag(applianceTag) {
+    const filteredRecipes = recipes.filter((recipe) => {
+      return recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
+    });
+  
+    
+    // afficher les recettes filtrées
+  displayData(filteredRecipes);
+    console.log(filteredRecipes); // Par exemple, afficher les recettes filtrées dans la console pour le moment
+  }
+ 
