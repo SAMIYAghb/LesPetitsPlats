@@ -1,4 +1,4 @@
-
+  // Affichage des ingrédients triés dans le dropdown menu
 export const displayIngredientTag = (ingredient) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
   const ingredientList = document.getElementById("ingredientList");
@@ -14,11 +14,9 @@ export const displayIngredientTag = (ingredient) => {
   link.classList.add("link-ingredient");
   li.appendChild(link);
   ingredientList.appendChild(li);
-  // Ajoute chaque nouvel élément au début de la liste
-  // ingredientList.insertBefore(li, ingredientList.firstChild);
-  // li.appendChild(link);
 };
 
+//afficher le tag selectionner tag jaune
 let ingredientTags = [];
 export const selectIngredientTag = (event) => {
   event.preventDefault();
@@ -61,8 +59,35 @@ export const selectIngredientTag = (event) => {
         // Désactiver l'élément cliqué
 
         clickedElement.classList.add('disabled-link');
-    // } else {
     //     console.log("Ce tag a déjà été sélectionné.");
     }
 
 };
+
+
+// Fonction pour afficher le nouveau tag sélectionné dans la liste des tags
+export const displayNewlySelectedTag = (tag) => {
+  // console.log(tag)
+  // Ajoutez ici le code pour créer et afficher le tag sélectionné dans l'interface utilisateur
+  const tagContainer = document.querySelector('.tag-container');
+
+  const newTag = document.createElement("div");
+  newTag.classList.add('tag');
+  tagContainer.appendChild(newTag);
+
+  const tagContent = document.createElement("span");
+  tagContent.textContent = tag;
+  tagContent.classList.add("tag-element");
+  newTag.appendChild(tagContent);
+
+  const closeTag = document.createElement("i");
+  closeTag.classList.add("fa-solid", "fa-circle-xmark");
+  newTag.addEventListener('click', () => {
+    // console.log(newTag)
+    newTag.remove(); // Supprime le tag lorsqu'on clique sur l'icône de fermeture
+  });
+  newTag.appendChild(closeTag);
+   console.log(tag)
+   
+};
+
