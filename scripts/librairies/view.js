@@ -1,4 +1,4 @@
-const displayCard =(recipe)=>{
+export const displayCard =(recipe)=>{
     
   const column = document.createElement('div');
   column.classList.add('col-sm-6', 'col-md-4');

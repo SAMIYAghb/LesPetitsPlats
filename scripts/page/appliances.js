@@ -54,7 +54,8 @@ import {
     selectApplianceTag,
   } from "../librairies/displayApplianceTag.js";
   import { recipes } from "../utils/api.js";
-import { displayData } from "./index.js";
+import { displayData } from "../utils/api.js";
+
 //   console.log(recipes)
 
 //   //************** start appareils*/
@@ -116,6 +117,6 @@ function addClickListenersToApplianceLinks() {
     
     // afficher les recettes filtrées
   displayData(filteredRecipes);
-    console.log(filteredRecipes); // Par exemple, afficher les recettes filtrées dans la console pour le moment
+    // console.log(filteredRecipes); 
   }
  

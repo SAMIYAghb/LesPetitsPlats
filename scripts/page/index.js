@@ -1,6 +1,6 @@
 import displayCard from "../librairies/view.js";
 import { searchRecipe, deleteAccents } from "../librairies/search.js";
-import { getRecipes, recipes } from "../utils/api.js";
+import { getRecipes, displayData } from "../utils/api.js";
 import { 
   searchIngredientTag,
    getIngredients,
@@ -11,17 +11,6 @@ import { getUstensil } from "./ustensils.js";
 
 
 // console.log(matchingTagsLength)
-export function displayData(recipes) {
-  // console.log(recipes)
-  const recipeSection = document.querySelector(".cards-container");
-  // Nettoyez le conteneur avant d'ajouter de nouvelles cartes (si nécessaire)
-  recipeSection.innerHTML = "";
-  recipes.forEach((recipe) => {
-    const card = displayCard(recipe); // Appelez displayCard pour obtenir la carte HTML de la recette
-    // console.log(card)
-    recipeSection.appendChild(card); // Ajoutez la carte au conteneu
-  });
-}
 
 const searchInput = document.getElementById("searchInput");
 const init = async () => {

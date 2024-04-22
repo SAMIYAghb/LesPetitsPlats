@@ -72,20 +72,20 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
       //   console.log("rrr");
       // }
       //verifient l'appareil
-      if (
-        tagArrays.appliances &&
-        tagArrays.appliances.length > 0 &&
-        tagArrays.appliances.some((searchAppliance) => {
-          // console.log(searchAppliance)
-          // console.log(recipe.appliance)
-          deleteAccents(recipe.appliance)
-            .toLowerCase()
-            .trim()
-            .includes(deleteAccents(searchAppliance).toLowerCase().trim());
-        })
-      ) {
-        return true;
-      }
+      // if (
+      //   tagArrays.appliances &&
+      //   tagArrays.appliances.length > 0 &&
+      //   tagArrays.appliances.some((searchAppliance) => {
+      //     // console.log(searchAppliance)
+      //     // console.log(recipe.appliance)
+      //     deleteAccents(recipe.appliance)
+      //       .toLowerCase()
+      //       .trim()
+      //       .includes(deleteAccents(searchAppliance).toLowerCase().trim());
+      //   })
+      // ) {
+      //   return true;
+      // }
       //verifier l'ustensil
       // if (
       //   tagArrays.ustensils &&

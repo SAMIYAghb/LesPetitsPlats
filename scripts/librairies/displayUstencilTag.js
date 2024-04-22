@@ -1,4 +1,4 @@
-// import { updateTags } from '../page/index.js';
+
 
 export const displayUstensilTag = (ustensil)=>{
     // Récupère la liste ul où les ingrédients seront ajoutés
@@ -17,13 +17,13 @@ export const displayUstensilTag = (ustensil)=>{
     ustensilList.appendChild(li);
 }
 let ustensilTags = [];
-export const selectUstensilTag = (event) => {
-    event.preventDefault();
+export const selectUstensilTag = (clickedElementContent, clickedElement) => {
+    // event.preventDefault();
     // console.log(event.target);
     // Récupère l'élément qui a déclenché l'événement
-    const clickedElement = event.target; 
+    // const clickedElement = event.target; 
     // console.log(clickedElement.textContent);
-    const clickedElementContent = clickedElement.textContent;
+    // const clickedElementContent = clickedElement.textContent;
     // console.log(clickedElementContent)
     // Vérifier si l'élément a déjà été sélectionné
 if (!ustensilTags.includes(clickedElementContent)) {

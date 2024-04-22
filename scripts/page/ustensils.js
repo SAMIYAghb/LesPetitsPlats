@@ -3,13 +3,21 @@ import {
   selectUstensilTag,
 } from "../librairies/displayUstencilTag.js";
 import { recipes } from "../utils/api.js";
+import { displayData } from "../utils/api.js";
+
 
 function addClickListenersToUstensilLinks() {
   const links = document.querySelectorAll(".link-ustensil");
   // console.log(links);
   links.forEach((link) => {
     //  console.log(link)
-    link.addEventListener("click", selectUstensilTag);
+    // link.addEventListener("click", selectUstensilTag);
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const clickedElementContent = link.textContent.trim();
+      selectUstensilTag(clickedElementContent, link);
+      filterRecipesByUstensilTag(clickedElementContent);
+    });
   });
 }
 
@@ -43,4 +51,22 @@ filteredUstensilsArray
 addClickListenersToUstensilLinks();
 //   //************** end ustensils*/
 //   //************** end ustensils*/
+
 // Filtrer les recettes en fonction du tag sélectionné
+function filterRecipesByUstensilTag(ustensilTag) {
+  // console.log(ustensilTag)
+  const filteredRecipes = recipes.filter((recipe) => {
+    
+      // console.log(ustensil)
+      // Vérifie si le tag d'ustensile correspond à au moins un ustensile dans la recette
+    return recipe.ustensils.some((ustensil) => ustensil.toLowerCase() === ustensilTag.toLowerCase());
+
+
+    // return ustensil.toLowerCase() === ustensilTag.toLowerCase();
+  });
+
+  
+  // afficher les recettes filtrées
+displayData(filteredRecipes);
+  console.log(filteredRecipes); 
+}
