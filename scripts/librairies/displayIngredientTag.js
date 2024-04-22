@@ -18,13 +18,13 @@ export const displayIngredientTag = (ingredient) => {
 
 //afficher le tag selectionner tag jaune
 let ingredientTags = [];
-export const selectIngredientTag = (event) => {
-  event.preventDefault();
+export const selectIngredientTag = (clickedElementContent, clickedElement) => {
+  // event.preventDefault();
   // console.log(event.target);
   // Récupère l'élément qui a déclenché l'événement
-  const clickedElement = event.target;
+  // const clickedElement = event.target;
   // console.log(clickedElement.textContent);
-  const clickedElementContent = clickedElement.textContent;
+  // const clickedElementContent = clickedElement.textContent;
   // console.log(clickedElementContent)
 
 

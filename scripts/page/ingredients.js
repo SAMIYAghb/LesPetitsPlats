@@ -4,6 +4,9 @@ import {
   selectIngredientTag,
   displayNewlySelectedTag,
 } from "../librairies/displayIngredientTag.js";
+import { displayData } from "../utils/api.js";
+
+
 
 //   //**************start ingredient*/
 //   //**************start ingredient*/
@@ -16,7 +19,13 @@ function addClickListenersToIngredientLinks() {
   // console.log(links);
   links.forEach((link) => {
     //  console.log(link)
-    link.addEventListener("click", selectIngredientTag);
+    // link.addEventListener("click", selectUstensilTag);
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const clickedElementContent = link.textContent.trim();
+      selectIngredientTag(clickedElementContent, link);
+      filterRecipesByIgredientTag(clickedElementContent);
+    });
   });
 }
 function deleteAccents(texte) {
@@ -80,28 +89,27 @@ export const searchIngredientTag = () => {
     const matchingTags = transformedArray.filter((tag) =>
       tag.includes(inputValue)
     );
-    // matchingTagsLength =matchingTags.length; 
+    // matchingTagsLength =matchingTags.length;
     // console.log(matchingTags)
     // console.log(matchingTags.length)
     if (matchingTags.length > 0) {
       clearDropdown();
       matchingTags.forEach((tag) => {
-          displayIngredientTag(tag); // Affiche le tag dans le dropdown
+        displayIngredientTag(tag); // Affiche le tag dans le dropdown
       });
       addClickListenersToNewTags(); // Ajoute les écouteurs d'événements de clic aux tags dans le dropdown
-  }
-    
+    }
   }
 };
 // Fonction pour ajouter un écouteur d'événements de clic à chaque tag dans le dropdown
 const addClickListenersToNewTags = () => {
   const dropdownTags = document.querySelectorAll(".link-ingredient");
   dropdownTags.forEach((tag) => {
-      tag.addEventListener("click", (event) => {
-        event.preventDefault();
-          const selectedTag = tag.textContent;
-          displayNewlySelectedTag(selectedTag);
-      });
+    tag.addEventListener("click", (event) => {
+      event.preventDefault();
+      const selectedTag = tag.textContent;
+      displayNewlySelectedTag(selectedTag);
+    });
   });
 };
 //le tableau
@@ -124,6 +132,25 @@ const clearDropdown = () => {
 
 //   //**************end ingredient*/
 //   //**************end ingredient*/
+
+// Filtrer les recettes en fonction du tag sélectionné
+function filterRecipesByIgredientTag(ingredientTag) {
+  // console.log(ingredientTag)
+  const filteredRecipes = recipes.filter((recipe) => {
+    // console.log(recipe.ingredients)
+    // Vérifie si le tag d'ingrédient correspond à au moins un ingrédient dans la recette
+    return recipe.ingredients.some((ingredient) => {
+      return ingredient.ingredient.toLowerCase() === ingredientTag.toLowerCase();
+    });
+
+    // filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
+    // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné,
+  });
+  // afficher les recettes filtrées
+  displayData(filteredRecipes);
+  // console.log(filteredRecipes);
+}
+
 // } else if (matchingTags.length = 0){
 //   filteredIngredientsArray
 //     .sort((a, b) => a.localeCompare(b, "fr"))

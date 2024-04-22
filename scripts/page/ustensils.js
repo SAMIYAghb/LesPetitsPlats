@@ -62,11 +62,12 @@ function filterRecipesByUstensilTag(ustensilTag) {
     return recipe.ustensils.some((ustensil) => ustensil.toLowerCase() === ustensilTag.toLowerCase());
 
 
-    // return ustensil.toLowerCase() === ustensilTag.toLowerCase();
+    // filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
+    // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné, 
   });
 
   
   // afficher les recettes filtrées
 displayData(filteredRecipes);
-  console.log(filteredRecipes); 
+  // console.log(filteredRecipes); 
 }
