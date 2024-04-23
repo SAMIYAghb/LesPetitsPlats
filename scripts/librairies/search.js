@@ -183,10 +183,25 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
   const totalRecipeElement = document.querySelector('.total-recipe');
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
 
+
+  // Si aucune recette n'est trouvée, afficher "not found"
+  // const notFoundElement = document.querySelector('.not-found');
+  //   console.log(notFoundElement);
+  if (filteredRecipes.length === 0) {
+    console.log(filteredRecipes.length)
+    notFoundElement.innerText = "Aucune recette corresond à cette recherche";
+   }
+   else {
+    // Si des recettes sont trouvées, effacer le message "not found"
+    notFoundElement.innerText = "";
+  }
+
+
   return filteredRecipes; // Renvoyer les recettes filtrées
 };
 
-
+const notFoundElement = document.querySelector('.not-found');
+// console.log(notFoundElement);
 
 
 

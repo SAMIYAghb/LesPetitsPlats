@@ -173,3 +173,7 @@ padding: 10px;
     opacity: 0.5; 
     color: #999; /* change la couleur pour indiquer qu'il est désactivé */
 }
+.not-found{
+    margin-left: 30%;
+    margin-bottom: 50px;
+}
