@@ -1,5 +1,5 @@
 import displayCard from "../librairies/view.js";
-import { searchRecipe, deleteAccents } from "../librairies/search.js";
+import { searchRecipe } from "../librairies/search.js";
 import { getRecipes, displayData } from "../utils/api.js";
 import { 
   searchIngredientTag,
@@ -38,7 +38,8 @@ totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
   // Gestionnaire d'événements pour la recherche principale
   searchInput.addEventListener("input", () => {
     //       // console.log(event.currentTarget.value)
-    const searchValue = deleteAccents(searchInput.value)
+    // const searchValue = deleteAccents(searchInput.value)
+    const searchValue = searchInput.value
       .toLowerCase()
       .trim()
       .replace(/\s/g, "");

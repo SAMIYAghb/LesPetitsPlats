@@ -28,9 +28,9 @@ function addClickListenersToIngredientLinks() {
     });
   });
 }
-function deleteAccents(texte) {
-  return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
+// function deleteAccents(texte) {
+//   return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+// }
 //*****Recuperer tous les filtres sans doublons
 let filteredIngredientsArray;
 export const getIngredients = (recipes) => {
@@ -76,7 +76,8 @@ const ingredientInput = document.getElementById("ingredientInput");
 
 export const searchIngredientTag = () => {
   // clearDropdown();
-  const inputValue = deleteAccents(ingredientInput.value)
+  // const inputValue = deleteAccents(ingredientInput.value)
+  const inputValue = ingredientInput.value
     .toLowerCase()
     .trim()
     .replace(/\s/g, "");
@@ -116,7 +117,8 @@ const addClickListenersToNewTags = () => {
 // Appliquer les transformations à chaque élément du tableau
 // console.log(ingredientTag)
 const transformedArray = ingredientTag.map((ingredient) => {
-  const trimmedIngredient = deleteAccents(ingredient).toLowerCase().trim();
+  // const trimmedIngredient = deleteAccents(ingredient).toLowerCase().trim();
+  const trimmedIngredient = ingredient.toLowerCase().trim();
   // .replace(/\s/g, "");
   // console.log(trimmedIngredient);
 

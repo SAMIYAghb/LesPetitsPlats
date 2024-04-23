@@ -1,9 +1,9 @@
 
 //la recherche une seul fonction exporté
 
-export function deleteAccents(texte) {
-  return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
+// export function deleteAccents(texte) {
+//   return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+// }
 // console.log(deleteAccents('éééé'))
 
 // export const searchRecipe = (recipes, searchValue, tagArrays) => {
@@ -121,7 +121,8 @@ export function deleteAccents(texte) {
 export const searchRecipe = (recipes, searchValue, tagArrays) => {
   let recipesSearch = recipes;
   // Supprimer les accents et les espaces de la valeur de recherche
-  const searchValueTrimmed = deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, "");
+  // const searchValueTrimmed = deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, "");
+  const searchValueTrimmed = searchValue.toLowerCase().trim().replace(/\s/g, "");
 
   // Vérifier si la valeur de recherche est vide après la suppression des accents et des espaces
   if (searchValueTrimmed.length === 0) {
@@ -133,7 +134,8 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
   const filteredRecipes = recipes.filter((recipe) => {
     // Vérifier si le titre de la recette contient la valeur de recherche
     if (
-      deleteAccents(recipe.name)
+      // deleteAccents(recipe.name)
+      recipe.name
         .toLowerCase()
         .trim()
         .replace(/\s/g, "")
@@ -143,7 +145,8 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     }
     // Vérifier si la description de la recette contient la valeur de recherche
     if (
-      deleteAccents(recipe.description)
+      // deleteAccents(recipe.description)
+      recipe.description
         .toLowerCase()
         .trim()
         .replace(/\s/g, "")
@@ -158,7 +161,8 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
           typeof ingredientObj === "object" &&
           "ingredient" in ingredientObj
         ) {
-          return deleteAccents(ingredientObj.ingredient)
+          // return deleteAccents(ingredientObj.ingredient)
+          return ingredientObj.ingredient
             .toLowerCase()
             .trim()
             .replace(/\s/g, "")
@@ -188,7 +192,7 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
   // const notFoundElement = document.querySelector('.not-found');
   //   console.log(notFoundElement);
   if (filteredRecipes.length === 0) {
-    console.log(filteredRecipes.length)
+    // console.log(filteredRecipes.length)
     notFoundElement.innerText = "Aucune recette corresond à cette recherche";
    }
    else {
