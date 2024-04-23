@@ -28,6 +28,13 @@ const init = async () => {
   // Affichage initial des données
   displayData(recipes);
 
+   // Définir la variable pour stocker le nombre total de recettes
+let totalRecipesCount = recipes.length;
+console.log('totalRecipesCount',totalRecipesCount)
+// Afficher le nombre total de recettes déjà existantes
+const totalRecipeElement = document.querySelector('.total-recipe');
+totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
+
   // Gestionnaire d'événements pour la recherche principale
   searchInput.addEventListener("input", () => {
     //       // console.log(event.currentTarget.value)
@@ -40,9 +47,10 @@ const init = async () => {
       appliances: appliances,
       ustensils: ustensils
     });
+
     displayData(recipesSearch);
   });
-
+  
   // Ajouter un gestionnaire d'événements ipour la recherche par tag d'ingrédients
   const ingredientInput = document.getElementById("ingredientInput");
   ingredientInput.addEventListener("keyup", searchIngredientTag);

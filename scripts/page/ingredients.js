@@ -149,7 +149,13 @@ function filterRecipesByIgredientTag(ingredientTag) {
   // afficher les recettes filtrées
   displayData(filteredRecipes);
   // console.log(filteredRecipes);
+  // add+ logic to filter ingredient in dropdownmenu
 }
+
+
+
+
+
 
 // } else if (matchingTags.length = 0){
 //   filteredIngredientsArray
