@@ -30,7 +30,7 @@ const init = async () => {
 
    // Définir la variable pour stocker le nombre total de recettes
 let totalRecipesCount = recipes.length;
-console.log('totalRecipesCount',totalRecipesCount)
+// console.log('totalRecipesCount',totalRecipesCount)
 // Afficher le nombre total de recettes déjà existantes
 const totalRecipeElement = document.querySelector('.total-recipe');
 totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
