@@ -139,6 +139,11 @@ const clearDropdown = () => {
 function filterRecipesByIgredientTag(ingredientTag) {
   // console.log(recipes)
   // console.log(ingredientTag)
+  const searchValue = document
+    .getElementById("searchInput")
+    .value.toLowerCase()
+    .trim()
+    .replace(/\s/g, "");
    // Si le tag d'ingrédient est fermé (aucun tag sélectionné), afficher toutes les recettes
   //  if (!ingredientTag) {
   //   displayData(recipes);
@@ -150,13 +155,29 @@ function filterRecipesByIgredientTag(ingredientTag) {
   const filteredRecipes = recipes.filter((recipe) => {
     // console.log(recipe.ingredients)
     // Vérifie si le tag d'ingrédient correspond à au moins un ingrédient dans la recette
-    return recipe.ingredients.some((ingredient) => {
-      return ingredient.ingredient.toLowerCase() === ingredientTag.toLowerCase();
-    });
-
-    // filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
-    // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné,
+    // return recipe.ingredients.some((ingredient) => {
+    //   return ingredient.ingredient.toLowerCase() === ingredientTag.toLowerCase();
+    // });
+    const matchesSearch =(
+      recipe.name
+        .toLowerCase()
+        .trim()
+        .replace(/\s/g, "")
+        .includes(searchValue) ||
+      recipe.description
+        .toLowerCase()
+        .trim()
+        .replace(/\s/g, "")
+        .includes(searchValue) ||
+        recipe.ingredients.some((ingredientObj) =>
+        ingredientObj.ingredient.toLowerCase().includes(searchValue)
+      ))
+      const matchesUstensilTag = recipe.ingredients.some((ingredientObj) => ingredientObj.ingredient.toLowerCase() === ingredientTag.toLowerCase());
+      // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
+    return matchesSearch && matchesUstensilTag;
   });
+
+    
   // Afficher le nombre de recettes filtrées
   // afficher les recettes filtrées
   displayData(filteredRecipes);
@@ -174,7 +195,9 @@ const totalRecipeElement = document.querySelector('.total-recipe');
 
 
 
-
+// filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
+    // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné,
+    
 // } else if (matchingTags.length = 0){
 //   filteredIngredientsArray
 //     .sort((a, b) => a.localeCompare(b, "fr"))
