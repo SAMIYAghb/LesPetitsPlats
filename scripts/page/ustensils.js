@@ -70,4 +70,7 @@ function filterRecipesByUstensilTag(ustensilTag) {
   // afficher les recettes filtrées
 displayData(filteredRecipes);
   // console.log(filteredRecipes); 
+  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+
 }
+const totalRecipeElement = document.querySelector('.total-recipe');

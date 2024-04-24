@@ -137,7 +137,16 @@ const clearDropdown = () => {
 
 // Filtrer les recettes en fonction du tag sélectionné
 function filterRecipesByIgredientTag(ingredientTag) {
+  // console.log(recipes)
   // console.log(ingredientTag)
+   // Si le tag d'ingrédient est fermé (aucun tag sélectionné), afficher toutes les recettes
+  //  if (!ingredientTag) {
+  //   displayData(recipes);
+  //   // Mettre à jour le compteur pour afficher le nombre total de recettes
+  //   totalRecipeElement.innerText = `${recipes.length} recettes`;
+  //   return;
+  // }
+
   const filteredRecipes = recipes.filter((recipe) => {
     // console.log(recipe.ingredients)
     // Vérifie si le tag d'ingrédient correspond à au moins un ingrédient dans la recette
@@ -148,13 +157,20 @@ function filterRecipesByIgredientTag(ingredientTag) {
     // filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
     // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné,
   });
+  // Afficher le nombre de recettes filtrées
   // afficher les recettes filtrées
   displayData(filteredRecipes);
-  // console.log(filteredRecipes);
-  // add+ logic to filter ingredient in dropdownmenu
+  // Afficher le compte du nombre de recettes filtrées
+ 
+  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  console.log(filteredRecipes);
+  return filteredRecipes;
 }
+const totalRecipeElement = document.querySelector('.total-recipe');
 
-
+// // Utiliser le résultat stocké
+// console.log(filteredRecipes);
+// add+ logic to filter ingredient in dropdownmenu
 
 
 

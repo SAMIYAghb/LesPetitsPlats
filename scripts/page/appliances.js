@@ -112,11 +112,14 @@ function addClickListenersToApplianceLinks() {
    function filterRecipesByApplianceTag(applianceTag) {
     const filteredRecipes = recipes.filter((recipe) => {
       return recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
+      
     });
   
     
     // afficher les recettes filtrées
   displayData(filteredRecipes);
     // console.log(filteredRecipes); 
+    // Afficher le compte du nombre de recettes filtrées
+  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
   }
- 
+  const totalRecipeElement = document.querySelector('.total-recipe');
