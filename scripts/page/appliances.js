@@ -108,13 +108,36 @@ function addClickListenersToApplianceLinks() {
   //   //************** end  appareils*/
   //   //************** end  appareils*/
 
-  //  Filtrer les recettes en fonction du tag sélectionné
+  //  Filtrer les recettes en fonction de la recherche actuelle et du tag appareil sélectionné 
    function filterRecipesByApplianceTag(applianceTag) {
+    // const filteredRecipes = recipes.filter((recipe) => {
+    //   return recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
+    // });
+    const searchValue = document
+    .getElementById("searchInput")
+    .value.toLowerCase()
+    .trim()
+    .replace(/\s/g, "");
     const filteredRecipes = recipes.filter((recipe) => {
-      return recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
-      
+      const matchesSearch =(
+        recipe.name
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, "")
+          .includes(searchValue) ||
+        recipe.description
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, "")
+          .includes(searchValue) ||
+          recipe.ingredients.some((ingredientObj) =>
+          ingredientObj.ingredient.toLowerCase().includes(searchValue)
+        ))
+        const matchesUstensilTag = recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
+        // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
+      return matchesSearch && matchesUstensilTag;
     });
-  
+    
     
     // afficher les recettes filtrées
   displayData(filteredRecipes);
