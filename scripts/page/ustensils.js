@@ -39,7 +39,8 @@ export const getUstensil = (recipes) => {
   return filteredUstensilsArray;
 };
 getUstensil(recipes);
-
+// const ustensilTags = getUstensil(recipes);
+// console.log(ustensilTags)
 //****Afficher les ustensils dans le dropDownMenu
 
 filteredUstensilsArray
@@ -52,8 +53,8 @@ addClickListenersToUstensilLinks();
 //   //************** end ustensils*/
 
 // Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
-
-function filterRecipesByUstensilTag(ustensilTag) {
+const selectedUstensilTagsArray = [];
+function filterRecipesByUstensilTag(selectedUstensilTags) {
   // console.log(ustensilTag)
   const searchValue = document
     .getElementById("searchInput")
@@ -61,7 +62,6 @@ function filterRecipesByUstensilTag(ustensilTag) {
     .trim()
     .replace(/\s/g, "");
   // console.log(searchValue)
-
 
   // const filteredRecipes = recipes.filter((recipe) => {
 
@@ -72,10 +72,16 @@ function filterRecipesByUstensilTag(ustensilTag) {
   //   // filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
   //   // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné,
   // });
+  // Créer un tableau contenant tous les tags sélectionnés
+ 
 
+    // Ajoutez le tag actuel à selectedUstensilTagsArray
+  selectedUstensilTagsArray.push(selectedUstensilTags);
+  // console.log(selectedUstensilTagsArray)
   // Filtrer les recettes en fonction de la valeur de recherche actuelle et du tag d'ustensile sélectionné
   const filteredRecipes = recipes.filter((recipe) => {
-    const matchesSearch =(
+    // Vérifie si la recette correspond à la recherche
+    const matchesSearch =
       recipe.name
         .toLowerCase()
         .trim()
@@ -86,17 +92,38 @@ function filterRecipesByUstensilTag(ustensilTag) {
         .trim()
         .replace(/\s/g, "")
         .includes(searchValue) ||
-        recipe.ingredients.some((ingredientObj) =>
+      recipe.ingredients.some((ingredientObj) =>
         ingredientObj.ingredient.toLowerCase().includes(searchValue)
-      ))
-      const matchesUstensilTag = recipe.ustensils.some((ustensil) => ustensil.toLowerCase() === ustensilTag.toLowerCase());
-      // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
-    return matchesSearch && matchesUstensilTag;
+      );
+    // Vérifie si la recette contient tous les tags d'ustensiles sélectionnés
+    // const matchesUstensilTags =
+    //  recipe.ustensils.some((ustensil) => ustensil.toLowerCase() === selectedUstensilTags.toLowerCase());
+   
+   
+    // Vérifie si la recette contient tous les tags d'ustensiles sélectionnés
+    const matchesUstensilTags = selectedUstensilTagsArray.every(tag =>
+      recipe.ustensils.some((ustensil) => ustensil.toLowerCase().includes(tag.toLowerCase()))
+  );
+    //  console.log(recipe.ustensils)
+  //  console.log(tagsArray)
+    // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
+    return matchesSearch && matchesUstensilTags;
   });
-  
+
   // afficher les recettes filtrées
   displayData(filteredRecipes);
   // console.log(filteredRecipes);
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
 }
 const totalRecipeElement = document.querySelector(".total-recipe");
+
+
+// La différence entre les méthodes every() et some() réside dans leur comportement lorsqu'elles sont utilisées sur un tableau.
+
+// every() : Cette méthode vérifie si tous les éléments d'un tableau satisfont une condition spécifiée par une fonction de rappel. Elle retourne true si tous les éléments passent le test, sinon elle retourne false. En d'autres termes, elle renvoie true si chaque élément du tableau répond à la condition spécifiée.
+// some() : Cette méthode vérifie si au moins un des éléments d'un tableau satisfait une condition spécifiée par une fonction de rappel. Elle retourne true si au moins un élément passe le test, sinon elle retourne false. En d'autres termes, elle renvoie true dès qu'un élément du tableau répond à la condition spécifiée.
+
+// Dans le contexte de mon code :
+
+// Utiliser every() signifie que je vérifie si **tous les tags** d'ustensiles sélectionnés sont inclus dans les ustensiles de la recette. Si chaque tag est présent au moins une fois dans les ustensiles de la recette, la condition est vraie et matchesUstensilTags sera true.
+// Utiliser some() signifie que je vérifie si **au moins un des tags** d'ustensiles sélectionnés est inclus dans les ustensiles de la recette. Si au moins un des tags est présent dans les ustensiles de la recette, la condition est vraie et matchesUstensilTags sera true.
