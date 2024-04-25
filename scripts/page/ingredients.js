@@ -136,7 +136,8 @@ const clearDropdown = () => {
 //   //**************end ingredient*/
 
 // Filtrer les recettes en fonction du tag sélectionné
-function filterRecipesByIgredientTag(ingredientTag) {
+const selectedIngredientTagsArray = [];
+function filterRecipesByIgredientTag(selectedIngredientTags) {
   // console.log(recipes)
   // console.log(ingredientTag)
   const searchValue = document
@@ -151,13 +152,11 @@ function filterRecipesByIgredientTag(ingredientTag) {
   //   totalRecipeElement.innerText = `${recipes.length} recettes`;
   //   return;
   // }
-
+  
+  // Ajoutez le tag actuel à selectedIngredientTagsArray
+  selectedIngredientTagsArray.push(selectedIngredientTags);
   const filteredRecipes = recipes.filter((recipe) => {
-    // console.log(recipe.ingredients)
-    // Vérifie si le tag d'ingrédient correspond à au moins un ingrédient dans la recette
-    // return recipe.ingredients.some((ingredient) => {
-    //   return ingredient.ingredient.toLowerCase() === ingredientTag.toLowerCase();
-    // });
+  
     const matchesSearch =(
       recipe.name
         .toLowerCase()
@@ -172,9 +171,17 @@ function filterRecipesByIgredientTag(ingredientTag) {
         recipe.ingredients.some((ingredientObj) =>
         ingredientObj.ingredient.toLowerCase().includes(searchValue)
       ))
-      const matchesUstensilTag = recipe.ingredients.some((ingredientObj) => ingredientObj.ingredient.toLowerCase() === ingredientTag.toLowerCase());
+
+      // Vérifie si la recette contient tous les tags d'ustensiles sélectionnés
+    const matchesIngredientTags = selectedIngredientTagsArray.every(tag =>
+      recipe.ingredients.some((ingredientObj) =>ingredientObj.ingredient.toLowerCase().includes(tag.toLowerCase()))
+      
+  );
+
+
+      // const matchesUstensilTag = recipe.ingredients.some((ingredientObj) => ingredientObj.ingredient.toLowerCase() === ingredientTag.toLowerCase());
       // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
-    return matchesSearch && matchesUstensilTag;
+    return matchesSearch && matchesIngredientTags;
   });
 
     

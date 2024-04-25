@@ -63,18 +63,6 @@ function filterRecipesByUstensilTag(selectedUstensilTags) {
     .replace(/\s/g, "");
   // console.log(searchValue)
 
-  // const filteredRecipes = recipes.filter((recipe) => {
-
-  //     // console.log(ustensil)
-  //     // Vérifie si le tag d'ustensile correspond à au moins un ustensile dans la recette
-  //   return recipe.ustensils.some((ustensil) => ustensil.toLowerCase() === ustensilTag.toLowerCase());
-
-  //   // filter() pour parcourir toutes les recettes et retourner uniquement celles qui ont au moins un ustensile correspondant au tag sélectionné.
-  //   // some() est utilisée pour vérifier si au moins un élément du tableau recipe.ustensils correspond au tag d'ustensile sélectionné,
-  // });
-  // Créer un tableau contenant tous les tags sélectionnés
- 
-
     // Ajoutez le tag actuel à selectedUstensilTagsArray
   selectedUstensilTagsArray.push(selectedUstensilTags);
   // console.log(selectedUstensilTagsArray)
@@ -95,11 +83,8 @@ function filterRecipesByUstensilTag(selectedUstensilTags) {
       recipe.ingredients.some((ingredientObj) =>
         ingredientObj.ingredient.toLowerCase().includes(searchValue)
       );
-    // Vérifie si la recette contient tous les tags d'ustensiles sélectionnés
-    // const matchesUstensilTags =
-    //  recipe.ustensils.some((ustensil) => ustensil.toLowerCase() === selectedUstensilTags.toLowerCase());
    
-   
+  //  console.log(recipe.ustensils)
     // Vérifie si la recette contient tous les tags d'ustensiles sélectionnés
     const matchesUstensilTags = selectedUstensilTagsArray.every(tag =>
       recipe.ustensils.some((ustensil) => ustensil.toLowerCase().includes(tag.toLowerCase()))

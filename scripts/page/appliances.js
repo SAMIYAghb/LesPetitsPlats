@@ -109,15 +109,18 @@ function addClickListenersToApplianceLinks() {
   //   //************** end  appareils*/
 
   //  Filtrer les recettes en fonction de la recherche actuelle et du tag appareil sélectionné 
-   function filterRecipesByApplianceTag(applianceTag) {
-    // const filteredRecipes = recipes.filter((recipe) => {
-    //   return recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
-    // });
+  const selectedApplianceTagsArray = [];
+   function filterRecipesByApplianceTag(selectedAapplianceTags) {
+    
     const searchValue = document
     .getElementById("searchInput")
     .value.toLowerCase()
     .trim()
     .replace(/\s/g, "");
+
+     //ajouter le tag selectionne dans selectedApplianceTagsArray
+     selectedApplianceTagsArray.push(selectedAapplianceTags)
+    //  console.log(selectedApplianceTagsArray)
     const filteredRecipes = recipes.filter((recipe) => {
       const matchesSearch =(
         recipe.name
@@ -133,9 +136,18 @@ function addClickListenersToApplianceLinks() {
           recipe.ingredients.some((ingredientObj) =>
           ingredientObj.ingredient.toLowerCase().includes(searchValue)
         ))
-        const matchesUstensilTag = recipe.appliance.toLowerCase() === applianceTag.toLowerCase();
+
+       
+
+// console.log(recipe.appliance)
+// Vérifie si la recette contient le tag d'appareil sélectionné
+const matchesApplianceTags = selectedApplianceTagsArray.every(tag =>
+  recipe.appliance.toLowerCase().includes(tag.toLowerCase())
+);
+//ca fonctionne pas avec le deuxieme tag selectionner , normalement j'obtien 0 des que je selectonne un deuxieme tag
+        // const matchesApplianceTag = recipe.appliance.toLowerCase() === selectedAapplianceTags.toLowerCase();
         // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
-      return matchesSearch && matchesUstensilTag;
+      return matchesSearch && matchesApplianceTags;
     });
     
     
