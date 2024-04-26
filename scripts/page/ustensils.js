@@ -1,9 +1,11 @@
 import {
   displayUstensilTag,
   selectUstensilTag,
+  
 } from "../librairies/displayUstencilTag.js";
 import { recipes } from "../utils/api.js";
 import { displayData } from "../utils/api.js";
+// import {filterRecipesByUstensilTag} from './filterRecipes.js'
 
 function addClickListenersToUstensilLinks() {
   const links = document.querySelectorAll(".link-ustensil");
@@ -52,10 +54,11 @@ addClickListenersToUstensilLinks();
 //   //************** end ustensils*/
 //   //************** end ustensils*/
 
-// Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
+// // Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
 const selectedUstensilTagsArray = [];
-function filterRecipesByUstensilTag(selectedUstensilTags) {
+export function filterRecipesByUstensilTag(selectedUstensilTags) {
   // console.log(ustensilTag)
+ 
   const searchValue = document
     .getElementById("searchInput")
     .value.toLowerCase()
@@ -67,7 +70,7 @@ function filterRecipesByUstensilTag(selectedUstensilTags) {
   selectedUstensilTagsArray.push(selectedUstensilTags);
   // console.log(selectedUstensilTagsArray)
   // Filtrer les recettes en fonction de la valeur de recherche actuelle et du tag d'ustensile sélectionné
-  const filteredRecipes = recipes.filter((recipe) => {
+   const filteredRecipes = recipes.filter((recipe) => {
     // Vérifie si la recette correspond à la recherche
     const matchesSearch =
       recipe.name
@@ -94,13 +97,76 @@ function filterRecipesByUstensilTag(selectedUstensilTags) {
     // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
     return matchesSearch && matchesUstensilTags;
   });
-
+// console.log(filteredRecipes)
   // afficher les recettes filtrées
   displayData(filteredRecipes);
   // console.log(filteredRecipes);
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  // console.log(filteredRecipes);
+
+  // Mettre à jour la liste d'ustensiles
+  updateUstensilList(filteredRecipes);
+
+
+
 }
+// Fonction pour mettre à jour la liste d'ustensiles
+function updateUstensilList(filteredRecipes) {
+  ustensilList.innerHTML = "";
+
+  // Récupérer les ustensiles à partir des recettes filtrées
+  const ustensilsSet = new Set();
+  filteredRecipes.forEach((recipe) => {
+    recipe.ustensils.forEach((ustensil) => {
+      ustensilsSet.add(ustensil);
+    });
+  });
+  const newFilteredUstensils = Array.from(ustensilsSet).sort((a, b) => a.localeCompare(b, "fr"));
+
+  // Afficher les ustensiles dans la liste
+  newFilteredUstensils.forEach((element) => {
+    displayUstensilTag(element);
+  });
+
+  
+}
+
+
 const totalRecipeElement = document.querySelector(".total-recipe");
+const ustensilList = document.getElementById("ustensilList");
+
+
+
+function updateUstensilSelectBox(filteredRecipes) {
+  // console.log(filteredRecipes);
+  const ustensilList = document.getElementById("ustensilList");
+
+// Effacer les options existantes
+ustensilList.innerHTML = "";
+// Récupérer les ustensiles à partir des recettes filtrées
+const ustensilsSet = new Set();
+console.log(ustensilsSet)
+const filteredUstensils = filteredRecipes.forEach((recipe) => {
+  recipe.ustensils.forEach((ustensil) => {
+    ustensilsSet.add(ustensil);
+  });
+});
+console.log(filteredUstensils)
+// const filteredUstensilsArray = Array.from(ustensilsSet).sort((a, b) => a.localeCompare(b, "fr"));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // La différence entre les méthodes every() et some() réside dans leur comportement lorsqu'elles sont utilisées sur un tableau.

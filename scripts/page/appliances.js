@@ -110,7 +110,7 @@ function addClickListenersToApplianceLinks() {
 
   //  Filtrer les recettes en fonction de la recherche actuelle et du tag appareil sélectionné 
   const selectedApplianceTagsArray = [];
-   function filterRecipesByApplianceTag(selectedAapplianceTags) {
+  export function filterRecipesByApplianceTag(selectedAapplianceTags) {
     
     const searchValue = document
     .getElementById("searchInput")

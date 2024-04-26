@@ -137,7 +137,7 @@ const clearDropdown = () => {
 
 // Filtrer les recettes en fonction du tag sélectionné
 const selectedIngredientTagsArray = [];
-function filterRecipesByIgredientTag(selectedIngredientTags) {
+export function filterRecipesByIgredientTag(selectedIngredientTags) {
   // console.log(recipes)
   // console.log(ingredientTag)
   const searchValue = document

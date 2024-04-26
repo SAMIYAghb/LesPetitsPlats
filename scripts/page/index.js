@@ -97,6 +97,8 @@ const init = async () => {
     });
 
     displayData(recipesSearch);
+
+    
   });
 
   // Ajouter un gestionnaire d'événements ipour la recherche par tag d'ingrédients
