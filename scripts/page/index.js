@@ -2,7 +2,7 @@ import displayCard from "../librairies/view.js";
 import { searchRecipe } from "../librairies/search.js";
 import { getRecipes, displayData } from "../utils/api.js";
 import {
-  searchIngredientTag,
+  // searchIngredientTag,
   getIngredients,
   //  matchingTagsLength
 } from "./ingredients.js";
@@ -103,7 +103,7 @@ const init = async () => {
 
   // Ajouter un gestionnaire d'événements ipour la recherche par tag d'ingrédients
   const ingredientInput = document.getElementById("ingredientInput");
-  ingredientInput.addEventListener("keyup", searchIngredientTag);
+  // ingredientInput.addEventListener("keyup", searchIngredientTag);
 };
 
 init();

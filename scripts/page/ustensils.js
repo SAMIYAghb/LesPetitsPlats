@@ -5,7 +5,7 @@ import {
 } from "../librairies/displayUstencilTag.js";
 import { recipes } from "../utils/api.js";
 import { displayData } from "../utils/api.js";
-// import {filterRecipesByUstensilTag} from './filterRecipes.js'
+
 
 function addClickListenersToUstensilLinks() {
   const links = document.querySelectorAll(".link-ustensil");
@@ -18,6 +18,7 @@ function addClickListenersToUstensilLinks() {
       const clickedElementContent = link.textContent.trim();
       selectUstensilTag(clickedElementContent, link);
       filterRecipesByUstensilTag(clickedElementContent);
+      // console.log(clickedElementContent)
     });
   });
 }
@@ -41,20 +42,21 @@ export const getUstensil = (recipes) => {
   return filteredUstensilsArray;
 };
 getUstensil(recipes);
-// const ustensilTags = getUstensil(recipes);
-// console.log(ustensilTags)
-//****Afficher les ustensils dans le dropDownMenu
 
-filteredUstensilsArray
-  .sort((a, b) => a.localeCompare(b, "fr"))
+filteredUstensilsArray.sort((a, b) => a.localeCompare(b, "fr"))
   .forEach((ustensil) => {
     displayUstensilTag(ustensil);
   });
+
 addClickListenersToUstensilLinks();
 //   //************** end ustensils*/
 //   //************** end ustensils*/
 
 // // Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
+export const ustensilTag = getUstensil(recipes);
+// console.log(ustensilTag);
+
+
 const selectedUstensilTagsArray = [];
 export function filterRecipesByUstensilTag(selectedUstensilTags) {
   // console.log(ustensilTag)
@@ -65,6 +67,7 @@ export function filterRecipesByUstensilTag(selectedUstensilTags) {
     .trim()
     .replace(/\s/g, "");
   // console.log(searchValue)
+// Concaténer les nouveaux tags avec les tags existants
 
     // Ajoutez le tag actuel à selectedUstensilTagsArray
   selectedUstensilTagsArray.push(selectedUstensilTags);
@@ -105,55 +108,95 @@ export function filterRecipesByUstensilTag(selectedUstensilTags) {
   // console.log(filteredRecipes);
 
   // Mettre à jour la liste d'ustensiles
-  updateUstensilList(filteredRecipes);
+  updateUstensilSelectBox(filteredRecipes);
 
 
 
 }
-// Fonction pour mettre à jour la liste d'ustensiles
-function updateUstensilList(filteredRecipes) {
-  ustensilList.innerHTML = "";
 
-  // Récupérer les ustensiles à partir des recettes filtrées
-  const ustensilsSet = new Set();
-  filteredRecipes.forEach((recipe) => {
-    recipe.ustensils.forEach((ustensil) => {
-      ustensilsSet.add(ustensil);
-    });
-  });
-  const newFilteredUstensils = Array.from(ustensilsSet).sort((a, b) => a.localeCompare(b, "fr"));
 
-  // Afficher les ustensiles dans la liste
-  newFilteredUstensils.forEach((element) => {
-    displayUstensilTag(element);
-  });
-
-  
-}
 
 
 const totalRecipeElement = document.querySelector(".total-recipe");
 const ustensilList = document.getElementById("ustensilList");
 
 
+  // Récupérer les ustensiles à partir des recettes filtrées
 
 function updateUstensilSelectBox(filteredRecipes) {
   // console.log(filteredRecipes);
-  const ustensilList = document.getElementById("ustensilList");
+ 
 
 // Effacer les options existantes
 ustensilList.innerHTML = "";
 // Récupérer les ustensiles à partir des recettes filtrées
 const ustensilsSet = new Set();
-console.log(ustensilsSet)
+// console.log(ustensilsSet)
 const filteredUstensils = filteredRecipes.forEach((recipe) => {
+  // console.log(recipe.ustensils)
   recipe.ustensils.forEach((ustensil) => {
     ustensilsSet.add(ustensil);
   });
 });
-console.log(filteredUstensils)
-// const filteredUstensilsArray = Array.from(ustensilsSet).sort((a, b) => a.localeCompare(b, "fr"));
+
+
+const newFilteredUstensils = Array.from(ustensilsSet)
+.sort((a, b) => a.localeCompare(b, "fr"));
+// console.log(newFilteredUstensils)
+  // Afficher les ustensiles dans la liste
+  newFilteredUstensils.forEach((element) => {
+    displayUstensilTag(element);
+  });
 }
+//la je doit verifier pour quoi il s'affiche que le dernier tag selectionner
+
+
+// // Déclarez un tableau en dehors des fonctions pour stocker les tags sélectionnés
+// const selectedUstensilTags = [];
+
+// // Fonction pour afficher un tag d'ustensile
+// export const displayUstensilTag = (ustensil) => {
+//     const ustensilList = document.getElementById("ustensilList");
+//     const li = document.createElement("li");
+//     li.classList.add("li-ustensil");
+//     li.setAttribute("id", "li-ustensil");
+
+//     const link = document.createElement("a");
+//     link.textContent = `${ustensil}`;
+//     link.setAttribute("href", "#");
+//     link.classList.add("link-ustensil");
+
+//     link.addEventListener("click", () => {
+//         // Ajoutez le tag sélectionné au tableau
+//         if (!selectedUstensilTags.includes(ustensil)) {
+//             selectedUstensilTags.push(ustensil);
+//         }
+//         // Filtrer les recettes en fonction des tags sélectionnés
+//         filterRecipesBySelectedUstensilTags();
+//         // Afficher les tags sélectionnés
+//         displaySelectedUstensilTags();
+//     });
+
+//     li.appendChild(link);
+//     ustensilList.appendChild(li);
+// };
+
+// // Fonction pour filtrer les recettes en fonction des tags sélectionnés
+// function filterRecipesBySelectedUstensilTags() {
+//     // logique de filtrage des recettes en fonction des tags sélectionnés
+// }
+
+// // Fonction pour afficher les tags sélectionnés dans l'interface utilisateur
+// function displaySelectedUstensilTags() {
+//     const selectedUstensilTagsElement = document.getElementById("selectedUstensilTags");
+//     selectedUstensilTagsElement.innerHTML = "";
+
+//     selectedUstensilTags.forEach((tag) => {
+//         const tagElement = document.createElement("span");
+//         tagElement.textContent = tag;
+//         selectedUstensilTagsElement.appendChild(tagElement);
+//     });
+// }
 
 
 
@@ -169,12 +212,12 @@ console.log(filteredUstensils)
 
 
 
-// La différence entre les méthodes every() et some() réside dans leur comportement lorsqu'elles sont utilisées sur un tableau.
+// // La différence entre les méthodes every() et some() réside dans leur comportement lorsqu'elles sont utilisées sur un tableau.
 
-// every() : Cette méthode vérifie si tous les éléments d'un tableau satisfont une condition spécifiée par une fonction de rappel. Elle retourne true si tous les éléments passent le test, sinon elle retourne false. En d'autres termes, elle renvoie true si chaque élément du tableau répond à la condition spécifiée.
-// some() : Cette méthode vérifie si au moins un des éléments d'un tableau satisfait une condition spécifiée par une fonction de rappel. Elle retourne true si au moins un élément passe le test, sinon elle retourne false. En d'autres termes, elle renvoie true dès qu'un élément du tableau répond à la condition spécifiée.
+// // every() : Cette méthode vérifie si tous les éléments d'un tableau satisfont une condition spécifiée par une fonction de rappel. Elle retourne true si tous les éléments passent le test, sinon elle retourne false. En d'autres termes, elle renvoie true si chaque élément du tableau répond à la condition spécifiée.
+// // some() : Cette méthode vérifie si au moins un des éléments d'un tableau satisfait une condition spécifiée par une fonction de rappel. Elle retourne true si au moins un élément passe le test, sinon elle retourne false. En d'autres termes, elle renvoie true dès qu'un élément du tableau répond à la condition spécifiée.
 
-// Dans le contexte de mon code :
+// // Dans le contexte de mon code :
 
-// Utiliser every() signifie que je vérifie si **tous les tags** d'ustensiles sélectionnés sont inclus dans les ustensiles de la recette. Si chaque tag est présent au moins une fois dans les ustensiles de la recette, la condition est vraie et matchesUstensilTags sera true.
-// Utiliser some() signifie que je vérifie si **au moins un des tags** d'ustensiles sélectionnés est inclus dans les ustensiles de la recette. Si au moins un des tags est présent dans les ustensiles de la recette, la condition est vraie et matchesUstensilTags sera true.
+// // Utiliser every() signifie que je vérifie si **tous les tags** d'ustensiles sélectionnés sont inclus dans les ustensiles de la recette. Si chaque tag est présent au moins une fois dans les ustensiles de la recette, la condition est vraie et matchesUstensilTags sera true.
+// // Utiliser some() signifie que je vérifie si **au moins un des tags** d'ustensiles sélectionnés est inclus dans les ustensiles de la recette. Si au moins un des tags est présent dans les ustensiles de la recette, la condition est vraie et matchesUstensilTags sera true.

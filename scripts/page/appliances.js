@@ -156,5 +156,39 @@ const matchesApplianceTags = selectedApplianceTagsArray.every(tag =>
     // console.log(filteredRecipes); 
     // Afficher le compte du nombre de recettes filtrées
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+
+  updateApplianceSelectBox(filteredRecipes)
   }
   const totalRecipeElement = document.querySelector('.total-recipe');
+
+
+
+
+    // Récupérer les ustensiles à partir des recettes filtrées
+
+function updateApplianceSelectBox(filteredRecipes) {
+  // console.log(filteredRecipes);
+  const applianceList = document.getElementById("applianceList");
+
+// Effacer les options existantes
+applianceList.innerHTML = "";
+// Récupérer les appareil à partir des recettes filtrées
+const appliancesSet = new Set();
+// console.log(ustensilsSet)
+const filteredAppliances = filteredRecipes.forEach((recipe) => {
+  // console.log(recipe.appliance);
+  const app = recipe.appliance
+  // console.log(app)
+  appliancesSet.add(app);
+});
+
+
+// const newFilteredappliances = Array.from(appliancesSet)
+// .sort((a, b) => a.localeCompare(b, "fr"));
+// console.log(newFilteredappliances)
+//   // Afficher les ustensiles dans la liste
+//   newFilteredappliances.forEach((element) => {
+//     // displayUstensilTag(element);
+//     console.log(element)
+//   });
+}

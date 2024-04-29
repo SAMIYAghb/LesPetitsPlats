@@ -1,5 +1,5 @@
-// import {filterRecipesByUstensilTag} from '../page/filterRecipes.js'
-
+import {filterRecipesByUstensilTag} from '../page/ustensils.js'
+// const selectedUstensilTags = [];
 export const displayUstensilTag = (ustensil)=>{
     // Récupère la liste ul où les ingrédients seront ajoutés
     const ustensilList = document.getElementById("ustensilList");
@@ -10,17 +10,19 @@ export const displayUstensilTag = (ustensil)=>{
 
     // Crée un nouvel élément a
     const link = document.createElement("a");
-    // link.textContent = `${ustensil}`;
+    link.textContent = `${ustensil}`;
     
-    link.textContent = ustensil; // Utilise directement la valeur de l'ustensile
+    // link.textContent = ustensil; // Utilise directement la valeur de l'ustensile
     link.setAttribute("href", "#");
     link.classList.add("link-ustensil");
 
     //  Ajoute un gestionnaire d'événements au lien
-  // link.addEventListener("click", () => {
-  //   filterRecipesByUstensilTag([ustensil]); // Utilise directement la valeur de l'ustensile
-  // });
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    filterRecipesByUstensilTag(ustensil); // Utilise directement la valeur de l'ustensile
+  });
 
+ 
 
     li.appendChild(link);
     ustensilList.appendChild(li);
@@ -69,18 +71,67 @@ clickedElement.classList.add('disabled-link');
 }
 
 
-// export function addClickListenersToUstensilLinks() {
-//   const links = document.querySelectorAll(".link-ustensil");
-//   // console.log(links);
-//   links.forEach((link) => {
-//     //  console.log(link)
-//     // link.addEventListener("click", selectUstensilTag);
-//     link.addEventListener("click", (event) => {
-//       event.preventDefault();
-//       const clickedElementContent = link.textContent.trim();
-//       selectUstensilTag(clickedElementContent, link);
-//       filterRecipesByUstensilTag(clickedElementContent);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Déclarez un tableau en dehors des fonctions pour stocker les tags sélectionnés
+// const selectedUstensilTags = [];
+
+// // Fonction pour afficher un tag d'ustensile
+// export const displayUstensilTag = (ustensil) => {
+//     const ustensilList = document.getElementById("ustensilList");
+//     const li = document.createElement("li");
+//     li.classList.add("li-ustensil");
+//     li.setAttribute("id", "li-ustensil");
+
+//     const link = document.createElement("a");
+//     link.textContent = `${ustensil}`;
+//     link.setAttribute("href", "#");
+//     link.classList.add("link-ustensil");
+
+//     link.addEventListener("click", () => {
+//         // Ajoutez le tag sélectionné au tableau
+//         if (!selectedUstensilTags.includes(ustensil)) {
+//             selectedUstensilTags.push(ustensil);
+//         }
+//         // Filtrer les recettes en fonction des tags sélectionnés
+//         filterRecipesBySelectedUstensilTags();
+//         // Afficher les tags sélectionnés
+//         displaySelectedUstensilTags();
 //     });
-//   });
+
+//     li.appendChild(link);
+//     ustensilList.appendChild(li);
+// };
+
+// // Fonction pour filtrer les recettes en fonction des tags sélectionnés
+// function filterRecipesBySelectedUstensilTags() {
+//     // Votre logique de filtrage des recettes en fonction des tags sélectionnés
 // }
-// addClickListenersToUstensilLinks();
+
+// // Fonction pour afficher les tags sélectionnés dans l'interface utilisateur
+// function displaySelectedUstensilTags() {
+//     const selectedUstensilTagsElement = document.getElementById("selectedUstensilTags");
+//     selectedUstensilTagsElement.innerHTML = "";
+
+//     selectedUstensilTags.forEach((tag) => {
+//         const tagElement = document.createElement("span");
+//         tagElement.textContent = tag;
+//         selectedUstensilTagsElement.appendChild(tagElement);
+//     });
+// }

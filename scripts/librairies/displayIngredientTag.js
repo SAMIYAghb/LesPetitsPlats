@@ -1,3 +1,4 @@
+  import {filterRecipesByIgredientTag} from '../page/ingredients.js'
   // Affichage des ingrédients triés dans le dropdown menu
 export const displayIngredientTag = (ingredient) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
@@ -9,9 +10,16 @@ export const displayIngredientTag = (ingredient) => {
 
   // Crée un nouvel élément a
   const link = document.createElement("a");
-  link.textContent = `${ingredient}`;
+  // link.textContent = `${ingredient}`;
+  link.textContent = ingredient;
   link.setAttribute("href", "#");
   link.classList.add("link-ingredient");
+
+  //  Ajoute un gestionnaire d'événements au lien
+  link.addEventListener("click", (e) => {
+    e.preventDefault()
+    filterRecipesByIgredientTag(ingredient); // Utilise directement la valeur de l'ustensile
+  });
   li.appendChild(link);
   ingredientList.appendChild(li);
 };
