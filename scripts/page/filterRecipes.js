@@ -188,3 +188,92 @@
 
 // const totalRecipeElement = document.querySelector(".total-recipe");
 // const ustensilList = document.getElementById("ustensilList");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export const searchRecipe = (recipes, searchValue, tagArrays) => {
+//     // Supprimer les accents et les espaces de la valeur de recherche
+//     const searchValueTrimmed = searchValue.toLowerCase().trim().replace(/\s/g, "");
+  
+//     // Filtrer les recettes en fonction de la valeur de recherche
+//     let filteredRecipes = recipes.filter((recipe) => {
+//       // Vérifier si le titre de la recette contient la valeur de recherche
+//       if (
+//         recipe.name.toLowerCase().trim().replace(/\s/g, "").includes(searchValueTrimmed)
+//       ) {
+//         return true;
+//       }
+//       // Vérifier si la description de la recette contient la valeur de recherche
+//       if (
+//         recipe.description.toLowerCase().trim().replace(/\s/g, "").includes(searchValueTrimmed)
+//       ) {
+//         return true;
+//       }
+//       // Vérifier si l'ingrédient de la recette contient la valeur de recherche
+//       if (
+//         recipe.ingredients.some((ingredientObj) => {
+//           if (
+//             typeof ingredientObj === "object" &&
+//             "ingredient" in ingredientObj
+//           ) {
+//             return ingredientObj.ingredient.toLowerCase().trim().replace(/\s/g, "").includes(searchValueTrimmed);
+//           }
+//           return false;
+//         })
+//       ) {
+//         return true;
+//       }
+//       // Vérifier si la recette a des tags d'ustensil correspondant à ceux dans tagArrays.filteredUstensilsArray
+//       if (
+//         tagArrays &&
+//         tagArrays.filteredUstensilsArray &&
+//         tagArrays.filteredUstensilsArray.length > 0
+//       ) {
+//         return tagArrays.filteredUstensilsArray.every((tag) =>
+//           recipe.ustensils.map((ustensil) => ustensil.toLowerCase().trim().replace(/\s/g, "")).includes(tag)
+//         );
+//       }
+//       // Si aucun critère de recherche n'est trouvé, rejeter la recette
+//       return false;
+//     });
+  
+//     // Afficher le compte du nombre de recettes filtrées
+//     const totalRecipeElement = document.querySelector(".total-recipe");
+//     totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  
+//     // Si aucune recette n'est trouvée, afficher "not found"
+//     const notFoundElement = document.querySelector(".not-found");
+//     if (filteredRecipes.length === 0) {
+//       notFoundElement.innerText = "Aucune recette ne correspond à cette recherche";
+//     } else {
+//       notFoundElement.innerText = "";
+//     }
+  
+//     return filteredRecipes; // Renvoyer les recettes filtrées
+//   };

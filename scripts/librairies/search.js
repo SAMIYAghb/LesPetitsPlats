@@ -1,4 +1,3 @@
-
 //la recherche une seul fonction exporté
 
 // export function deleteAccents(texte) {
@@ -114,27 +113,32 @@
 //   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
 
 //   return filteredRecipes; // Renvoyer les recettes filtrées
-  
-// };
 
+// };
 
 export const searchRecipe = (recipes, searchValue, tagArrays) => {
   let recipesSearch = recipes;
-  // Supprimer les accents et les espaces de la valeur de recherche
+  // Supprimer les espaces de la valeur de recherche
   // const searchValueTrimmed = deleteAccents(searchValue).toLowerCase().trim().replace(/\s/g, "");
-  const searchValueTrimmed = searchValue.toLowerCase().trim().replace(/\s/g, "");
+  const searchValueTrimmed = searchValue
+    .toLowerCase()
+    .trim()
+    .replace(/\s/g, "");
 
-  // Vérifier si la valeur de recherche est vide après la suppression des accents et des espaces
-  if (searchValueTrimmed.length === 0) {
+  // Vérifier si la valeur de recherche est vide après la suppression des espaces
+  if (
+    searchValueTrimmed.length === 0 &&
+    (!tagArrays || tagArrays.length === 0)
+  ) {
     // Si la valeur de recherche est vide, retourner toutes les recettes
     return recipes;
   }
 
   // Filtrer les recettes en fonction de la valeur de recherche
-  const filteredRecipes = recipes.filter((recipe) => {
+  let filteredRecipes = recipes.filter((recipe) => {
     // Vérifier si le titre de la recette contient la valeur de recherche
+    // if (searchValue.length >= 3) {}
     if (
-      // deleteAccents(recipe.name)
       recipe.name
         .toLowerCase()
         .trim()
@@ -145,7 +149,6 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     }
     // Vérifier si la description de la recette contient la valeur de recherche
     if (
-      // deleteAccents(recipe.description)
       recipe.description
         .toLowerCase()
         .trim()
@@ -175,18 +178,42 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     }
 
     //Si la recette ne correspond à aucun critère de recherche, la rejeter
-    return false;
+    // return false;
+
+    // // Vérifier si la recette a des tags correspondant à ceux dans tagArrays
+    // const selectedUstensilTagsArray = tagArrays.selectedUstensilTagsArray;
+    // console.log(selectedUstensilTagsArray)
+    // if (tagArrays) {
+    //   // console.log(tagArrays.selectedUstensilTagsArray)
+    //   if (
+    //     selectedUstensilTagsArray &&
+    //     selectedUstensilTagsArray.length > 0 &&
+    //     selectedUstensilTagsArray.some((searchUstensil) => {
+    //       console.log("Searching for ustensil:", searchUstensil);
+    //       return recipe.ustensils.some((ustensil) => {
+    //         console.log("Current ustensil in recipe:", ustensil);
+    //         return ustensil
+    //           .toLowerCase()
+    //           .trim()
+    //           .replace(/\s/g, "")
+    //           .includes(searchUstensil.toLowerCase().trim().replace(/\s/g, ""));
+    //       });
+    //     })
+    //   ) {
+    //     console.log("Recipe matches ustensil search criteria");
+    //     return true;
+    //   }
+    // }
+ //Si la recette ne correspond à aucun critère de recherche, la rejeter
+    // return false;
   });
 
-  // Vérifier si la recette a des tags correspondant à ceux dans tagArrays
-  if (tagArrays) {
-    // Code pour vérifier les tags
-  }
+
+  
 
   // Afficher le compte du nombre de recettes filtrées
-  const totalRecipeElement = document.querySelector('.total-recipe');
+  const totalRecipeElement = document.querySelector(".total-recipe");
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-
 
   // Si aucune recette n'est trouvée, afficher "not found"
   // const notFoundElement = document.querySelector('.not-found');
@@ -194,98 +221,16 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
   if (filteredRecipes.length === 0) {
     // console.log(filteredRecipes.length)
     notFoundElement.innerText = "Aucune recette corresond à cette recherche";
-   }
-   else {
+  } else {
     // Si des recettes sont trouvées, effacer le message "not found"
     notFoundElement.innerText = "";
   }
 
-
   return filteredRecipes; // Renvoyer les recettes filtrées
 };
 
-const notFoundElement = document.querySelector('.not-found');
+const notFoundElement = document.querySelector(".not-found");
 // console.log(notFoundElement);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // export const searchRecipe =(recipes, searchValue, tagArray)=>{
 
@@ -375,3 +320,86 @@ const notFoundElement = document.querySelector('.not-found');
 //     return true;
 //   }
 // }
+
+// return (
+
+//   (tagArrays.filteredIngredientsArray ? tagArrays.filteredIngredientsArray.every((tag) => recipe.ingredients.some((ingredientObj) => ingredientObj.ingredient.toLowerCase().includes(tag))) : true) &&
+//   (tagArrays.filteredAppliancesArray ? tagArrays.filteredAppliancesArray.every((tag) => recipe.appliances.map(appliance => appliance.toLowerCase()).includes(tag)) : true) &&
+//   // (tagArrays.filteredUstensilsArray ? tagArrays.filteredUstensilsArray.every((tag) => recipe.ustensils.map(ustensil => ustensil.toLowerCase()).includes(tag)) : true)
+//   (tagArrays.filteredUstensilsArray ? tagArrays.filteredUstensilsArray.every((tag) => recipe.ustensils.map(ustensil => ustensil.toLowerCase()).includes(tag)) : true)
+
+// );
+
+// Filtrer les recettes en fonction des tags sélectionnés dans chaque catégorie
+// if (tagArrays && tagArrays.length > 0) {
+//   console.log(tagArrays);
+//   console.log(tagArrays.filteredUstensilsArray);
+//   console.log(filteredUstensilsArray)
+//   const filteredRecipes = recipes.filter((recipe) => {
+//    console.log(recipe)
+//     // if (tagArrays.filteredIngredientsArray.every((tag) => recipe.ingredients.some((ingredientObj) => ingredientObj.ingredient.toLowerCase().includes(tag)))){
+//     //   return true;
+//     // }
+//     // if(tagArrays.filteredAppliancesArray.every((tag) => recipe.appliances.map(appliance => appliance.toLowerCase()).includes(tag))){
+//     //   return true;
+//     // }
+
+//     // if (tagArrays.filteredUstensilsArray.every((tag) => recipe.ustensils.map(ustensil => ustensil.toLowerCase()).includes(tag))){
+//     //   return true;
+//     // }
+//   })
+// }
+
+// return (
+//   recipe.name.toLowerCase().includes(searchValueTrimmed) ||
+//   recipe.description.toLowerCase().includes(searchValueTrimmed) ||
+//   recipe.ingredients.some((ingredientObj) => {
+//     return ingredientObj.ingredient.toLowerCase().includes(searchValueTrimmed);
+//   })
+// );
+
+// Filtrer les recettes en fonction des tags sélectionnés dans chaque catégorie
+// if (tagArrays && (tagArrays.filteredIngredientsArray.length > 0 || tagArrays.filteredAppliancesArray.length > 0 || tagArrays.filteredUstensilsArray.length > 0)) {
+//   filteredRecipes = recipes.filter((recipe) => {
+//     if (tagArrays.filteredIngredientsArray.length > 0 && !tagArrays.filteredIngredientsArray.every((tag) => recipe.ingredients.some((ingredientObj) => ingredientObj.ingredient.toLowerCase().includes(tag)))) {
+//       return false;
+//     }
+//     if (tagArrays.filteredAppliancesArray.length > 0 && !tagArrays.filteredAppliancesArray.every((tag) => recipe.appliances.map(appliance => appliance.toLowerCase()).includes(tag))) {
+//       return false;
+//     }
+//     if (tagArrays.filteredUstensilsArray.length > 0 && !tagArrays.filteredUstensilsArray.every((tag) => recipe.ustensils.map(ustensil => ustensil.toLowerCase()).includes(tag))) {
+//       return false;
+//     }
+//     return true;
+//   });
+// }
+
+// // // Vérifier si la recette a des tags correspondant à ceux dans tagArrays
+
+// if (tagArrays) {
+//   // console.log(recipes)
+//   // console.log(tagArrays)
+//   // console.log(tagArrays.filteredIngredientsArray)
+//   // console.log(tagArrays.filteredIngredientsArray.length)
+// if(tagArrays.filteredIngredientsArray && tagArrays.filteredIngredientsArray.length > 0 &&
+//   tagArrays.filteredIngredientsArray.some((ing)=>{
+//     console.log(ing)
+
+//   })
+// ){
+//  console.log('gg')
+
+// }
+// }
+
+// console.log(recipe.ustensil)
+//   //     // deleteAccents(recipe.ustensil)
+//   //     //   .toLowerCase()
+//   //     //   .trim()
+//   //     //   .includes(deleteAccents(searchUstensil).toLowerCase().trim());
+//   //   })
+//   // ) {
+//   //   return true;
+//   // }
+// afficher les recettes filtrées
+// displayData(filteredRecipes);

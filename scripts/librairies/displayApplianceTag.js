@@ -1,5 +1,5 @@
-import {searchRecipe} from  '../librairies/search.js'
-import {recipes} from '../utils/api.js'
+
+import {filterRecipesByApplianceTag} from '../page/index.js'
 
 export const displayApplianceTag = (appliance) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
@@ -14,7 +14,14 @@ export const displayApplianceTag = (appliance) => {
   link.textContent = `${appliance}`;
   link.setAttribute("href", "#");
   link.classList.add("link-appliance");
-  // link.addEventListener('click', selectIngredientTag);
+  //  Ajoute un gestionnaire d'événements au lien
+link.addEventListener("click", (e) => {
+  e.preventDefault();
+  // console.log(e.target)
+  
+  selectApplianceTag(appliance, li); // Appel de la fonction pour sélectionner le tag
+  filterRecipesByApplianceTag(appliance); // Utilise directement la valeur de l'appliance
+});
   li.appendChild(link);
   applianceList.appendChild(li);
 };
@@ -30,10 +37,10 @@ export const selectApplianceTag = (clickedElementContent, clickedElement) => {
     const tag = document.createElement("div");
     tag.classList.add('tag');
     tagContainer.appendChild(tag);
-    tag.addEventListener('click', () => {
-      tag.style.display ='none';
-      clickedElement.classList.remove('disabled-link');
-    });
+    // tag.addEventListener('click', () => {
+    //   tag.style.display ='none';
+    //   clickedElement.classList.remove('disabled-link');
+    // });
 
     const newTag = document.createElement("span");
     newTag.textContent = clickedElementContent;
@@ -43,7 +50,15 @@ export const selectApplianceTag = (clickedElementContent, clickedElement) => {
     const closeTag = document.createElement("i");
     closeTag.classList.add("fa-solid", "fa-circle-xmark");
     tag.appendChild(closeTag);
-
+    // / Gestionnaire d'événements pour supprimer le tag
+    tag.addEventListener('click', () => {
+      tag.style.display = 'none'; // Cache le tag
+      clickedElement.classList.remove('disabled-link'); // Réactive le lien
+      const index = applianceTags.indexOf(clickedElementContent);
+      if (index !== -1) {
+        applianceTags.splice(index, 1); // Supprime le tag du tableau
+      }
+    });
     // Désactive le lien <a> après le clic
     clickedElement.classList.add("disabled-link");
   }

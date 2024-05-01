@@ -1,8 +1,11 @@
-  import {filterRecipesByIgredientTag} from '../page/ingredients.js'
-  // Affichage des ingrédients triés dans le dropdown menu
+
+import {filterRecipesByIgredientTag} from '../page/index.js'
+
+// Récupère la liste ul où les ingrédients seront ajoutés
+const ingredientList = document.getElementById("ingredientList");
+// Affichage les ingrédients triés dans le dropdown menu
 export const displayIngredientTag = (ingredient) => {
-  // Récupère la liste ul où les ingrédients seront ajoutés
-  const ingredientList = document.getElementById("ingredientList");
+  
   // console.log(ingredientList);
   const li = document.createElement("li");
   li.classList.add("li-ingredient");
@@ -17,7 +20,9 @@ export const displayIngredientTag = (ingredient) => {
 
   //  Ajoute un gestionnaire d'événements au lien
   link.addEventListener("click", (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    
+    selectIngredientTag(ingredient, li);
     filterRecipesByIgredientTag(ingredient); // Utilise directement la valeur de l'ustensile
   });
   li.appendChild(link);
@@ -27,75 +32,81 @@ export const displayIngredientTag = (ingredient) => {
 //afficher le tag selectionner tag jaune
 let ingredientTags = [];
 export const selectIngredientTag = (clickedElementContent, clickedElement) => {
-  // event.preventDefault();
-  // console.log(event.target);
-  // Récupère l'élément qui a déclenché l'événement
-  // const clickedElement = event.target;
-  // console.log(clickedElement.textContent);
-  // const clickedElementContent = clickedElement.textContent;
   // console.log(clickedElementContent)
+  // console.log(clickedElement)
 
+  // Vérifier si l'élément a déjà été sélectionné
+  if (!ingredientTags.includes(clickedElementContent)) {
+    // console.log(clickedElementContent)
+    // Ajouter l'élément cliqué à la liste des ingrédients sélectionnés
+    ingredientTags.push(clickedElementContent);
+    // console.log(ingredientTags);
+ 
+    const tagContainer = document.querySelector(".tag-container");
 
-    // Vérifier si l'élément a déjà été sélectionné
-    if (!ingredientTags.includes(clickedElementContent)) {
-        // Ajouter l'élément cliqué à la liste des ingrédients sélectionnés
-        ingredientTags.push(clickedElementContent);
-        // console.log(ingredientTags);
-      
-        const tagContainer = document.querySelector('.tag-container');
-      
-        
-                // Ajoute chaque ingrédient sélectionné au conteneur de tags
+    // Ajoute chaque ingrédient sélectionné au conteneur de tags
 
-                const tag = document.createElement("div");
-                tag.classList.add('tag');
-                tagContainer.appendChild(tag);
-                tag.addEventListener('click', ()=>{
-                  tag.style.display ='none';
-                  clickedElement.disabled = false;
-                  clickedElement.classList.remove('disabled-link');
-                })
-            
-                const newTag = document.createElement("span");
-                newTag.textContent = clickedElementContent;
-                newTag.classList.add("tag-element");
-                tag.appendChild(newTag);
-                
-                const closeTag = document.createElement("i");
-                closeTag.classList.add("fa-solid", "fa-circle-xmark");
-                tag.appendChild(closeTag);
-        // Désactiver l'élément cliqué
+    const tag = document.createElement("div");
+    tag.classList.add("tag");
+    tagContainer.appendChild(tag);
+    // tag.addEventListener('click', ()=>{
+    //   tag.style.display ='none';
+    //   clickedElement.disabled = false;
+    //   clickedElement.classList.remove('disabled-link');
+    // })
 
-        clickedElement.classList.add('disabled-link');
-    //     console.log("Ce tag a déjà été sélectionné.");
-    }
+    const newTag = document.createElement("span");
+    newTag.textContent = clickedElementContent;
+    newTag.classList.add("tag-element");
+    tag.appendChild(newTag);
+
+    const closeTag = document.createElement("i");
+    closeTag.classList.add("fa-solid", "fa-circle-xmark");
+    tag.appendChild(closeTag);
+    // Désactiver l'élément cliqué
+    // Gestionnaire d'événements pour supprimer le tag
+    tag.addEventListener("click", () => {
+      tag.style.display = "none"; // Cache le tag
+      clickedElement.classList.remove("disabled-link"); // Réactive le lien
+      const index = ingredientTags.indexOf(clickedElementContent);
+      if (index !== -1) {
+        ingredientTags.splice(index, 1); // Supprime le tag du tableau
+      }
+    });
+    clickedElement.classList.add("disabled-link");
+        // console.log("Ce tag a déjà été sélectionné.");
+  }
+
 
 };
+// Fonction pour filtrer les recettes en fonction des tags sélectionnés
+// const searchInput = document.getElementById("searchInput");
+// const filterRecipes = () => {
+  
+//   const searchValue = searchInput.value.toLowerCase().trim().replace(/\s/g, "");
+// // console.log(searchValue)
+//   const recipesSearch = searchRecipe(recipes, searchValue, {
+//     filteredIngredientsArray: ingredientTags,
+//     filteredAppliancesArray: [],
+//     filteredUstensilsArray: []
+//   });
+//   // console.log(ingredientTags)
+// // console.log(recipesSearch)
+//   // Affichage des recettes filtrées
+//   displayData(recipesSearch);
+// };
+
+// Gestionnaire d'événements pour la recherche principale
+// const searchInput = document.getElementById("searchInput");
+// searchInput.addEventListener("input", filterRecipes);
 
 
-// Fonction pour afficher le nouveau tag sélectionné dans la liste des tags
-export const displayNewlySelectedTag = (tag) => {
-  // console.log(tag)
-  // Ajoutez ici le code pour créer et afficher le tag sélectionné dans l'interface utilisateur
-  const tagContainer = document.querySelector('.tag-container');
-
-  const newTag = document.createElement("div");
-  newTag.classList.add('tag');
-  tagContainer.appendChild(newTag);
-
-  const tagContent = document.createElement("span");
-  tagContent.textContent = tag;
-  tagContent.classList.add("tag-element");
-  newTag.appendChild(tagContent);
-
-  const closeTag = document.createElement("i");
-  closeTag.classList.add("fa-solid", "fa-circle-xmark");
-  newTag.addEventListener('click', () => {
-    // console.log(newTag)
-    newTag.remove(); // Supprime le tag lorsqu'on clique sur l'icône de fermeture
-  });
-  newTag.appendChild(closeTag);
-   console.log(tag)
-   
-};
+// // Ajouter un gestionnaire d'événements pour le clic sur un tag d'ingrédient
+// // const ingredientList = document.getElementById("ingredientList");
+// ingredientList.addEventListener("click", (event) => {
+//   if (event.target.classList.contains("link-ingredient")) {
+//     const clickedIngredient = event.target.textContent;
+//     selectIngredientTag(clickedIngredient);
+//   }
+// });
 
