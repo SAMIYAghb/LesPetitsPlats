@@ -1,5 +1,5 @@
 
-import {filterRecipesByIgredientTag} from '../page/index.js'
+import {filterRecipesByIgredientTag, filterRecipes} from '../page/index.js'
 
 // Récupère la liste ul où les ingrédients seront ajoutés
 const ingredientList = document.getElementById("ingredientList");
@@ -24,6 +24,7 @@ export const displayIngredientTag = (ingredient) => {
     
     selectIngredientTag(ingredient, li);
     filterRecipesByIgredientTag(ingredient); // Utilise directement la valeur de l'ustensile
+    filterRecipes();
   });
   li.appendChild(link);
   ingredientList.appendChild(li);
