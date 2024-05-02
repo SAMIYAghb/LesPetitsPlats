@@ -237,6 +237,8 @@ const recipes = await getRecipes();
 const selectedUstensilTagsArray = [];
 export function filterRecipesByUstensilTag(selectedUstensilTags) {
   // console.log(selectedUstensilTags)
+  // Réinitialiser le tableau des tags d'ustensile à chaque appel de la fonction
+
   // Concaténer les nouveaux tags avec les tags existants
   // Ajoutez le tag actuel à selectedUstensilTagsArray
   selectedUstensilTagsArray.push(selectedUstensilTags);
@@ -261,7 +263,12 @@ export function filterRecipesByUstensilTag(selectedUstensilTags) {
 
   // Mettre à jour la liste d'ustensiles
   updateUstensilSelectBox(filteredRecipes);
+
+  console.log(selectedUstensilTagsArray)
+  // Retourner selectedUstensilTagsArray
+  return selectedUstensilTagsArray;
 }
+console.log(selectedUstensilTagsArray)
 
 function updateUstensilSelectBox(filteredRecipes) {
   // console.log(filteredRecipes);
@@ -352,14 +359,15 @@ const init = async () => {
       });
       console.log(selectedIngredientTagsArray,
         selectedApplianceTagsArray,
-        selectedUstensilTagsArray)
+        selectedUstensilTagsArray, 'depuis index')
 
       displayData(recipesSearch);
     } else {
       // Si la longueur de la valeur de recherche est inférieure à 3 caractères, ne rien faire (ou gérer autrement)
-      displayData(recipes);
+      // displayData(recipes);
     }
-  });
+  }
+);
 
   // Ajouter un gestionnaire d'événements ipour la recherche par tag d'ingrédients
   const ingredientInput = document.getElementById("ingredientInput");
