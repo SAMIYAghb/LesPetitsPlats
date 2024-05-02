@@ -66,10 +66,35 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     return false;
   });
 
-  // Filtrer les recettes en fonction des tags sélectionnés
+  // Filtrer les recettes en fonction des tags d'ingrédients sélectionnés
+  if (tagArrays && tagArrays.selectedIngredientTagsArray.length > 0) {
+    filteredRecipes = filteredRecipes.filter((recipe) => {
+      return tagArrays.selectedIngredientTagsArray.every((searchIngredient) => {
+        return recipe.ingredients.some((ingredientObj) => {
+          if (
+            typeof ingredientObj === "object" &&
+            "ingredient" in ingredientObj
+          ) {
+            return ingredientObj.ingredient
+              .toLowerCase()
+              .includes(searchIngredient.toLowerCase());
+          }
+          return false;
+        });
+      });
+    });
+  }
+// Filtrer les recettes en fonction des tags d'appareil sélectionnés
+if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
+  filteredRecipes = filteredRecipes.filter((recipe) => {
+    return tagArrays.selectedApplianceTagsArray.every((tag) =>
+    recipe.appliance.toLowerCase().includes(tag.toLowerCase()))
+    });
+}
+  // Filtrer les recettes en fonction des tags ustensil sélectionnés
   if (tagArrays){
     if(tagArrays.selectedUstensilTagsArray.length > 0) {
-      console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
+      // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
       filteredRecipes = filteredRecipes.filter(recipe => {
         return tagArrays.selectedUstensilTagsArray.every(searchUstensil => {
           return recipe.ustensils.some(ustensil =>
