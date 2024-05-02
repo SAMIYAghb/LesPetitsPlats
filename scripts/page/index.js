@@ -8,7 +8,6 @@ import {
 import { displayIngredientTag } from "../librairies/displayIngredientTag.js";
 import { displayApplianceTag } from "../librairies/displayApplianceTag.js";
 
-
 /**********Ingredients */
 /********** */
 /********** */
@@ -22,12 +21,11 @@ export const getIngredients = (recipes) => {
 
     recipeIngredients.forEach((ingredient) => {
       const ingredientElement = ingredient.ingredient;
-      ingredientsSet.add(ingredientElement.toLowerCase()); // Convertir en minuscules
+      ingredientsSet.add(ingredientElement.toLowerCase()); 
     });
   });
 
   filteredIngredientsArray = Array.from(ingredientsSet);
-  // console.log(filteredIngredientsArray);
   return filteredIngredientsArray;
 };
 //++++++++++++
@@ -47,70 +45,30 @@ export function filterRecipesByIgredientTag(selectedIngredientTags) {
           .includes(tag.toLowerCase())
       )
     );
-
-    // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
     return matchesIngredientTags;
   });
-
-  // Afficher le nombre de recettes filtrées
-  // afficher les recettes filtrées
   displayData(filteredRecipes);
-  // Afficher le compte du nombre de recettes filtrées
+
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-  // console.log(filteredRecipes);
-
-  updateIngredientSelectBox(filteredRecipes);
-
+  updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
   // return filteredRecipes;
 }
-function updateIngredientSelectBox(filteredRecipes) {
-  // console.log(filteredRecipes);
-  const ingredientList = document.getElementById("ingredientList");
 
-  // Effacer les options existantes
-  ingredientList.innerHTML = "";
-  // Récupérer les ustensiles à partir des recettes filtrées
-  const ingredientsSet = new Set();
-  // console.log(ustensilsSet)
-  const filteredAppliances = filteredRecipes.forEach((recipe) => {
-    // console.log(recipe.ingredients)
-    recipe.ingredients.filter((ele) => {
-      // console.log(ele.ingredient)
-      const ing = ele.ingredient.toLowerCase();
-      ingredientsSet.add(ing);
-      // console.log(ingredientsSet.add(ing))
-    });
-  });
-
-  const newFilteredIngredients = Array.from(ingredientsSet).sort((a, b) =>
-    a.localeCompare(b, "fr")
-  );
-  // console.log(newFilteredIngredients)
-  // Afficher les ustensiles dans la liste
-  newFilteredIngredients.forEach((element) => {
-    // console.log(element)
-    displayIngredientTag(element);
-  });
-}
 /**********end Ingredients */
-/********** */
-/********** */
+
 /**********appliances */
-/********** */
-/********** */
+
 let filteredAppliancesArray;
 export const getAppliances = (recipes) => {
-  // console.log(recipes)
   const appliancesSet = new Set();
 
   recipes.forEach((recipe) => {
     const appliance = recipe.appliance;
-    //   console.log(appliance)
-    appliancesSet.add(appliance.toLowerCase()); // Convertir en minuscules
+
+    appliancesSet.add(appliance.toLowerCase());
   });
 
   filteredAppliancesArray = Array.from(appliancesSet);
-  // console.log(filteredAppliancesArray);
   return filteredAppliancesArray;
 };
 //++++++++++++
@@ -120,49 +78,21 @@ const selectedApplianceTagsArray = [];
 export function filterRecipesByApplianceTag(selectedAapplianceTags) {
   //ajouter le tag selectionne dans selectedApplianceTagsArray
   selectedApplianceTagsArray.push(selectedAapplianceTags);
-  //  console.log(selectedApplianceTagsArray)
   const filteredRecipes = recipes.filter((recipe) => {
-    // console.log(recipe.appliance)
-    // Vérifie si la recette contient le tag d'appareil sélectionné
     const matchesApplianceTags = selectedApplianceTagsArray.every((tag) =>
       recipe.appliance.toLowerCase().includes(tag.toLowerCase())
     );
-    //ca fonctionne pas avec le deuxieme tag selectionner , normalement j'obtien 0 des que je selectonne un deuxieme tag
-    // const matchesApplianceTag = recipe.appliance.toLowerCase() === selectedAapplianceTags.toLowerCase();
-    // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
     return matchesApplianceTags;
   });
-
   // afficher les recettes filtrées
   displayData(filteredRecipes);
   // console.log(filteredRecipes);
   // Afficher le compte du nombre de recettes filtrées
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-
-  updateApplianceSelectBox(filteredRecipes);
-}
-function updateApplianceSelectBox(filteredRecipes) {
-  // console.log(filteredRecipes);
-  const applianceList = document.getElementById("applianceList");
-
-  // Effacer les options existantes
-  applianceList.innerHTML = "";
-  // Récupérer les appareil à partir des recettes filtrées
-  const appliancesSet = new Set();
-  // console.log(ustensilsSet)
-  const filteredAppliances = filteredRecipes.forEach((recipe) => {
-    // console.log(recipe.appliance);
-    const app = recipe.appliance;
-    // console.log(app)
-    appliancesSet.add(app);
-  });
+  updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
 }
 /**********end appliances */
-/********** */
-/********** */
 /**********ustensil */
-/********** */
-/********** */
 let filteredUstensilsArray;
 export const getUstensil = (recipes) => {
   // On crée un nouvel ensemble Les ensembles en JavaScript ne permettent pas les doublons, ce qui les rend parfaits pour stocker des valeurs uniques
@@ -181,94 +111,93 @@ export const getUstensil = (recipes) => {
   return filteredUstensilsArray;
 };
 const recipes = await getRecipes();
-//++++++++++++
-//++++++++++++
+
 // // Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
 const selectedUstensilTagsArray = [];
 export function filterRecipesByUstensilTag(selectedUstensilTags) {
-  // console.log(selectedUstensilTags)
-  // Réinitialiser le tableau des tags d'ustensile à chaque appel de la fonction
-
-  // Concaténer les nouveaux tags avec les tags existants
-  // Ajoutez le tag actuel à selectedUstensilTagsArray
   selectedUstensilTagsArray.push(selectedUstensilTags);
-  // console.log(selectedUstensilTagsArray)
-  // Filtrer les recettes en fonction de la valeur de recherche actuelle et du tag d'ustensile sélectionné
+
   const filteredRecipes = recipes.filter((recipe) => {
-    // Vérifie si la recette contient tous les tags d'ustensiles sélectionnés
     const matchesUstensilTags = selectedUstensilTagsArray.every((tag) =>
       recipe.ustensils.some((ustensil) =>
         ustensil.toLowerCase().trim().includes(tag.toLowerCase())
       )
     );
-    // Retourner true uniquement si la recette correspond à la fois à la recherche et au tag d'ustensile sélectionné
+
     return matchesUstensilTags;
   });
-  // console.log(filteredRecipes)
-  // afficher les recettes filtrées
+
   displayData(filteredRecipes);
-  // console.log(filteredRecipes);
+
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-  // console.log(filteredRecipes);
 
-  // Mettre à jour la liste d'ustensiles
-  updateUstensilSelectBox(filteredRecipes);
+  updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
 
-  console.log(selectedUstensilTagsArray);
-  // Retourner selectedUstensilTagsArray
   return selectedUstensilTagsArray;
 }
-console.log(selectedUstensilTagsArray);
+/**********end ustensil */
+function updateSelectBox(filteredRecipes, listType, displayFunction) {
+  const listElement = document.getElementById(listType + "List");
+  listElement.innerHTML = "";
 
-function updateUstensilSelectBox(filteredRecipes) {
-  // console.log(filteredRecipes);
-  const ustensilList = document.getElementById("ustensilList");
-  // Effacer les options existantes
-  ustensilList.innerHTML = "";
-  // Récupérer les ustensiles à partir des recettes filtrées
-  const ustensilsSet = new Set();
-  // console.log(ustensilsSet)
-  const filteredUstensils = filteredRecipes.forEach((recipe) => {
-    // console.log(recipe.ustensils)
-    recipe.ustensils.forEach((ustensil) => {
-      ustensilsSet.add(ustensil);
-    });
+  const itemSet = new Set();
+
+  filteredRecipes.forEach((recipe) => {
+    switch (listType) {
+      case "ustensil":
+        recipe.ustensils.forEach((ustensil) => itemSet.add(ustensil));
+        break;
+      case "appliance":
+        itemSet.add(recipe.appliance);
+        break;
+      case "ingredient":
+        recipe.ingredients.forEach((ingredient) =>
+          itemSet.add(ingredient.ingredient.toLowerCase())
+        );
+        break;
+      default:
+        break;
+    }
   });
-  const newFilteredUstensils = Array.from(ustensilsSet).sort((a, b) =>
+
+  const sortedItems = Array.from(itemSet).sort((a, b) =>
     a.localeCompare(b, "fr")
   );
-  // console.log(newFilteredUstensils)
-  // Afficher les ustensiles dans la liste
-  newFilteredUstensils.forEach((element) => {
-    displayUstensilTag(element);
+
+  sortedItems.forEach((item) => {
+    displayFunction(item);
   });
 }
-/**********end ustensil */
-/********** */
-/********** */
 
-export function filterRecipesByAllTags(selectedIngredientTags, selectedApplianceTags, selectedUstensilTags) {
-  console.log(selectedIngredientTags, selectedApplianceTags, selectedUstensilTags)
+export function filterRecipesByAllTags(
+  selectedIngredientTags,
+  selectedApplianceTags,
+  selectedUstensilTags
+) {
+  console.log(
+    selectedIngredientTags,
+    selectedApplianceTags,
+    selectedUstensilTags
+  );
   const filteredRecipes = recipes.filter((recipe) => {
-    
     const matchesIngredientTags = selectedIngredientTags.every((tag) =>
       recipe.ingredients.some((ingredientObj) =>
         ingredientObj.ingredient.toLowerCase().includes(tag.toLowerCase())
       )
     );
-    
+
     const matchesApplianceTags = selectedApplianceTags.every((tag) =>
       recipe.appliance.toLowerCase().includes(tag.toLowerCase())
     );
     const matchesUstensilTags = selectedUstensilTagsArray.every((tag) =>
-    recipe.ustensils.some((ustensil) =>
-      ustensil.toLowerCase().trim().includes(tag.toLowerCase())
-    )
-  );
+      recipe.ustensils.some((ustensil) =>
+        ustensil.toLowerCase().trim().includes(tag.toLowerCase())
+      )
+    );
 
     return matchesIngredientTags && matchesApplianceTags && matchesUstensilTags;
   });
-  console.log(filteredRecipes)
+  console.log(filteredRecipes);
 
   displayData(filteredRecipes);
   totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
@@ -278,7 +207,11 @@ export function filterRecipesByAllTags(selectedIngredientTags, selectedAppliance
 
 // Call this function whenever any tag selection changes
 export function filterRecipes() {
-  filterRecipesByAllTags(selectedIngredientTagsArray, selectedApplianceTagsArray, selectedUstensilTagsArray);
+  filterRecipesByAllTags(
+    selectedIngredientTagsArray,
+    selectedApplianceTagsArray,
+    selectedUstensilTagsArray
+  );
 }
 
 const totalRecipeElement = document.querySelector(".total-recipe");
@@ -293,37 +226,33 @@ const init = async () => {
 
   const recipes = await getRecipes();
 
-  // afficher les Ingredients( tags
-  filteredIngredientsArray = getIngredients(recipes);
-  filteredIngredientsArray
+  // Fonction générique pour afficher les tags
+function displayTags(tagsArray, displayFunction) {
+  tagsArray
     .sort((a, b) => a.localeCompare(b, "fr"))
-    .forEach((ingredient) => {
-      // console.log(ingredient)
-      displayIngredientTag(ingredient);
+    .forEach((tag) => {
+      displayFunction(tag);
     });
-  // afficher les appliance tags
-  filteredAppliancesArray = getAppliances(recipes);
-  filteredAppliancesArray
-    .sort((a, b) => a.localeCompare(b, "fr"))
-    .forEach((appliance) => {
-      displayApplianceTag(appliance);
-    });
+}
 
-  // afficher les Ustensil tags
-  filteredUstensilsArray = getUstensil(recipes);
-  // console.log(filteredUstensilsArray);
-  filteredUstensilsArray
-    .sort((a, b) => a.localeCompare(b, "fr"))
-    .forEach((ustensil) => {
-      displayUstensilTag(ustensil);
-    });
+// Afficher les ingrédients
+const ingredientsArray = getIngredients(recipes);
+displayTags(ingredientsArray, displayIngredientTag);
+
+// Afficher les appareils
+const appliancesArray = getAppliances(recipes);
+displayTags(appliancesArray, displayApplianceTag);
+
+// Afficher les ustensiles
+const ustensilsArray = getUstensil(recipes);
+displayTags(ustensilsArray, displayUstensilTag);
+
 
   // Affichage initial des données
   displayData(recipes);
 
   // Définir la variable pour stocker le nombre total de recettes
   let totalRecipesCount = recipes.length;
-  // Afficher le nombre total de recettes déjà existantes
 
   totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
 
@@ -333,7 +262,6 @@ const init = async () => {
       .toLowerCase()
       .trim()
       .replace(/\s/g, "");
-    // Vérifier si la longueur de la valeur de recherche est supérieure ou égale à 3 caractères
     if (searchValue.length >= 3) {
       const recipesSearch = searchRecipe(recipes, searchValue, {
         selectedIngredientTagsArray,
