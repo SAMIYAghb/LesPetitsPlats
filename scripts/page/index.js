@@ -7,27 +7,61 @@ import {
 } from "../librairies/displayUstencilTag.js";
 import { displayIngredientTag } from "../librairies/displayIngredientTag.js";
 import { displayApplianceTag } from "../librairies/displayApplianceTag.js";
+const filterUniqueData = (recipes, property) => {
+  const uniqueData = new Set();
+
+  recipes.forEach((recipe) => {
+    const data = recipe[property];
+
+    if (Array.isArray(data)) {
+      data.forEach((item) => {
+        if (typeof item === 'object' && item.hasOwnProperty('ingredient')) {
+          uniqueData.add(item.ingredient.toLowerCase());
+        } else if (typeof item === 'string') {
+          uniqueData.add(item.toLowerCase());
+        }
+      });
+    } else if (typeof data === 'string') {
+      uniqueData.add(data.toLowerCase());
+    }
+  });
+
+  return Array.from(uniqueData);
+};
+
+export const getAppliances = (recipes) => {
+  return filterUniqueData(recipes, 'appliance');
+};
+
+export const getIngredients = (recipes) => {
+  const ingredients = filterUniqueData(recipes, 'ingredients');
+  return ingredients;
+};
+
+export const getUstensil = (recipes) => {
+  return filterUniqueData(recipes, 'ustensils');
+};
 
 /**********Ingredients */
 /********** */
 /********** */
-let filteredIngredientsArray;
-export const getIngredients = (recipes) => {
-  // console.log(recipes)
-  const ingredientsSet = new Set();
+// let filteredIngredientsArray;
+// export const getIngredients = (recipes) => {
+//   // console.log(recipes)
+//   const ingredientsSet = new Set();
 
-  recipes.forEach((recipe) => {
-    const recipeIngredients = recipe.ingredients;
+//   recipes.forEach((recipe) => {
+//     const recipeIngredients = recipe.ingredients;
 
-    recipeIngredients.forEach((ingredient) => {
-      const ingredientElement = ingredient.ingredient;
-      ingredientsSet.add(ingredientElement.toLowerCase()); 
-    });
-  });
+//     recipeIngredients.forEach((ingredient) => {
+//       const ingredientElement = ingredient.ingredient;
+//       ingredientsSet.add(ingredientElement.toLowerCase()); 
+//     });
+//   });
 
-  filteredIngredientsArray = Array.from(ingredientsSet);
-  return filteredIngredientsArray;
-};
+//   filteredIngredientsArray = Array.from(ingredientsSet);
+//   return filteredIngredientsArray;
+// };
 //++++++++++++
 //++++++++++++
 // Filtrer les recettes en fonction du tag sélectionné
@@ -49,7 +83,9 @@ export function filterRecipesByIgredientTag(selectedIngredientTags) {
   });
   displayData(filteredRecipes);
 
-  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  let filteredRecipesCount = filteredRecipes.length;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
   updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
   // return filteredRecipes;
 }
@@ -58,19 +94,19 @@ export function filterRecipesByIgredientTag(selectedIngredientTags) {
 
 /**********appliances */
 
-let filteredAppliancesArray;
-export const getAppliances = (recipes) => {
-  const appliancesSet = new Set();
+// let filteredAppliancesArray;
+// export const getAppliances = (recipes) => {
+//   const appliancesSet = new Set();
 
-  recipes.forEach((recipe) => {
-    const appliance = recipe.appliance;
+//   recipes.forEach((recipe) => {
+//     const appliance = recipe.appliance;
 
-    appliancesSet.add(appliance.toLowerCase());
-  });
+//     appliancesSet.add(appliance.toLowerCase());
+//   });
 
-  filteredAppliancesArray = Array.from(appliancesSet);
-  return filteredAppliancesArray;
-};
+//   filteredAppliancesArray = Array.from(appliancesSet);
+//   return filteredAppliancesArray;
+// };
 //++++++++++++
 //++++++++++++
 //  Filtrer les recettes en fonction de la recherche actuelle et du tag appareil sélectionné
@@ -88,28 +124,30 @@ export function filterRecipesByApplianceTag(selectedAapplianceTags) {
   displayData(filteredRecipes);
   // console.log(filteredRecipes);
   // Afficher le compte du nombre de recettes filtrées
-  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  let filteredRecipesCount = filteredRecipes.length;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
   updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
 }
 /**********end appliances */
 /**********ustensil */
-let filteredUstensilsArray;
-export const getUstensil = (recipes) => {
-  // On crée un nouvel ensemble Les ensembles en JavaScript ne permettent pas les doublons, ce qui les rend parfaits pour stocker des valeurs uniques
-  const ustensilsSet = new Set();
+// let filteredUstensilsArray;
+// export const getUstensil = (recipes) => {
+//   // On crée un nouvel ensemble Les ensembles en JavaScript ne permettent pas les doublons, ce qui les rend parfaits pour stocker des valeurs uniques
+//   const ustensilsSet = new Set();
 
-  recipes.forEach((recipe) => {
-    const ustensils = recipe.ustensils;
-    //Pour chaque ustensile dans la liste, on ajoute l'ustensile converti en minuscules à l'ensemble ustensilsSet en utilisant
-    ustensils.forEach((ustensil) => {
-      ustensilsSet.add(ustensil.toLowerCase()); // Convertir en minuscules
-    });
-  });
-  //Conversion de l'ensemble en tableau
-  filteredUstensilsArray = Array.from(ustensilsSet);
-  // console.log(filteredUstensilsArray);
-  return filteredUstensilsArray;
-};
+//   recipes.forEach((recipe) => {
+//     const ustensils = recipe.ustensils;
+//     //Pour chaque ustensile dans la liste, on ajoute l'ustensile converti en minuscules à l'ensemble ustensilsSet en utilisant
+//     ustensils.forEach((ustensil) => {
+//       ustensilsSet.add(ustensil.toLowerCase()); // Convertir en minuscules
+//     });
+//   });
+//   //Conversion de l'ensemble en tableau
+//   filteredUstensilsArray = Array.from(ustensilsSet);
+//   // console.log(filteredUstensilsArray);
+//   return filteredUstensilsArray;
+// };
 const recipes = await getRecipes();
 
 // // Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
@@ -129,8 +167,9 @@ export function filterRecipesByUstensilTag(selectedUstensilTags) {
 
   displayData(filteredRecipes);
 
-  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-
+  // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  let filteredRecipesCount = filteredRecipes.length;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
   updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
 
   return selectedUstensilTagsArray;
@@ -174,11 +213,11 @@ export function filterRecipesByAllTags(
   selectedApplianceTags,
   selectedUstensilTags
 ) {
-  console.log(
-    selectedIngredientTags,
-    selectedApplianceTags,
-    selectedUstensilTags
-  );
+  // console.log(
+  //   selectedIngredientTags,
+  //   selectedApplianceTags,
+  //   selectedUstensilTags
+  // );
   const filteredRecipes = recipes.filter((recipe) => {
     const matchesIngredientTags = selectedIngredientTags.every((tag) =>
       recipe.ingredients.some((ingredientObj) =>
@@ -200,10 +239,20 @@ export function filterRecipesByAllTags(
   console.log(filteredRecipes);
 
   displayData(filteredRecipes);
-  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  let filteredRecipesCount = filteredRecipes.length;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
 
   // Update select boxes if needed
 }
+const pluralizeRecipe = (count) => {
+  // console.log(count)
+  if (count === 0) {
+    return 'recette';
+  } else {
+    return count === 1 ? 'recette' : 'recettes';
+  }
+};
 
 // Call this function whenever any tag selection changes
 export function filterRecipes() {
@@ -254,8 +303,9 @@ displayTags(ustensilsArray, displayUstensilTag);
   // Définir la variable pour stocker le nombre total de recettes
   let totalRecipesCount = recipes.length;
 
-  totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
+  // totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
 
+  totalRecipeElement.innerText = `${totalRecipesCount} ${pluralizeRecipe(totalRecipesCount)}`;
   // Gestionnaire d'événements pour la recherche principale
   searchInput.addEventListener("input", () => {
     const searchValue = searchInput.value

@@ -69,17 +69,21 @@ export const selectIngredientTag = (clickedElementContent, clickedElement) => {
     tag.addEventListener("click", () => {
       tag.style.display = "none"; // Cache le tag
       clickedElement.classList.remove("disabled-link"); // Réactive le lien
+      clickedElement.removeEventListener("click", ingredientClickHandler);
+
       const index = ingredientTags.indexOf(clickedElementContent);
       if (index !== -1) {
         ingredientTags.splice(index, 1); // Supprime le tag du tableau
       }
     });
     clickedElement.classList.add("disabled-link");
-        // console.log("Ce tag a déjà été sélectionné.");
+        console.log("Ce tag a déjà été sélectionné.");
   }
 
 
 };
+
+
 // Fonction pour filtrer les recettes en fonction des tags sélectionnés
 // const searchInput = document.getElementById("searchInput");
 // const filterRecipes = () => {

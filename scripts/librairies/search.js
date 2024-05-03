@@ -104,11 +104,20 @@ if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
       });
     }
   }
-
+  const pluralizeRecipe = (count) => {
+    // console.log(count)
+    if (count === 0) {
+      return 'recette';
+    } else {
+      return count === 1 ? 'recette' : 'recettes';
+    }
+  };
   // Afficher le compte du nombre de recettes filtrées
   const totalRecipeElement = document.querySelector(".total-recipe");
-  totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-
+  // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
+  let filteredRecipesCount = filteredRecipes.length;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
+  
   // Si aucune recette n'est trouvée, afficher "not found"
   const notFoundElement = document.querySelector('.not-found');
   if (filteredRecipes.length === 0) {
