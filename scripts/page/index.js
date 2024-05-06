@@ -88,6 +88,8 @@ export function filterRecipesByIgredientTag(selectedIngredientTags) {
   totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
     filteredRecipesCount
   )}`;
+  updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
+  updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
   updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
   // return filteredRecipes;
 }
@@ -131,7 +133,9 @@ export function filterRecipesByApplianceTag(selectedAapplianceTags) {
   totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
     filteredRecipesCount
   )}`;
+  updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
   updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
+  updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
 }
 /**********end appliances */
 /**********ustensil */
@@ -176,7 +180,10 @@ export function filterRecipesByUstensilTag(selectedUstensilTags) {
   totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
     filteredRecipesCount
   )}`;
+  
   updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
+      updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
+      updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
 
   return selectedUstensilTagsArray;
 }
@@ -313,7 +320,7 @@ const init = async () => {
       .toLowerCase()
       .trim()
       .replace(/\s/g, "");
-    console.log(inputValue);
+    // console.log(inputValue);
     // Recherche à partir du premier caractère
     if (inputValue.length > 0) {
       // Si l'utilisateur a saisi quelque chose, effectuez la recherche et affichez les résultats
@@ -365,14 +372,16 @@ const searchUstensilTag = () => {
     .toLowerCase()
     .trim()
     .replace(/\s/g, "");
-  console.log(inputValue);
+  // console.log(inputValue);
   if (inputValue.length > 0) {
     const matchingTags = ustensilsArray.filter((tag) =>
       tag.includes(inputValue)
     );
     if (matchingTags.length > 0) {
+      console.log(matchingTags)
       ustensilList.innerHTML = ""; 
       displayTags(matchingTags, displayUstensilTag);
+
     } else {
       ustensilList.innerHTML = "<li>Aucun résultat trouvé</li>";
     }
@@ -381,6 +390,8 @@ const searchUstensilTag = () => {
     displayTags(ustensilsArray, displayUstensilTag);
   }
 };
+// Fonction générique pour chercher les tags
+// function searchTag(tagsArray, displayFunction) {}
   // Affichage initial des données
   displayData(recipes);
 
@@ -428,43 +439,3 @@ const searchUstensilTag = () => {
 };
 
 init();
-// //   //**************search ingredient*/
-// const ingredientInput = document.getElementById("ingredientInput");
-// const searchIngredientTag = () => {
-//   // clearDropdown();
-//   const inputValue = ingredientInput.value
-//     .toLowerCase()
-//     .trim()
-//     .replace(/\s/g, "");
-//     console.log(inputValue)
-//   // Recherche à partir du premier caractère
-//   if (inputValue.length > 0) {
-// console.log(ingredientsArray)
-//   }}
-//Vérifie si un tag correspond à l'entrée de l'utilisateur
-
-// const matchingTags = transformedArray.filter((tag) =>
-//   tag.includes(inputValue)
-// );
-// console.log(matchingTags)
-
-//     if (matchingTags.length > 0) {
-//       clearDropdown();
-//       matchingTags.forEach((tag) => displayIngredientTag(tag));
-//     // } else if (matchingTags.length = 0){
-//     //   filteredIngredientsArray
-//     //     .sort((a, b) => a.localeCompare(b, "fr"))
-//     //     .forEach((ingredient) => {
-//     //       displayIngredientTag(ingredient);
-//     //     });
-//     // }
-//   }
-//   }else if (inputValue.length = 0){
-//       filteredIngredientsArray
-//         .sort((a, b) => a.localeCompare(b, "fr"))
-//         .forEach((ingredient) => {
-//           displayIngredientTag(ingredient);
-//         });
-//     }
-//     }
-// };
