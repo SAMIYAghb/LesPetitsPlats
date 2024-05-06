@@ -197,10 +197,10 @@ function updateSelectBox(filteredRecipes, listType, displayFunction) {
   filteredRecipes.forEach((recipe) => {
     switch (listType) {
       case "ustensil":
-        recipe.ustensils.forEach((ustensil) => itemSet.add(ustensil));
+        recipe.ustensils.forEach((ustensil) => itemSet.add(ustensil.toLowerCase()));
         break;
       case "appliance":
-        itemSet.add(recipe.appliance);
+        itemSet.add(recipe.appliance.toLowerCase());
         break;
       case "ingredient":
         recipe.ingredients.forEach((ingredient) =>
