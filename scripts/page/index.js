@@ -228,7 +228,7 @@ export function filterRecipesByAllTags(
     const matchesApplianceTags = selectedApplianceTags.every((tag) =>
       recipe.appliance.toLowerCase().includes(tag.toLowerCase())
     );
-    const matchesUstensilTags = selectedUstensilTagsArray.every((tag) =>
+    const matchesUstensilTags = selectedUstensilTags.every((tag) =>
       recipe.ustensils.some((ustensil) =>
         ustensil.toLowerCase().trim().includes(tag.toLowerCase())
       )
@@ -265,6 +265,7 @@ export function filterRecipes() {
 
 const totalRecipeElement = document.querySelector(".total-recipe");
 const searchInput = document.getElementById("searchInput");
+
 const init = async () => {
   // Définir les valeurs par défaut pour l'état de l'input de recherche et les résultats de la recherche
   let defaultSearchValue = "";
@@ -326,6 +327,9 @@ displayTags(ustensilsArray, displayUstensilTag);
       );
 
       displayData(recipesSearch);
+      updateSelectBox(recipesSearch, "ustensil", displayUstensilTag);
+      updateSelectBox(recipesSearch, "appliance", displayApplianceTag);
+      updateSelectBox(recipesSearch, "ingredient", displayIngredientTag);
     } else {
       // Si la longueur de la valeur de recherche est inférieure à 3 caractères, ne rien faire (ou gérer autrement)
       // displayData(recipes);
