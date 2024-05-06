@@ -15,13 +15,13 @@ const filterUniqueData = (recipes, property) => {
 
     if (Array.isArray(data)) {
       data.forEach((item) => {
-        if (typeof item === 'object' && item.hasOwnProperty('ingredient')) {
+        if (typeof item === "object" && item.hasOwnProperty("ingredient")) {
           uniqueData.add(item.ingredient.toLowerCase());
-        } else if (typeof item === 'string') {
+        } else if (typeof item === "string") {
           uniqueData.add(item.toLowerCase());
         }
       });
-    } else if (typeof data === 'string') {
+    } else if (typeof data === "string") {
       uniqueData.add(data.toLowerCase());
     }
   });
@@ -30,16 +30,16 @@ const filterUniqueData = (recipes, property) => {
 };
 
 export const getAppliances = (recipes) => {
-  return filterUniqueData(recipes, 'appliance');
+  return filterUniqueData(recipes, "appliance");
 };
 
 export const getIngredients = (recipes) => {
-  const ingredients = filterUniqueData(recipes, 'ingredients');
+  const ingredients = filterUniqueData(recipes, "ingredients");
   return ingredients;
 };
 
 export const getUstensil = (recipes) => {
-  return filterUniqueData(recipes, 'ustensils');
+  return filterUniqueData(recipes, "ustensils");
 };
 
 /**********Ingredients */
@@ -55,7 +55,7 @@ export const getUstensil = (recipes) => {
 
 //     recipeIngredients.forEach((ingredient) => {
 //       const ingredientElement = ingredient.ingredient;
-//       ingredientsSet.add(ingredientElement.toLowerCase()); 
+//       ingredientsSet.add(ingredientElement.toLowerCase());
 //     });
 //   });
 
@@ -85,7 +85,9 @@ export function filterRecipesByIgredientTag(selectedIngredientTags) {
 
   // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
   let filteredRecipesCount = filteredRecipes.length;
-  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
+    filteredRecipesCount
+  )}`;
   updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
   // return filteredRecipes;
 }
@@ -126,7 +128,9 @@ export function filterRecipesByApplianceTag(selectedAapplianceTags) {
   // Afficher le compte du nombre de recettes filtrées
   // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
   let filteredRecipesCount = filteredRecipes.length;
-  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
+    filteredRecipesCount
+  )}`;
   updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
 }
 /**********end appliances */
@@ -169,7 +173,9 @@ export function filterRecipesByUstensilTag(selectedUstensilTags) {
 
   // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
   let filteredRecipesCount = filteredRecipes.length;
-  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
+    filteredRecipesCount
+  )}`;
   updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
 
   return selectedUstensilTagsArray;
@@ -241,16 +247,18 @@ export function filterRecipesByAllTags(
   displayData(filteredRecipes);
   // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
   let filteredRecipesCount = filteredRecipes.length;
-  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
+  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(
+    filteredRecipesCount
+  )}`;
 
   // Update select boxes if needed
 }
 const pluralizeRecipe = (count) => {
   // console.log(count)
   if (count === 0) {
-    return 'recette';
+    return "recette";
   } else {
-    return count === 1 ? 'recette' : 'recettes';
+    return count === 1 ? "recette" : "recettes";
   }
 };
 
@@ -277,27 +285,102 @@ const init = async () => {
   const recipes = await getRecipes();
 
   // Fonction générique pour afficher les tags
-function displayTags(tagsArray, displayFunction) {
-  tagsArray
-    .sort((a, b) => a.localeCompare(b, "fr"))
-    .forEach((tag) => {
-      displayFunction(tag);
-    });
-}
+  function displayTags(tagsArray, displayFunction) {
+    tagsArray
+      .sort((a, b) => a.localeCompare(b, "fr"))
+      .forEach((tag) => {
+        displayFunction(tag);
+      });
+  }
 
-// Afficher les ingrédients
-const ingredientsArray = getIngredients(recipes);
-displayTags(ingredientsArray, displayIngredientTag);
+  // Afficher les ingrédients
+  const ingredientsArray = getIngredients(recipes);
+  displayTags(ingredientsArray, displayIngredientTag);
 
-// Afficher les appareils
-const appliancesArray = getAppliances(recipes);
-displayTags(appliancesArray, displayApplianceTag);
+  // Afficher les appareils
+  const appliancesArray = getAppliances(recipes);
+  displayTags(appliancesArray, displayApplianceTag);
 
-// Afficher les ustensiles
-const ustensilsArray = getUstensil(recipes);
-displayTags(ustensilsArray, displayUstensilTag);
+  // Afficher les ustensiles
+  const ustensilsArray = getUstensil(recipes);
+  displayTags(ustensilsArray, displayUstensilTag);
 
-
+  //   //**************search ingredient tag*/
+  const ingredientList = document.getElementById("ingredientList");
+  const ingredientInput = document.getElementById("ingredientInput");
+  const searchIngredientTag = () => {
+    const inputValue = ingredientInput.value
+      .toLowerCase()
+      .trim()
+      .replace(/\s/g, "");
+    console.log(inputValue);
+    // Recherche à partir du premier caractère
+    if (inputValue.length > 0) {
+      // Si l'utilisateur a saisi quelque chose, effectuez la recherche et affichez les résultats
+      const matchingTags = ingredientsArray.filter((tag) =>
+        tag.includes(inputValue)
+      );
+      if (matchingTags.length > 0) {
+        ingredientList.innerHTML = ""; // Supprime tous les éléments enfants
+        displayTags(matchingTags, displayIngredientTag);
+      } else {
+        // Si aucun résultat ne correspond à la recherche, affichez un message indiquant qu'aucun résultat n'a été trouvé
+        ingredientList.innerHTML = "<li>Aucun résultat trouvé</li>";
+      }
+    } else {
+      // Si le champ de recherche est vide, affichez la liste complète d'ingrédients
+      ingredientList.innerHTML = ""; // Supprime tous les éléments enfants
+      displayTags(ingredientsArray, displayIngredientTag);
+    }
+  };
+//   //**************search appliance tag*/
+const applianceList = document.getElementById("applianceList");
+const appareilInput = document.getElementById("appareilInput");
+const searchApplianceTag = () => {
+  const inputValue = appareilInput.value
+    .toLowerCase()
+    .trim()
+    .replace(/\s/g, "");
+  console.log(inputValue);
+  if (inputValue.length > 0) {
+    const matchingTags = appliancesArray.filter((tag) =>
+      tag.includes(inputValue)
+    );
+    if (matchingTags.length > 0) {
+      applianceList.innerHTML = ""; 
+      displayTags(matchingTags, displayApplianceTag);
+    } else {
+      applianceList.innerHTML = "<li>Aucun résultat trouvé</li>";
+    }
+  } else {
+    applianceList.innerHTML = "";
+    displayTags(appliancesArray, displayApplianceTag);
+  }
+};
+//   //**************search ustensile tag*/
+const ustensilList = document.getElementById("ustensilList");
+const ustensilInput = document.getElementById("ustensilInput");
+const searchUstensilTag = () => {
+  const inputValue = ustensilInput.value
+    .toLowerCase()
+    .trim()
+    .replace(/\s/g, "");
+  console.log(inputValue);
+  if (inputValue.length > 0) {
+    const matchingTags = ustensilsArray.filter((tag) =>
+      tag.includes(inputValue)
+    );
+    if (matchingTags.length > 0) {
+      ustensilList.innerHTML = ""; 
+      displayTags(matchingTags, displayUstensilTag);
+    } else {
+      ustensilList.innerHTML = "<li>Aucun résultat trouvé</li>";
+    }
+  } else {
+    ustensilList.innerHTML = "";
+    displayTags(ustensilsArray, displayUstensilTag);
+  }
+};
   // Affichage initial des données
   displayData(recipes);
 
@@ -306,7 +389,9 @@ displayTags(ustensilsArray, displayUstensilTag);
 
   // totalRecipeElement.innerText = `${totalRecipesCount} recettes`;
 
-  totalRecipeElement.innerText = `${totalRecipesCount} ${pluralizeRecipe(totalRecipesCount)}`;
+  totalRecipeElement.innerText = `${totalRecipesCount} ${pluralizeRecipe(
+    totalRecipesCount
+  )}`;
   // Gestionnaire d'événements pour la recherche principale
   searchInput.addEventListener("input", () => {
     const searchValue = searchInput.value
@@ -337,8 +422,49 @@ displayTags(ustensilsArray, displayUstensilTag);
   });
 
   // Ajouter un gestionnaire d'événements ipour la recherche par tag d'ingrédients
-  const ingredientInput = document.getElementById("ingredientInput");
-  // ingredientInput.addEventListener("keyup", searchIngredientTag);
+  ingredientInput.addEventListener("keyup", searchIngredientTag);
+  appareilInput.addEventListener("keyup", searchApplianceTag);
+  ustensilInput.addEventListener("keyup", searchUstensilTag);
 };
 
 init();
+// //   //**************search ingredient*/
+// const ingredientInput = document.getElementById("ingredientInput");
+// const searchIngredientTag = () => {
+//   // clearDropdown();
+//   const inputValue = ingredientInput.value
+//     .toLowerCase()
+//     .trim()
+//     .replace(/\s/g, "");
+//     console.log(inputValue)
+//   // Recherche à partir du premier caractère
+//   if (inputValue.length > 0) {
+// console.log(ingredientsArray)
+//   }}
+//Vérifie si un tag correspond à l'entrée de l'utilisateur
+
+// const matchingTags = transformedArray.filter((tag) =>
+//   tag.includes(inputValue)
+// );
+// console.log(matchingTags)
+
+//     if (matchingTags.length > 0) {
+//       clearDropdown();
+//       matchingTags.forEach((tag) => displayIngredientTag(tag));
+//     // } else if (matchingTags.length = 0){
+//     //   filteredIngredientsArray
+//     //     .sort((a, b) => a.localeCompare(b, "fr"))
+//     //     .forEach((ingredient) => {
+//     //       displayIngredientTag(ingredient);
+//     //     });
+//     // }
+//   }
+//   }else if (inputValue.length = 0){
+//       filteredIngredientsArray
+//         .sort((a, b) => a.localeCompare(b, "fr"))
+//         .forEach((ingredient) => {
+//           displayIngredientTag(ingredient);
+//         });
+//     }
+//     }
+// };
