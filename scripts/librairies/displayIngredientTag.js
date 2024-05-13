@@ -44,8 +44,8 @@ export const displayIngredientTag = (ingredient) => {
 let ingredientTags = [];
 export const selectIngredientTag = (clickedElementContent, clickedElement, searchValue) => {
   // console.log(clickedElementContent)
-  // console.log(clickedElement)
-
+  console.log(clickedElement)
+  clickedElement.classList.add("disabled-link");
   // Vérifier si l'élément a déjà été sélectionné
   if (!ingredientTags.includes(clickedElementContent)) {
     // console.log(clickedElementContent)
@@ -86,6 +86,7 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
         ingredientTags.splice(index, 1); // Supprime le tag du tableau
       }
     });
+
     clickedElement.classList.add("disabled-link");
         // console.log("Ce tag a déjà été sélectionné.");
 

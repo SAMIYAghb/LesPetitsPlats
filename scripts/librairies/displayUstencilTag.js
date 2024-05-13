@@ -44,6 +44,7 @@ let ustensilTags = [];
 export const selectUstensilTag = (clickedElementContent, clickedElement, searchValue) => {
   // console.log(clickedElement)
   // console.log(clickedElementContent)
+  // clickedElement.classList.add("disabled-link");
   // Vérifier si l'élément a déjà été sélectionné
   if (!ustensilTags.includes(clickedElementContent)) {
     ustensilTags.push(clickedElementContent);
@@ -71,18 +72,19 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
     const closeTag = document.createElement("i");
     closeTag.classList.add("fa-solid", "fa-circle-xmark");
     tag.appendChild(closeTag);
-
+    clickedElement.classList.add("disabled-link");
     // Gestionnaire d'événements pour supprimer le tag
     tag.addEventListener("click", () => {
       tag.style.display = "none"; // Cache le tag
       clickedElement.classList.remove("disabled-link"); // Réactive le lien
+      clickedElement.removeEventListener("click", ingredientClickHandler);
       const index = ustensilTags.indexOf(clickedElementContent);
       if (index !== -1) {
         ustensilTags.splice(index, 1); // Supprime le tag du tableau
       }
     });
 
-    clickedElement.classList.add("disabled-link");
+    // clickedElement.classList.add("disabled-link");
 
     filterRecipesByUstensilTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
 
