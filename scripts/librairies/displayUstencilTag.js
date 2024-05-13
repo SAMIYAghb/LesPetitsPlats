@@ -1,5 +1,5 @@
 import {
-  filterRecipesByUstensilTag
+  filterRecipesByTag
 } from "../page/index.js";
 
 //afficher les ustensil dans le dropdown menu
@@ -19,14 +19,6 @@ export const displayUstensilTag = (ustensil) => {
   link.setAttribute("href", "#");
   link.classList.add("link-ustensil");
 
-  //  Ajoute un gestionnaire d'événements au lien
-  // link.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   // console.log(e.target)
-
-  //   selectUstensilTag(ustensil, li); // Appel de la fonction pour sélectionner le tag
-  //   filterRecipesByUstensilTag(ustensil); // Utilise directement la valeur de l'ustensile
-  // });
   link.addEventListener("click", (e) => {
     e.preventDefault();
     // Récupère la valeur actuelle de la recherche
@@ -44,7 +36,7 @@ let ustensilTags = [];
 export const selectUstensilTag = (clickedElementContent, clickedElement, searchValue) => {
   // console.log(clickedElement)
   // console.log(clickedElementContent)
-  // clickedElement.classList.add("disabled-link");
+  clickedElement.classList.add("disabled-link");
   // Vérifier si l'élément a déjà été sélectionné
   if (!ustensilTags.includes(clickedElementContent)) {
     ustensilTags.push(clickedElementContent);
@@ -56,11 +48,6 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
     tag.classList.add("tag");
     tagContainer.appendChild(tag);
     // console.log(tag,'tag')
-
-    // tag.addEventListener('click', ()=>{
-    //   tag.style.display ='none';
-    //   clickedElement.classList.remove('disabled-link');
-    // })
     // Ajoute le contenu du tag
     const newTag = document.createElement("span");
     newTag.textContent = clickedElementContent;
@@ -72,7 +59,7 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
     const closeTag = document.createElement("i");
     closeTag.classList.add("fa-solid", "fa-circle-xmark");
     tag.appendChild(closeTag);
-    clickedElement.classList.add("disabled-link");
+    // clickedElement.classList.add("disabled-link");
     // Gestionnaire d'événements pour supprimer le tag
     tag.addEventListener("click", () => {
       tag.style.display = "none"; // Cache le tag
@@ -83,12 +70,12 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
         ustensilTags.splice(index, 1); // Supprime le tag du tableau
       }
     });
+// 
+ 
 
-    // clickedElement.classList.add("disabled-link");
+    // filterRecipesByUstensilTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
 
-    filterRecipesByUstensilTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
-
-    
+    filterRecipesByTag('ustensil', clickedElementContent, searchValue);
   
   
   }

@@ -1,6 +1,6 @@
 
-import {filterRecipesByIgredientTag, 
-  // filterRecipes
+import {
+  filterRecipesByTag
 } from '../page/index.js'
 
 // Récupère la liste ul où les ingrédients seront ajoutés
@@ -15,19 +15,11 @@ export const displayIngredientTag = (ingredient) => {
 
   // Crée un nouvel élément a
   const link = document.createElement("a");
-  // link.textContent = `${ingredient}`;
   link.textContent = ingredient;
   link.setAttribute("href", "#");
   link.classList.add("link-ingredient");
 
   //  Ajoute un gestionnaire d'événements au lien
-  // link.addEventListener("click", (e) => {
-  //   e.preventDefault();
-    
-  //   selectIngredientTag(ingredient, li);
-  //   filterRecipesByIgredientTag(ingredient); // Utilise directement la valeur de l'ustensile
-  //   // filterRecipes();
-  // });
 
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -60,12 +52,7 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
     const tag = document.createElement("div");
     tag.classList.add("tag");
     tagContainer.appendChild(tag);
-    // tag.addEventListener('click', ()=>{
-    //   tag.style.display ='none';
-    //   clickedElement.disabled = false;
-    //   clickedElement.classList.remove('disabled-link');
-    // })
-
+    
     const newTag = document.createElement("span");
     newTag.textContent = clickedElementContent;
     newTag.classList.add("tag-element");
@@ -90,7 +77,8 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
     clickedElement.classList.add("disabled-link");
         // console.log("Ce tag a déjà été sélectionné.");
 
-        filterRecipesByIgredientTag(clickedElementContent, searchValue);
+        // filterRecipesByIgredientTag(clickedElementContent, searchValue);
+        filterRecipesByTag('ingredient', clickedElementContent, searchValue)
   }
 
 
