@@ -1,5 +1,7 @@
 
-import {filterRecipesByApplianceTag, filterRecipes} from '../page/index.js'
+import {filterRecipesByApplianceTag,
+  //  filterRecipes
+  } from '../page/index.js'
 
 export const displayApplianceTag = (appliance) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
@@ -21,7 +23,7 @@ link.addEventListener("click", (e) => {
   
   selectApplianceTag(appliance, li); // Appel de la fonction pour sélectionner le tag
   filterRecipesByApplianceTag(appliance); // Utilise directement la valeur de l'appliance
-  filterRecipes()
+  // filterRecipes()
 });
   li.appendChild(link);
   applianceList.appendChild(li);

@@ -1,9 +1,5 @@
-
-
-
 const notFoundElement = document.querySelector(".not-found");
 // console.log(notFoundElement);
-
 
 export const searchRecipe = (recipes, searchValue, tagArrays) => {
   let recipesSearch = recipes;
@@ -19,56 +15,58 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     (!tagArrays || tagArrays.length === 0)
   ) {
     // Si la valeur de recherche est vide, retourner toutes les recettes
-    return recipes;
+    return recipesSearch;
   }
 
   // Filtrer les recettes en fonction de la valeur de recherche
-  let filteredRecipes = recipes.filter((recipe) => {
-    // Vérifier si le titre de la recette contient la valeur de recherche
-    if (
-      recipe.name
-        .toLowerCase()
-        .trim()
-        .replace(/\s/g, "")
-        .includes(searchValueTrimmed)
-    ) {
-      return true;
-    }
-    // Vérifier si la description de la recette contient la valeur de recherche
-    if (
-      recipe.description
-        .toLowerCase()
-        .trim()
-        .replace(/\s/g, "")
-        .includes(searchValueTrimmed)
-    ) {
-      return true;
-    }
-    // Vérifier si l'ingrédient de la recette contient la valeur de recherche
-    if (
-      recipe.ingredients.some((ingredientObj) => {
-        if (
-          typeof ingredientObj === "object" &&
-          "ingredient" in ingredientObj
-        ) {
-          return ingredientObj.ingredient
-            .toLowerCase()
-            .trim()
-            .replace(/\s/g, "")
-            .includes(searchValueTrimmed);
-        }
-        return false;
-      })
-    ) {
-      return true;
-    }
+  if (searchValueTrimmed.length !== 0) {
+    recipesSearch = recipesSearch.filter((recipe) => {
+      // Vérifier si le titre de la recette contient la valeur de recherche
+      if (
+        recipe.name
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, "")
+          .includes(searchValueTrimmed)
+      ) {
+        return true;
+      }
+      // Vérifier si la description de la recette contient la valeur de recherche
+      if (
+        recipe.description
+          .toLowerCase()
+          .trim()
+          .replace(/\s/g, "")
+          .includes(searchValueTrimmed)
+      ) {
+        return true;
+      }
+      // Vérifier si l'ingrédient de la recette contient la valeur de recherche
+      if (
+        recipe.ingredients.some((ingredientObj) => {
+          if (
+            typeof ingredientObj === "object" &&
+            "ingredient" in ingredientObj
+          ) {
+            return ingredientObj.ingredient
+              .toLowerCase()
+              .trim()
+              .replace(/\s/g, "")
+              .includes(searchValueTrimmed);
+          }
+          return false;
+        })
+      ) {
+        return true;
+      }
 
-    return false;
-  });
+      return false;
+    });
+  }
 
   // Filtrer les recettes en fonction des tags d'ingrédients sélectionnés
   if (tagArrays && tagArrays.selectedIngredientTagsArray.length > 0) {
-    filteredRecipes = filteredRecipes.filter((recipe) => {
+    recipesSearch = recipesSearch.filter((recipe) => {
       return tagArrays.selectedIngredientTagsArray.every((searchIngredient) => {
         return recipe.ingredients.some((ingredientObj) => {
           if (
@@ -84,134 +82,37 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
       });
     });
   }
-// Filtrer les recettes en fonction des tags d'appareil sélectionnés
-if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
-  filteredRecipes = filteredRecipes.filter((recipe) => {
-    return tagArrays.selectedApplianceTagsArray.every((tag) =>
-    recipe.appliance.toLowerCase().includes(tag.toLowerCase()))
+  // Filtrer les recettes en fonction des tags d'appareil sélectionnés
+  if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
+    recipesSearch = recipesSearch.filter((recipe) => {
+      return tagArrays.selectedApplianceTagsArray.every((tag) =>
+        recipe.appliance.toLowerCase().includes(tag.toLowerCase())
+      );
     });
-}
+  }
   // Filtrer les recettes en fonction des tags ustensil sélectionnés
-  if (tagArrays){
-    if(tagArrays.selectedUstensilTagsArray.length > 0) {
-      // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
-      filteredRecipes = filteredRecipes.filter(recipe => {
-        return tagArrays.selectedUstensilTagsArray.every(searchUstensil => {
-          return recipe.ustensils.some(ustensil =>
-            ustensil.toLowerCase().includes(searchUstensil.toLowerCase())
-          );
-        });
+
+  if (tagArrays && tagArrays.selectedUstensilTagsArray.length > 0) {
+    // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
+    recipesSearch = recipesSearch.filter((recipe) => {
+      return tagArrays.selectedUstensilTagsArray.every((searchUstensil) => {
+        return recipe.ustensils.some((ustensil) =>
+          ustensil.toLowerCase().includes(searchUstensil.toLowerCase())
+        );
       });
-    }
+    });
   }
-  const pluralizeRecipe = (count) => {
-    // console.log(count)
-    if (count === 0) {
-      return 'recette';
-    } else {
-      return count === 1 ? 'recette' : 'recettes';
-    }
-  };
-  // Afficher le compte du nombre de recettes filtrées
-  const totalRecipeElement = document.querySelector(".total-recipe");
-  // totalRecipeElement.innerText = `${filteredRecipes.length} recettes`;
-  let filteredRecipesCount = filteredRecipes.length;
-  totalRecipeElement.innerText = `${filteredRecipesCount} ${pluralizeRecipe(filteredRecipesCount)}`;
-  
+
   // Si aucune recette n'est trouvée, afficher "not found"
-  const notFoundElement = document.querySelector('.not-found');
-  if (filteredRecipes.length === 0) {
-    notFoundElement.innerText = "Aucune recette corresond à cette recherche";
-  } else {
-    notFoundElement.innerText = "";
-  }
+  //   const notFoundElement = document.querySelector(".not-found");
+  //   if (filteredRecipes.length === 0) {
+  //     notFoundElement.innerText = "Aucune recette corresond à cette recherche";
+  //   } else {
+  //     notFoundElement.innerText = "";
+  //   }
 
-  return filteredRecipes; // Renvoyer les recettes filtrées
+  return recipesSearch; // Renvoyer les recettes filtrées
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // export const searchRecipe =(recipes, searchValue, tagArray)=>{
 
@@ -241,4 +142,3 @@ if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
 // Si on veut vérifier qu'un élément est dans un tableau, on pourra utiliser la méthode Array.prototype.includes().
 
 // Par exemple, si vous recherchez "pomme" dans un tableau contenant ["pomme", "pomme de terre", "pommeau"], includes() retournerait true pour "pomme", mais aussi pour "pommeau", ce qui peut ne pas être souhaité. some() permet de spécifier des conditions plus complexes pour la recherche, ce qui peut être plus approprié dans certains cas.
-

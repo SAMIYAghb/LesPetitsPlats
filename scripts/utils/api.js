@@ -5,7 +5,14 @@ export const getRecipes = async () => {
   const data = await response.json();
   return data;
 };
-
+const pluralizeRecipe = (count) => {
+  // console.log(count)
+  if (count === 0) {
+    return "recette";
+  } else {
+    return count === 1 ? "recette" : "recettes";
+  }
+};
 export const recipes = await getRecipes();
 export function displayData(recipes) {
   // console.log(recipes)
@@ -17,4 +24,24 @@ export function displayData(recipes) {
     // console.log(card)
     recipeSection.appendChild(card); // Ajoutez la carte au conteneu
   });
+
+
+  let totalRecipesCount = recipes.length;
+    // console.log(totalRecipesCount)
+    const totalRecipeElement = document.querySelector(".total-recipe");
+    totalRecipeElement.innerText = `${totalRecipesCount} ${pluralizeRecipe(
+      totalRecipesCount
+    )}`;
+  // Si aucune recette n'est trouvée, afficher "not found"
+  const notFoundElement = document.querySelector(".not-found");
+  // console.log(notFoundElement)
+  if (totalRecipesCount === 0) {
+    notFoundElement.innerText = "Aucune recette corresond à cette recherche";
+  } else {
+    notFoundElement.innerText = "";
+  }
+
 }
+
+
+    
