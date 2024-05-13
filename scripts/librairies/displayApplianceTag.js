@@ -1,6 +1,5 @@
 
-import {filterRecipesByApplianceTag,
-  //  filterRecipes
+import {filterRecipesByApplianceTag
   } from '../page/index.js'
 
 export const displayApplianceTag = (appliance) => {
@@ -17,20 +16,29 @@ export const displayApplianceTag = (appliance) => {
   link.setAttribute("href", "#");
   link.classList.add("link-appliance");
   //  Ajoute un gestionnaire d'événements au lien
+// link.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   // console.log(e.target)
+  
+//   selectApplianceTag(appliance, li); // Appel de la fonction pour sélectionner le tag
+//   filterRecipesByApplianceTag(appliance); // Utilise directement la valeur de l'appliance
+//   // filterRecipes()
+// });
+
 link.addEventListener("click", (e) => {
   e.preventDefault();
-  // console.log(e.target)
-  
-  selectApplianceTag(appliance, li); // Appel de la fonction pour sélectionner le tag
-  filterRecipesByApplianceTag(appliance); // Utilise directement la valeur de l'appliance
-  // filterRecipes()
+  // Récupère la valeur actuelle de la recherche
+  const searchValue = document.getElementById("searchInput").value.trim();
+  // Appel de la fonction pour sélectionner le tag et filtrer les recettes
+  selectApplianceTag(appliance, li, searchValue);
 });
+
   li.appendChild(link);
   applianceList.appendChild(li);
 };
 
 let applianceTags = [];
-export const selectApplianceTag = (clickedElementContent, clickedElement) => {
+export const selectApplianceTag = (clickedElementContent, clickedElement, searchValue) => {
   // Vérifier si l'élément a déjà été sélectionné
   if (!applianceTags.includes(clickedElementContent)) {
     applianceTags.push(clickedElementContent);
@@ -64,6 +72,9 @@ export const selectApplianceTag = (clickedElementContent, clickedElement) => {
     });
     // Désactive le lien <a> après le clic
     clickedElement.classList.add("disabled-link");
+
+    filterRecipesByApplianceTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
+
   }
 };
 

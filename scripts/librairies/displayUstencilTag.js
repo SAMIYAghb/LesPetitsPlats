@@ -20,21 +20,28 @@ export const displayUstensilTag = (ustensil) => {
   link.classList.add("link-ustensil");
 
   //  Ajoute un gestionnaire d'événements au lien
+  // link.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   // console.log(e.target)
+
+  //   selectUstensilTag(ustensil, li); // Appel de la fonction pour sélectionner le tag
+  //   filterRecipesByUstensilTag(ustensil); // Utilise directement la valeur de l'ustensile
+  // });
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    // console.log(e.target)
-
-    selectUstensilTag(ustensil, li); // Appel de la fonction pour sélectionner le tag
-    filterRecipesByUstensilTag(ustensil); // Utilise directement la valeur de l'ustensile
+    // Récupère la valeur actuelle de la recherche
+    const searchValue = document.getElementById("searchInput").value.trim();
+    // Appel de la fonction pour sélectionner le tag et filtrer les recettes
+    selectUstensilTag(ustensil, li, searchValue);
   });
-
+  
   li.appendChild(link);
   ustensilList.appendChild(li);
 };
 
 // afficher le tag apres clique
 let ustensilTags = [];
-export const selectUstensilTag = (clickedElementContent, clickedElement) => {
+export const selectUstensilTag = (clickedElementContent, clickedElement, searchValue) => {
   // console.log(clickedElement)
   // console.log(clickedElementContent)
   // Vérifier si l'élément a déjà été sélectionné
@@ -76,6 +83,12 @@ export const selectUstensilTag = (clickedElementContent, clickedElement) => {
     });
 
     clickedElement.classList.add("disabled-link");
+
+    filterRecipesByUstensilTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
+
+    
+  
+  
   }
 };
 

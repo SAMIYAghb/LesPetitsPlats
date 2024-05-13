@@ -21,12 +21,20 @@ export const displayIngredientTag = (ingredient) => {
   link.classList.add("link-ingredient");
 
   //  Ajoute un gestionnaire d'événements au lien
+  // link.addEventListener("click", (e) => {
+  //   e.preventDefault();
+    
+  //   selectIngredientTag(ingredient, li);
+  //   filterRecipesByIgredientTag(ingredient); // Utilise directement la valeur de l'ustensile
+  //   // filterRecipes();
+  // });
+
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    
-    selectIngredientTag(ingredient, li);
-    filterRecipesByIgredientTag(ingredient); // Utilise directement la valeur de l'ustensile
-    // filterRecipes();
+    // Récupère la valeur actuelle de la recherche
+    const searchValue = document.getElementById("searchInput").value.trim();
+    // Appel de la fonction pour sélectionner le tag et filtrer les recettes
+    selectIngredientTag(ingredient, li, searchValue);
   });
   li.appendChild(link);
   ingredientList.appendChild(li);
@@ -34,7 +42,7 @@ export const displayIngredientTag = (ingredient) => {
 
 //afficher le tag selectionner tag jaune
 let ingredientTags = [];
-export const selectIngredientTag = (clickedElementContent, clickedElement) => {
+export const selectIngredientTag = (clickedElementContent, clickedElement, searchValue) => {
   // console.log(clickedElementContent)
   // console.log(clickedElement)
 
@@ -79,7 +87,9 @@ export const selectIngredientTag = (clickedElementContent, clickedElement) => {
       }
     });
     clickedElement.classList.add("disabled-link");
-        console.log("Ce tag a déjà été sélectionné.");
+        // console.log("Ce tag a déjà été sélectionné.");
+
+        filterRecipesByIgredientTag(clickedElementContent, searchValue);
   }
 
 

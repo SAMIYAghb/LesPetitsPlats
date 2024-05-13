@@ -55,11 +55,11 @@ console.log(searchValue)
 let filteredRecipes;
 // Filtrer les recettes en fonction du tag sélectionné
 let selectedIngredientTagsArray = [];
-export function filterRecipesByIgredientTag(selectedIngredientTags) {
+export function filterRecipesByIgredientTag(selectedIngredientTags, searchValue) {
   // Ajoutez le tag actuel à selectedIngredientTagsArray
   selectedIngredientTagsArray.push(selectedIngredientTags);
   filteredRecipes = searchRecipe(recipes, searchValue, {
-    selectedIngredientTagsArray,
+    selectedIngredientTagsArray:[selectedIngredientTags],
     selectedApplianceTagsArray,
     selectedUstensilTagsArray,
   });
@@ -75,13 +75,13 @@ export function filterRecipesByIgredientTag(selectedIngredientTags) {
 /**********appliances */
 //  Filtrer les recettes en fonction de la recherche actuelle et du tag appareil sélectionné
 let selectedApplianceTagsArray = [];
-export function filterRecipesByApplianceTag(selectedAapplianceTags) {
+export function filterRecipesByApplianceTag(selectedAapplianceTags, searchValue) {
   //ajouter le tag selectionne dans selectedApplianceTagsArray
   selectedApplianceTagsArray.push(selectedAapplianceTags);
 
   filteredRecipes = searchRecipe(recipes, searchValue, {
     selectedIngredientTagsArray,
-    selectedApplianceTagsArray,
+    selectedApplianceTagsArray:[selectedAapplianceTags],
     selectedUstensilTagsArray,
   });
   // afficher les recettes filtrées
@@ -98,19 +98,19 @@ export function filterRecipesByApplianceTag(selectedAapplianceTags) {
 const recipes = await getRecipes();
 // // Filtrer les recettes en fonction du tag sélectionné et prenon en consédération la recheche saisi dans la searchBar
 let selectedUstensilTagsArray = [];
-export function filterRecipesByUstensilTag(selectedUstensilTags) {
-  console.log(selectedUstensilTags)
+export function filterRecipesByUstensilTag(selectedUstensilTags, searchValue) {
+  // console.log(selectedUstensilTags)
   selectedUstensilTagsArray.push(selectedUstensilTags);
   
   const filteredRecipes = searchRecipe(recipes, searchValue, {
     selectedIngredientTagsArray,
     selectedApplianceTagsArray,
-    selectedUstensilTagsArray,
+    selectedUstensilTagsArray: [selectedUstensilTags],
   });
   // console.log(selectedIngredientTagsArray,
   //   selectedApplianceTagsArray,
   //   selectedUstensilTagsArray,"depuis filterRecipesByUstensilTag")
-console.log(filteredRecipes, 'filterRecipesByUstensilTag')
+// console.log(filteredRecipes, 'filterRecipesByUstensilTag')
   displayData(filteredRecipes);
 
       updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
