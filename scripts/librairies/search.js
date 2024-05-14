@@ -103,16 +103,10 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     });
   }
 
-  // Si aucune recette n'est trouvée, afficher "not found"
-  //   const notFoundElement = document.querySelector(".not-found");
-  //   if (filteredRecipes.length === 0) {
-  //     notFoundElement.innerText = "Aucune recette corresond à cette recherche";
-  //   } else {
-  //     notFoundElement.innerText = "";
-  //   }
 
   return recipesSearch; // Renvoyer les recettes filtrées
 };
+
 
 // export const searchRecipe =(recipes, searchValue, tagArray)=>{
 

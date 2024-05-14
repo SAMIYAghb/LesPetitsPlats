@@ -39,6 +39,7 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
   clickedElement.classList.add("disabled-link");
   // Vérifier si l'élément a déjà été sélectionné
   if (!ustensilTags.includes(clickedElementContent)) {
+    // clickedElement.classList.add("disabled-link");
     ustensilTags.push(clickedElementContent);
 
     const tagContainer = document.querySelector(".tag-container");
@@ -64,7 +65,6 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
     tag.addEventListener("click", () => {
       tag.style.display = "none"; // Cache le tag
       clickedElement.classList.remove("disabled-link"); // Réactive le lien
-      clickedElement.removeEventListener("click", ingredientClickHandler);
       const index = ustensilTags.indexOf(clickedElementContent);
       if (index !== -1) {
         ustensilTags.splice(index, 1); // Supprime le tag du tableau
@@ -76,7 +76,7 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
     // filterRecipesByUstensilTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
 
     filterRecipesByTag('ustensil', clickedElementContent, searchValue);
-  
+    // clickedElement.classList.("disabled-link");
   
   }
 };
