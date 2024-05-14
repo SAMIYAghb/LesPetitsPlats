@@ -122,6 +122,7 @@ function updateSelectBox(filteredRecipes, listType, displayFunction) {
   sortedItems.forEach((item) => {
     displayFunction(item);
   });
+
 }
 
 const init = async () => {

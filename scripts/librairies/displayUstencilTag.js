@@ -1,7 +1,8 @@
 import {
   filterRecipesByTag
 } from "../page/index.js";
-
+// Définir un ensemble pour stocker les tags désactivés
+const disabledUstensilTags = new Set();
 //afficher les ustensil dans le dropdown menu
 export const displayUstensilTag = (ustensil) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
@@ -18,6 +19,11 @@ export const displayUstensilTag = (ustensil) => {
   // link.textContent = ustensil; // Utilise directement la valeur de l'ustensile
   link.setAttribute("href", "#");
   link.classList.add("link-ustensil");
+
+  // Vérifier si le tag est désactivé et ajouter la classe en conséquence
+  if (disabledUstensilTags.has(ustensil)) {
+    link.classList.add("disabled-link");
+  }
 
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -44,7 +50,7 @@ export const selectUstensilTag = (clickedElementContent, clickedElement, searchV
   if (!ustensilTags.includes(clickedElementContent)) {
     // clickedElement.classList.add("disabled-link");
     ustensilTags.push(clickedElementContent);
-
+disabledUstensilTags.add(clickedElementContent);
     const tagContainer = document.querySelector(".tag-container");
     // Crée le tag
     // Ajoute chaque tag sélectionné au conteneur de tags

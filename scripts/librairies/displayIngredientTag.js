@@ -3,6 +3,8 @@ import {
   filterRecipesByTag
 } from '../page/index.js'
 
+// Définir un ensemble pour stocker les tags désactivés
+const disabledIngredientTags = new Set();
 // Récupère la liste ul où les ingrédients seront ajoutés
 const ingredientList = document.getElementById("ingredientList");
 // Affichage les ingrédients triés dans le dropdown menu
@@ -18,6 +20,10 @@ export const displayIngredientTag = (ingredient) => {
   link.textContent = ingredient;
   link.setAttribute("href", "#");
   link.classList.add("link-ingredient");
+// Vérifier si le tag est désactivé et ajouter la classe en conséquence
+if (disabledIngredientTags.has(ingredient)) {
+  link.classList.add("disabled-link");
+}
 
   //  Ajoute un gestionnaire d'événements au lien
 
@@ -44,7 +50,7 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
     // Ajouter l'élément cliqué à la liste des ingrédients sélectionnés
     ingredientTags.push(clickedElementContent);
     // console.log(ingredientTags);
- 
+    disabledIngredientTags.add(clickedElementContent);
     const tagContainer = document.querySelector(".tag-container");
 
     // Ajoute chaque ingrédient sélectionné au conteneur de tags

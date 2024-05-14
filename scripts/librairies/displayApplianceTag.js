@@ -3,6 +3,8 @@ import {
   filterRecipesByTag
   } from '../page/index.js'
 
+  // Définir un ensemble pour stocker les tags désactivés
+const disabledApplianceTags = new Set();
 export const displayApplianceTag = (appliance) => {
   // Récupère la liste ul où les ingrédients seront ajoutés
   const applianceList = document.getElementById("applianceList");
@@ -15,10 +17,16 @@ export const displayApplianceTag = (appliance) => {
   const link = document.createElement("a");
   link.textContent = `${appliance}`;
   link.setAttribute("href", "#");
+   // Vérifier si le tag est désactivé et ajouter la classe en conséquence
+   if (disabledApplianceTags.has(appliance)) {
+    link.classList.add("disabled-link");
+
+  }
   link.classList.add("link-appliance");
   //  Ajoute un gestionnaire d'événements au lien
 link.addEventListener("click", (e) => {
   e.preventDefault();
+  e.target.classList.add("disabled-link");
   // Récupère la valeur actuelle de la recherche
   const searchValue = document.getElementById("searchInput").value.trim();
   // Appel de la fonction pour sélectionner le tag et filtrer les recettes
@@ -34,6 +42,7 @@ export const selectApplianceTag = (clickedElementContent, clickedElement, search
   // Vérifier si l'élément a déjà été sélectionné
   if (!applianceTags.includes(clickedElementContent)) {
     applianceTags.push(clickedElementContent);
+    disabledApplianceTags.add(clickedElementContent);
     const tagContainer = document.querySelector(".tag-container");
 
     // Ajoute chaque tag sélectionné au conteneur de tags
