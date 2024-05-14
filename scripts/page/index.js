@@ -3,7 +3,7 @@ import { displayIngredientTag } from "../librairies/displayIngredientTag.js";
 import { displayUstensilTag } from "../librairies/displayUstencilTag.js";
 import { searchRecipe } from "../librairies/search.js";
 import { getRecipes } from "../utils/api.js";
-import {displayData} from '../librairies/view.js'
+import { displayData } from "../librairies/view.js";
 
 const filterUniqueData = (recipes, property) => {
   const uniqueData = new Set();
@@ -44,7 +44,6 @@ const searchbar = document.getElementById("searchInput");
 
 const searchValue = searchbar.value.toLowerCase().trim().replace(/\s/g, "");
 
-
 let filteredRecipes;
 
 let selectedIngredientTagsArray = [];
@@ -79,7 +78,7 @@ export function filterRecipesByTag(tagType, selectedTag, searchValue) {
     selectedApplianceTagsArray,
     selectedUstensilTagsArray,
   });
-
+  console.log(filteredRecipes);
   displayData(filteredRecipes);
   updateSelectBox(filteredRecipes, "ustensil", displayUstensilTag);
   updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
@@ -123,7 +122,6 @@ function updateSelectBox(filteredRecipes, listType, displayFunction) {
   sortedItems.forEach((item) => {
     displayFunction(item);
   });
-
 }
 
 const init = async () => {
@@ -199,7 +197,18 @@ const init = async () => {
         applianceList.innerHTML = "";
         displayTags(matchingTags, displayApplianceTag);
       } else {
-        applianceList.innerHTML = "<li>Aucun résultat trouvé</li>";
+        // applianceList.innerHTML = "<li>Aucun résultat trouvé</li>";
+        // Création d'un nouvel élément li
+        const listItem = document.createElement("li");
+        // Création d'un nœud texte pour contenir le texte
+        const textNode = document.createTextNode("Aucun résultat trouvé");
+        // Ajout du nœud texte à l'élément li
+        listItem.appendChild(textNode);
+        // Nettoyage de tout contenu existant dans applianceList
+        applianceList.innerHTML = "";
+        // Ajout de l'élément li avec le texte brut à applianceList en toute sécurité
+        applianceList.appendChild(listItem);
+        // Encréant dynamiquement un nouvel élément  Cela garantit que le texte est inséré en toute sécurité dans le DOM sans risque d'exécution de code JavaScript indésirable.
       }
     } else {
       applianceList.innerHTML = "";
@@ -215,6 +224,9 @@ const init = async () => {
       .trim()
       .replace(/\s/g, "");
     // console.log(inputValue);
+    //    // Récupérer les ustensiles déjà filtrés au lieu de tous les ustensiles
+    // const filteredUstensils = getUstensil(filteredRecipes);
+    // console.log(filteredUstensils)
     if (inputValue.length > 0) {
       const matchingTags = ustensilsArray.filter((tag) =>
         tag.includes(inputValue)
@@ -247,6 +259,7 @@ const init = async () => {
         selectedApplianceTagsArray,
         selectedUstensilTagsArray,
       });
+
       displayData(recipesSearch);
       updateSelectBox(recipesSearch, "ustensil", displayUstensilTag);
       updateSelectBox(recipesSearch, "appliance", displayApplianceTag);
@@ -264,3 +277,6 @@ const init = async () => {
 };
 
 init();
+// Récupérer les ustensiles déjà filtrés au lieu de tous les ustensiles
+//  const filteredUstensils = getUstensil(filteredRecipes);
+//  console.log(filteredUstensils)

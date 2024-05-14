@@ -66,7 +66,7 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
     tag.addEventListener("click", () => {
       tag.style.display = "none"; // Cache le tag
       clickedElement.classList.remove("disabled-link"); // Réactive le lien
-      clickedElement.removeEventListener("click", ingredientClickHandler);
+      // clickedElement.removeEventListener("click", ingredientClickHandler);
 
       const index = ingredientTags.indexOf(clickedElementContent);
       if (index !== -1) {
