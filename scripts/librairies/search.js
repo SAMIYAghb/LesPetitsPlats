@@ -79,6 +79,7 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
     recipesSearch = recipesSearch.filter((recipe) => {
       return tagArrays.selectedUstensilTagsArray.every((searchUstensil) => {
+        // console.log(searchUstensil)
         const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
         const ustensilRegex = new RegExp(escapedUstensil, "i");
         return recipe.ustensils.some((ustensil) =>
@@ -90,6 +91,49 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
 
   return recipesSearch; // Renvoyer les recettes filtrées
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // La méthode some() teste si au moins un élément du tableau passe le test implémenté par la fonction fournie. Elle renvoie un booléen indiquant le résultat du test.
 // const array = [1, 2, 3, 4, 5];
@@ -107,3 +151,8 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
 // const resultat = regex.test(phrase);
 
 // console.log(resultat); // Cela affichera false car la phrase ne contient pas le mot "chat".
+
+
+
+
+

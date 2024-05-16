@@ -1,6 +1,7 @@
 
 import {
-  filterRecipesByTag
+  // filterRecipesByTag
+  filterRecipesByIgredientTag
 } from '../page/index.js'
 
 // Définir un ensemble pour stocker les tags désactivés
@@ -42,7 +43,7 @@ if (disabledIngredientTags.has(ingredient)) {
 let ingredientTags = [];
 export const selectIngredientTag = (clickedElementContent, clickedElement, searchValue) => {
   // console.log(clickedElementContent)
-  console.log(clickedElement)
+  // console.log(clickedElement)
   clickedElement.classList.add("disabled-link");
   // Vérifier si l'élément a déjà été sélectionné
   if (!ingredientTags.includes(clickedElementContent)) {
@@ -84,7 +85,7 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
         // console.log("Ce tag a déjà été sélectionné.");
 
         // filterRecipesByIgredientTag(clickedElementContent, searchValue);
-        filterRecipesByTag('ingredient', clickedElementContent, searchValue)
+        filterRecipesByIgredientTag( clickedElementContent, searchValue)
   }
 
 

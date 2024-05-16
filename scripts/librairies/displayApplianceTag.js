@@ -1,6 +1,7 @@
 
 import {
-  filterRecipesByTag
+  // filterRecipesByTag
+  filterRecipesByApplianceTag
   } from '../page/index.js'
 
   // Définir un ensemble pour stocker les tags désactivés
@@ -72,7 +73,7 @@ export const selectApplianceTag = (clickedElementContent, clickedElement, search
     clickedElement.classList.add("disabled-link");
 
     // filterRecipesByApplianceTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
-    filterRecipesByTag('appliance',clickedElementContent, searchValue )
+    filterRecipesByApplianceTag(clickedElementContent, searchValue )
   }
 };
 
