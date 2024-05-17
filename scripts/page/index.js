@@ -176,7 +176,6 @@ export function filterRecipesByIgredientTag(
   updateSelectBox(filteredRecipes, "appliance", displayApplianceTag);
   updateSelectBox(filteredRecipes, "ingredient", displayIngredientTag);
 
-
   const ingredientTags = updateSelectBox(
     filteredRecipes,
     "ingredient",
@@ -193,7 +192,6 @@ export function filterRecipesByIgredientTag(
     selectedIngredientTagsArray: selectedIngredientTagsArray,
     filteredIngredientTags: filteredIngredientTags,
   };
-  
 }
 
 const recipes = await getRecipes();
@@ -288,38 +286,89 @@ const init = async () => {
     // Recherche à partir du premier caractère
 
     const tagsArray = Object.values(filteredIngredientTags);
-    console.log(filteredIngredientTags)
-     console.log(tagsArray)
-    // Filtrer les tags correspondants
-    const matchingTags = tagsArray.reduce((acc, tagArray) => {
-      // Vérifier chaque élément du tableau tagArray
-      const matchingSubTags = tagArray.filter((tag) =>
-        tag.toLowerCase().includes(inputValue)
-      );
-      if (matchingSubTags.length > 0) {
-        acc.push(matchingSubTags);
-      }
-      return acc;
-    }, []);
 
-    // Si des tags correspondants sont trouvés
-    if (matchingTags.length > 0) {
-      ingredientList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
-      displayTags(matchingTags.flat(), displayIngredientTag); // Afficher les tags correspondants
-    } else {
-      // Si aucun tag correspondant n'est trouvé
-      ingredientList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
-    }
-    
-  };
+    if(inputValue.length > 0){
+      let originalMatchingTags;
+          if ( ingredientsArray) {
+            // console.log(ustensilsArray);
+             originalMatchingTags = ingredientsArray.filter((tag) =>
+              tag.toLowerCase().includes(inputValue)
+            );
+            // console.log(originalMatchingTags);
+            // console.log(originalMatchingTags.length);
+            if (originalMatchingTags.length > 0) {
+              ingredientList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
+              displayTags(originalMatchingTags, displayIngredientTag); // Afficher les tags correspondants
+            } else {
+              ingredientList.innerHTML = "";
+              displayTags(ustensilsArray, displayIngredientTag);
+              // Si aucun tag correspondant n'est trouvé
+              ingredientList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
+            }
+          }
+          
+          if (tagsArray) {
+            // console.log(tagsArray)
+            // Filtrer les tags correspondants
+            const matchingTags = tagsArray.reduce((acc, tagArray) => {
+              // Vérifier chaque élément du tableau tagArray
+              const matchingSubTags = tagArray.filter((tag) =>
+                tag.toLowerCase().includes(inputValue)
+              );
+              if (matchingSubTags.length > 0) {
+                acc.push(...matchingSubTags);
+              }
+              return acc;
+            }, []);
+            // console.log(matchingTags )
+            // console.log(matchingTags.flat())
+            // console.log(matchingTags.length)
+            // Si des tags correspondants sont trouvés
+            if (matchingTags.length > 0) {
+              ingredientList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
+              displayTags(matchingTags.flat(), displayIngredientTag); // Afficher les tags correspondants
+            } else if(originalMatchingTags.length == 0) {
+              ingredientList.innerHTML = "";
+              displayTags(tagsArray, displayIngredientTag);
+              // Si aucun tag correspondant n'est trouvé
+              ingredientList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
+            }
+          }
+      
+      
+    // console.log(filteredIngredientTags);
+    // console.log(tagsArray);
+    // // Filtrer les tags correspondants
+    // const matchingTags = tagsArray.reduce((acc, tagArray) => {
+    //   // Vérifier chaque élément du tableau tagArray
+    //   const matchingSubTags = tagArray.filter((tag) =>
+    //     tag.toLowerCase().includes(inputValue)
+    //   );
+    //   if (matchingSubTags.length > 0) {
+    //     acc.push(matchingSubTags);
+    //   }
+    //   return acc;
+    // }, []);
+
+    // // Si des tags correspondants sont trouvés
+    // if (matchingTags.length > 0) {
+    //   ingredientList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
+    //   displayTags(matchingTags.flat(), displayIngredientTag); // Afficher les tags correspondants
+    // } else {
+    //   // Si aucun tag correspondant n'est trouvé
+    //   ingredientList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
+    // }
+  }; 
+}
   //   //**************search appliance tag*/
   const searchApplianceTag = () => {
     const inputValue = appareilInput.value
       .toLowerCase()
       .trim()
       .replace(/\s/g, "");
-    console.log(inputValue);
+    // console.log(inputValue);
     if (inputValue.length > 0) {
+      let originalMatchingTags;
       const matchingTags = appliancesArray.filter((tag) =>
         tag.includes(inputValue)
       );
@@ -351,31 +400,93 @@ const init = async () => {
       .toLowerCase()
       .trim()
       .replace(/\s/g, "");
-    // console.log(inputValue);
-    // console.log(typeof filteredUstensilTags);
+
     // Obtenir les valeurs de l'objet filteredUstensilTags
     const tagsArray = Object.values(filteredUstensilTags);
-    //  console.log(tagsArray[0])
-    // Filtrer les tags correspondants
-    const matchingTags = tagsArray.reduce((acc, tagArray) => {
-      // Vérifier chaque élément du tableau tagArray
-      const matchingSubTags = tagArray.filter((tag) =>
+if(inputValue.length > 0){
+let originalMatchingTags;
+    if ( ustensilsArray) {
+      // console.log(ustensilsArray);
+       originalMatchingTags = ustensilsArray.filter((tag) =>
         tag.toLowerCase().includes(inputValue)
       );
-      if (matchingSubTags.length > 0) {
-        acc.push(matchingSubTags);
+      // console.log(originalMatchingTags);
+      // console.log(originalMatchingTags.length);
+      if (originalMatchingTags.length > 0) {
+        ustensilList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
+        displayTags(originalMatchingTags, displayUstensilTag); // Afficher les tags correspondants
+      } else {
+        ustensilList.innerHTML = "";
+        displayTags(ustensilsArray, displayUstensilTag);
+        // Si aucun tag correspondant n'est trouvé
+        ustensilList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
       }
-      return acc;
-    }, []);
-
-    // Si des tags correspondants sont trouvés
-    if (matchingTags.length > 0) {
-      ustensilList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
-      displayTags(matchingTags.flat(), displayUstensilTag); // Afficher les tags correspondants
-    } else {
-      // Si aucun tag correspondant n'est trouvé
-      ustensilList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
     }
+    
+    if (tagsArray) {
+      // console.log(tagsArray)
+      // Filtrer les tags correspondants
+      const matchingTags = tagsArray.reduce((acc, tagArray) => {
+        // Vérifier chaque élément du tableau tagArray
+        const matchingSubTags = tagArray.filter((tag) =>
+          tag.toLowerCase().includes(inputValue)
+        );
+        if (matchingSubTags.length > 0) {
+          acc.push(...matchingSubTags);
+        }
+        return acc;
+      }, []);
+      // console.log(matchingTags )
+      // console.log(matchingTags.flat())
+      // console.log(matchingTags.length)
+      // Si des tags correspondants sont trouvés
+      if (matchingTags.length > 0) {
+        ustensilList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
+        displayTags(matchingTags.flat(), displayUstensilTag); // Afficher les tags correspondants
+      } else if(originalMatchingTags.length == 0) {
+        ustensilList.innerHTML = "";
+        displayTags(tagsArray, displayUstensilTag);
+        // Si aucun tag correspondant n'est trouvé
+        ustensilList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
+      }
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+  // Combine the results from both filters
+  // const combinedMatchingTags = [...originalMatchingTags, ...matchingTags];
+
+  // if (combinedMatchingTags.length > 0) {
+  //   ustensilList.innerHTML = ""; // Vider la liste pour afficher les nouveaux tags
+  //   displayTags(combinedMatchingTags, displayUstensilTag); // Afficher les tags correspondants
+  // } else {
+  //   ustensilList.innerHTML = "<li>Aucun résultat trouvé</li>"; // Afficher un message d'erreur
+  // }
+// } else {
+//   // Si inputValue est vide, afficher tous les ustensiles (optionnel, selon votre besoin)
+//   ustensilList.innerHTML = "";
+//   displayTags(ustensilsArray, displayUstensilTag);
+
+
+
+// }
+
   };
   // Affichage initial des données
   displayData(recipes);
