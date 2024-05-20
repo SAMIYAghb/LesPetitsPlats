@@ -81,6 +81,7 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
         // console.log(ingredientTags)
         // console.log(typeof(ingredientTags))
       }
+      // Met à jour la liste des recettes en fonction des tags restants
       let remainingTags = ingredientTags.join(',');
       // console.log(remainingTags)
       // console.log(typeof(remainingTags),'typeof remainingTags')

@@ -104,7 +104,7 @@ const searchValue = searchbar.value.toLowerCase().trim().replace(/\s/g, "");
 // }
 
 export function filterRecipesByUstensilTag(selectedUstensilTag, searchValue) {
-  console.log(selectedUstensilTag, 'selectedUstensilTag')
+  // console.log(selectedUstensilTag, 'selectedUstensilTag')
   let recipesSearch = recipes;
   // console.log(selectedUstensilTag)
   // console.log(typeof(selectedUstensilTag))
@@ -181,7 +181,7 @@ export function filterRecipesByIgredientTag(
   selectedIngredientTag,
   searchValue
 ) {
-  console.log(selectedIngredientTag, 'selectedIngredientTag')
+  // console.log(selectedIngredientTag, 'selectedIngredientTag')
   let recipesSearch = recipes;
   // Vérifier si aucun tag n'est sélectionné
   if (!selectedIngredientTag) {
