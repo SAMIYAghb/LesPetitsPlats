@@ -79,7 +79,7 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
     // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
     recipesSearch = recipesSearch.filter((recipe) => {
       return tagArrays.selectedUstensilTagsArray.every((searchUstensil) => {
-        // console.log(searchUstensil)
+        // console.log(typeof(searchUstensil))
         const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
         const ustensilRegex = new RegExp(escapedUstensil, "i");
         return recipe.ustensils.some((ustensil) =>
@@ -94,40 +94,146 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
 
 
 
+// function escapeRegExp(string) {
+//   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// }
 
+// export const searchRecipe = (recipes, searchValue, tagArrays) => {
+//   let recipesSearch = recipes;
+//   const searchValueTrimmed = searchValue
+//     .toLowerCase()
+//     .trim()
+//     .replace(/\s/g, "");
 
+//   if (
+//     searchValueTrimmed.length === 0 &&
+//     (!tagArrays || tagArrays.length === 0)
+//   ) {
+//     return recipesSearch;
+//   }
 
+//   if (searchValueTrimmed.length !== 0) {
+//     const escapedSearchValue = escapeRegExp(searchValueTrimmed);
+//     const regex = new RegExp(escapedSearchValue, "i");
+//     const filteredRecipes = [];
 
+//     for (let i = 0; i < recipesSearch.length; i++) {
+//       const recipe = recipesSearch[i];
+//       if (
+//         regex.test(recipe.name.toLowerCase().replace(/\s/g, "")) ||
+//         regex.test(recipe.description.toLowerCase().replace(/\s/g, ""))
+//       ) {
+//         filteredRecipes.push(recipe);
+//         continue;
+//       }
 
+//       for (let j = 0; j < recipe.ingredients.length; j++) {
+//         const ingredientObj = recipe.ingredients[j];
+//         if (
+//           typeof ingredientObj === "object" &&
+//           "ingredient" in ingredientObj &&
+//           regex.test(ingredientObj.ingredient.toLowerCase().replace(/\s/g, ""))
+//         ) {
+//           filteredRecipes.push(recipe);
+//           break;
+//         }
+//       }
+//     }
+//     recipesSearch = filteredRecipes;
+//   }
 
+//   if (tagArrays && tagArrays.selectedIngredientTagsArray.length > 0) {
+//     const filteredRecipes = [];
 
+//     for (let i = 0; i < recipesSearch.length; i++) {
+//       const recipe = recipesSearch[i];
+//       let match = true;
 
+//       for (let j = 0; j < tagArrays.selectedIngredientTagsArray.length; j++) {
+//         const searchIngredient = tagArrays.selectedIngredientTagsArray[j];
+//         const escapedTag = escapeRegExp(searchIngredient.toLowerCase());
+//         const tagRegex = new RegExp(escapedTag, "i");
 
+//         let ingredientMatch = false;
+//         for (let k = 0; k < recipe.ingredients.length; k++) {
+//           const ingredientObj = recipe.ingredients[k];
+//           if (tagRegex.test(ingredientObj.ingredient.toLowerCase())) {
+//             ingredientMatch = true;
+//             break;
+//           }
+//         }
 
+//         if (!ingredientMatch) {
+//           match = false;
+//           break;
+//         }
+//       }
+//       if (match) {
+//         filteredRecipes.push(recipe);
+//       }
+//     }
+//     recipesSearch = filteredRecipes;
+//   }
 
+//   if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
+//     const filteredRecipes = [];
 
+//     for (let i = 0; i < recipesSearch.length; i++) {
+//       const recipe = recipesSearch[i];
+//       let match = true;
 
+//       for (let j = 0; j < tagArrays.selectedApplianceTagsArray.length; j++) {
+//         const tag = tagArrays.selectedApplianceTagsArray[j];
+//         const escapedTag = escapeRegExp(tag.toLowerCase());
+//         const tagRegex = new RegExp(escapedTag, "i");
 
+//         if (!tagRegex.test(recipe.appliance.toLowerCase())) {
+//           match = false;
+//           break;
+//         }
+//       }
+//       if (match) {
+//         filteredRecipes.push(recipe);
+//       }
+//     }
+//     recipesSearch = filteredRecipes;
+//   }
 
+//   if (tagArrays && tagArrays.selectedUstensilTagsArray.length > 0) {
+//     const filteredRecipes = [];
 
+//     for (let i = 0; i < recipesSearch.length; i++) {
+//       const recipe = recipesSearch[i];
+//       let match = true;
 
+//       for (let j = 0; j < tagArrays.selectedUstensilTagsArray.length; j++) {
+//         const searchUstensil = tagArrays.selectedUstensilTagsArray[j];
+//         const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
+//         const ustensilRegex = new RegExp(escapedUstensil, "i");
 
+//         let ustensilMatch = false;
+//         for (let k = 0; k < recipe.ustensils.length; k++) {
+//           const ustensil = recipe.ustensils[k];
+//           if (ustensilRegex.test(ustensil.toLowerCase())) {
+//             ustensilMatch = true;
+//             break;
+//           }
+//         }
 
+//         if (!ustensilMatch) {
+//           match = false;
+//           break;
+//         }
+//       }
+//       if (match) {
+//         filteredRecipes.push(recipe);
+//       }
+//     }
+//     recipesSearch = filteredRecipes;
+//   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//   return recipesSearch;
+// };
 
 
 
@@ -151,8 +257,3 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
 // const resultat = regex.test(phrase);
 
 // console.log(resultat); // Cela affichera false car la phrase ne contient pas le mot "chat".
-
-
-
-
-

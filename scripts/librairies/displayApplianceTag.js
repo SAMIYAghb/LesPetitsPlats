@@ -68,9 +68,13 @@ export const selectApplianceTag = (clickedElementContent, clickedElement, search
       if (index !== -1) {
         applianceTags.splice(index, 1); // Supprime le tag du tableau
       }
+      let remainingTags = applianceTags.join(',');
+      filterRecipesByApplianceTag(remainingTags, searchValue )
+
+
     });
     // Désactive le lien <a> après le clic
-    clickedElement.classList.add("disabled-link");
+    // clickedElement.classList.add("disabled-link");
 
     // filterRecipesByApplianceTag(clickedElementContent, searchValue); // Passe la valeur de recherche à la fonction de filtrage
     filterRecipesByApplianceTag(clickedElementContent, searchValue )

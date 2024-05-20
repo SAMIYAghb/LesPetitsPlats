@@ -78,14 +78,21 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
       const index = ingredientTags.indexOf(clickedElementContent);
       if (index !== -1) {
         ingredientTags.splice(index, 1); // Supprime le tag du tableau
+        // console.log(ingredientTags)
+        // console.log(typeof(ingredientTags))
       }
+      let remainingTags = ingredientTags.join(',');
+      // console.log(remainingTags)
+      // console.log(typeof(remainingTags),'typeof remainingTags')
+      filterRecipesByIgredientTag( remainingTags, searchValue)
     });
 
-    clickedElement.classList.add("disabled-link");
+    // clickedElement.classList.add("disabled-link");
         // console.log("Ce tag a déjà été sélectionné.");
 
         // filterRecipesByIgredientTag(clickedElementContent, searchValue);
-        filterRecipesByIgredientTag( clickedElementContent, searchValue)
+        filterRecipesByIgredientTag( ingredientTags.join(','), searchValue)
+        // console.log(clickedElementContent,'clickedElementContent')
   }
 
 
