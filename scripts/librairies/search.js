@@ -1,99 +1,239 @@
-// Fonction pour échapper les caractères spéciaux dans une expression régulière
+// // Fonction pour échapper les caractères spéciaux dans une expression régulière
+// function escapeRegExp(string) {
+//   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// }
+// export const searchRecipe = (recipes, searchValue, tagArrays) => {
+//   let recipesSearch = recipes;
+//   // Supprimer les espaces de la valeur de recherche
+//   const searchValueTrimmed = searchValue
+//     .toLowerCase()
+//     .trim()
+//     .replace(/\s/g, "");
+
+//   // Vérifier si la valeur de recherche est vide après la suppression des espaces
+//   if (
+//     searchValueTrimmed.length === 0 &&
+//     (!tagArrays || tagArrays.length === 0)
+//   ) {
+//     // Si la valeur de recherche est vide, retourner toutes les recettes
+//     return recipesSearch;
+//   }
+
+//   // Filtrer les recettes en fonction de la valeur de recherche
+//   if (searchValueTrimmed.length !== 0) {
+//     const escapedSearchValue = escapeRegExp(searchValueTrimmed);
+//     // Utilisation de RegExp pour échapper les caractères spéciaux dans la recherche
+//     const regex = new RegExp(escapedSearchValue, "i");
+//     recipesSearch = recipesSearch.filter((recipe) => {
+//       if (regex.test(recipe.name.toLowerCase().replace(/\s/g, ""))) {
+//         return true;
+//       }
+
+//       if (regex.test(recipe.description.toLowerCase().replace(/\s/g, ""))) {
+//         return true;
+//       }
+//       // Vérifier si l'ingrédient de la recette contient la valeur de recherche
+//       if (
+//         recipe.ingredients.some((ingredientObj) => {
+//           if (
+//             typeof ingredientObj === "object" &&
+//             "ingredient" in ingredientObj
+//           ) {
+//             return regex.test(
+//               ingredientObj.ingredient.toLowerCase().replace(/\s/g, "")
+//             );
+//           }
+//           return false;
+//         })
+//       ) {
+//         return true;
+//       }
+//       return false;
+//     });
+//   }
+
+//   // Filtrer les recettes en fonction des tags d'ingrédients sélectionnés
+//   if (tagArrays && tagArrays.selectedIngredientTagsArray.length > 0) {
+//     recipesSearch = recipesSearch.filter((recipe) => {
+//       return tagArrays.selectedIngredientTagsArray.every((searchIngredient) => {
+//         const escapedTag = escapeRegExp(searchIngredient.toLowerCase());
+//         const tagRegex = new RegExp(escapedTag, "i");
+//         return recipe.ingredients.some((ingredientObj) =>
+//           tagRegex.test(ingredientObj.ingredient.toLowerCase())
+//         );
+//       });
+//     });
+//   }
+//   // Filtrer les recettes en fonction des tags d'appareil sélectionnés
+//   if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
+//     recipesSearch = recipesSearch.filter((recipe) => {
+//       return tagArrays.selectedApplianceTagsArray.every((tag) => {
+//         const escapedTag = escapeRegExp(tag.toLowerCase());
+//         const tagRegex = new RegExp(escapedTag, "i");
+//         return tagRegex.test(recipe.appliance.toLowerCase());
+//       });
+//     });
+//   }
+//   // Filtrer les recettes en fonction des tags ustensil sélectionnés
+//   if (tagArrays && tagArrays.selectedUstensilTagsArray.length > 0) {
+//     // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
+//     recipesSearch = recipesSearch.filter((recipe) => {
+//       return tagArrays.selectedUstensilTagsArray.every((searchUstensil) => {
+//         // console.log(searchUstensil)
+//         const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
+//         const ustensilRegex = new RegExp(escapedUstensil, "i");
+//         return recipe.ustensils.some((ustensil) =>
+//           ustensilRegex.test(ustensil.toLowerCase())
+//         );
+//       });
+//     });
+//   }
+
+//   return recipesSearch; // Renvoyer les recettes filtrées
+// };
+
+
+
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
+
 export const searchRecipe = (recipes, searchValue, tagArrays) => {
   let recipesSearch = recipes;
-  // Supprimer les espaces de la valeur de recherche
   const searchValueTrimmed = searchValue
     .toLowerCase()
     .trim()
     .replace(/\s/g, "");
 
-  // Vérifier si la valeur de recherche est vide après la suppression des espaces
   if (
     searchValueTrimmed.length === 0 &&
     (!tagArrays || tagArrays.length === 0)
   ) {
-    // Si la valeur de recherche est vide, retourner toutes les recettes
     return recipesSearch;
   }
 
-  // Filtrer les recettes en fonction de la valeur de recherche
   if (searchValueTrimmed.length !== 0) {
     const escapedSearchValue = escapeRegExp(searchValueTrimmed);
-    // Utilisation de RegExp pour échapper les caractères spéciaux dans la recherche
     const regex = new RegExp(escapedSearchValue, "i");
-    recipesSearch = recipesSearch.filter((recipe) => {
-      if (regex.test(recipe.name.toLowerCase().replace(/\s/g, ""))) {
-        return true;
+    const filteredRecipes = [];
+
+    for (let i = 0; i < recipesSearch.length; i++) {
+      const recipe = recipesSearch[i];
+      if (
+        regex.test(recipe.name.toLowerCase().replace(/\s/g, "")) ||
+        regex.test(recipe.description.toLowerCase().replace(/\s/g, ""))
+      ) {
+        filteredRecipes.push(recipe);
+        continue;
       }
 
-      if (regex.test(recipe.description.toLowerCase().replace(/\s/g, ""))) {
-        return true;
+      for (let j = 0; j < recipe.ingredients.length; j++) {
+        const ingredientObj = recipe.ingredients[j];
+        if (
+          typeof ingredientObj === "object" &&
+          "ingredient" in ingredientObj &&
+          regex.test(ingredientObj.ingredient.toLowerCase().replace(/\s/g, ""))
+        ) {
+          filteredRecipes.push(recipe);
+          break;
+        }
       }
-      // Vérifier si l'ingrédient de la recette contient la valeur de recherche
-      if (
-        recipe.ingredients.some((ingredientObj) => {
-          if (
-            typeof ingredientObj === "object" &&
-            "ingredient" in ingredientObj
-          ) {
-            return regex.test(
-              ingredientObj.ingredient.toLowerCase().replace(/\s/g, "")
-            );
-          }
-          return false;
-        })
-      ) {
-        return true;
-      }
-      return false;
-    });
+    }
+    recipesSearch = filteredRecipes;
   }
 
-  // Filtrer les recettes en fonction des tags d'ingrédients sélectionnés
   if (tagArrays && tagArrays.selectedIngredientTagsArray.length > 0) {
-    recipesSearch = recipesSearch.filter((recipe) => {
-      return tagArrays.selectedIngredientTagsArray.every((searchIngredient) => {
+    const filteredRecipes = [];
+
+    for (let i = 0; i < recipesSearch.length; i++) {
+      const recipe = recipesSearch[i];
+      let match = true;
+
+      for (let j = 0; j < tagArrays.selectedIngredientTagsArray.length; j++) {
+        const searchIngredient = tagArrays.selectedIngredientTagsArray[j];
         const escapedTag = escapeRegExp(searchIngredient.toLowerCase());
         const tagRegex = new RegExp(escapedTag, "i");
-        return recipe.ingredients.some((ingredientObj) =>
-          tagRegex.test(ingredientObj.ingredient.toLowerCase())
-        );
-      });
-    });
+
+        let ingredientMatch = false;
+        for (let k = 0; k < recipe.ingredients.length; k++) {
+          const ingredientObj = recipe.ingredients[k];
+          if (tagRegex.test(ingredientObj.ingredient.toLowerCase())) {
+            ingredientMatch = true;
+            break;
+          }
+        }
+
+        if (!ingredientMatch) {
+          match = false;
+          break;
+        }
+      }
+      if (match) {
+        filteredRecipes.push(recipe);
+      }
+    }
+    recipesSearch = filteredRecipes;
   }
-  // Filtrer les recettes en fonction des tags d'appareil sélectionnés
+
   if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
-    recipesSearch = recipesSearch.filter((recipe) => {
-      return tagArrays.selectedApplianceTagsArray.every((tag) => {
+    const filteredRecipes = [];
+
+    for (let i = 0; i < recipesSearch.length; i++) {
+      const recipe = recipesSearch[i];
+      let match = true;
+
+      for (let j = 0; j < tagArrays.selectedApplianceTagsArray.length; j++) {
+        const tag = tagArrays.selectedApplianceTagsArray[j];
         const escapedTag = escapeRegExp(tag.toLowerCase());
         const tagRegex = new RegExp(escapedTag, "i");
-        return tagRegex.test(recipe.appliance.toLowerCase());
-      });
-    });
+
+        if (!tagRegex.test(recipe.appliance.toLowerCase())) {
+          match = false;
+          break;
+        }
+      }
+      if (match) {
+        filteredRecipes.push(recipe);
+      }
+    }
+    recipesSearch = filteredRecipes;
   }
-  // Filtrer les recettes en fonction des tags ustensil sélectionnés
+
   if (tagArrays && tagArrays.selectedUstensilTagsArray.length > 0) {
-    // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
-    recipesSearch = recipesSearch.filter((recipe) => {
-      return tagArrays.selectedUstensilTagsArray.every((searchUstensil) => {
-        // console.log(searchUstensil)
+    const filteredRecipes = [];
+
+    for (let i = 0; i < recipesSearch.length; i++) {
+      const recipe = recipesSearch[i];
+      let match = true;
+
+      for (let j = 0; j < tagArrays.selectedUstensilTagsArray.length; j++) {
+        const searchUstensil = tagArrays.selectedUstensilTagsArray[j];
         const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
         const ustensilRegex = new RegExp(escapedUstensil, "i");
-        return recipe.ustensils.some((ustensil) =>
-          ustensilRegex.test(ustensil.toLowerCase())
-        );
-      });
-    });
+
+        let ustensilMatch = false;
+        for (let k = 0; k < recipe.ustensils.length; k++) {
+          const ustensil = recipe.ustensils[k];
+          if (ustensilRegex.test(ustensil.toLowerCase())) {
+            ustensilMatch = true;
+            break;
+          }
+        }
+
+        if (!ustensilMatch) {
+          match = false;
+          break;
+        }
+      }
+      if (match) {
+        filteredRecipes.push(recipe);
+      }
+    }
+    recipesSearch = filteredRecipes;
   }
 
-  return recipesSearch; // Renvoyer les recettes filtrées
+  return recipesSearch;
 };
-
-
-
 
 
 
