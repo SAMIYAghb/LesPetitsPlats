@@ -1,10 +1,10 @@
 {
-  "scripts":{
-    "lint":"eslint scripts -c js --report-unused-disable-directives",
-    "lintfix":"eslint scripts -c js --fix"
+  "scripts": {
+    "lint": "eslint scripts",
+    "lintfix": "eslint scripts --fix"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1"
   }
