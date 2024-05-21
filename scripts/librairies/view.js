@@ -25,15 +25,6 @@ export const displayCard = (recipe) => {
   recipeLabel.classList.add('text-uppercase', 'second-color');
   recipeLabel.textContent = 'Recette';
 
-  //   const descriptionWordsCount = 31; // Nombre de mots dans la description fournie
-
-  // // Calcul du nombre de mots dans la description
-  // const descriptionContent = this.description.split(' ');
-  // const truncatedDescriptionContent = descriptionContent.slice(0, descriptionWordsCount).join(' ');
-
-  //   const description = document.createElement('p');
-  //   // description.textContent = this.description;
-  //   description.textContent = truncatedDescriptionContent;
   const maxCharsPerLine = 45; // Nombre maximal de caractères par ligne
   const maxLines = 4; // Nombre maximal de lignes dans la description
 
@@ -120,7 +111,8 @@ export function displayData(recipes) {
   // Nettoyez le conteneur avant d'ajouter de nouvelles cartes (si nécessaire)
   recipeSection.innerHTML = '';
   recipes.forEach((recipe) => {
-    const card = displayCard(recipe); // Appelez displayCard pour obtenir la carte HTML de la recette
+    const card = displayCard(recipe);
+    // Appelez displayCard pour obtenir la carte HTML de la recette
     // console.log(card)
     recipeSection.appendChild(card); // Ajoutez la carte au conteneu
   });

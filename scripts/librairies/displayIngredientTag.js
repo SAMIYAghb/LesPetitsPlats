@@ -1,42 +1,9 @@
 import {
-  // filterRecipesByTag
   filterRecipesByIgredientTag,
 } from '../page/index.js';
 
 // Définir un ensemble pour stocker les tags désactivés
 const disabledIngredientTags = new Set();
-// Récupère la liste ul où les ingrédients seront ajoutés
-const ingredientList = document.getElementById('ingredientList');
-// Affichage les ingrédients triés dans le dropdown menu
-export const displayIngredientTag = (ingredient) => {
-  // console.log(ingredientList);
-  const li = document.createElement('li');
-  li.classList.add('li-ingredient');
-  // li.setAttribute("id", "li-ingredient");
-
-  // Crée un nouvel élément a
-  const link = document.createElement('a');
-  link.textContent = ingredient;
-  link.setAttribute('href', '#');
-  link.classList.add('link-ingredient');
-  // Vérifier si le tag est désactivé et ajouter la classe en conséquence
-  if (disabledIngredientTags.has(ingredient)) {
-    link.classList.add('disabled-link');
-  }
-
-  //  Ajoute un gestionnaire d'événements au lien
-
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Récupère la valeur actuelle de la recherche
-    const searchValue = document.getElementById('searchInput').value.trim();
-    // Appel de la fonction pour sélectionner le tag et filtrer les recettes
-    selectIngredientTag(ingredient, li, searchValue);
-  });
-  li.appendChild(link);
-  ingredientList.appendChild(li);
-};
-
 // afficher le tag selectionner tag jaune
 const ingredientTags = [];
 export const selectIngredientTag = (clickedElementContent, clickedElement, searchValue) => {
@@ -94,33 +61,34 @@ export const selectIngredientTag = (clickedElementContent, clickedElement, searc
     // console.log(clickedElementContent,'clickedElementContent')
   }
 };
+// Récupère la liste ul où les ingrédients seront ajoutés
+const ingredientList = document.getElementById('ingredientList');
+// Affichage les ingrédients triés dans le dropdown menu
+export const displayIngredientTag = (ingredient) => {
+  // console.log(ingredientList);
+  const li = document.createElement('li');
+  li.classList.add('li-ingredient');
+  // li.setAttribute("id", "li-ingredient");
 
-// Fonction pour filtrer les recettes en fonction des tags sélectionnés
-// const searchInput = document.getElementById("searchInput");
-// const filterRecipes = () => {
+  // Crée un nouvel élément a
+  const link = document.createElement('a');
+  link.textContent = ingredient;
+  link.setAttribute('href', '#');
+  link.classList.add('link-ingredient');
+  // Vérifier si le tag est désactivé et ajouter la classe en conséquence
+  if (disabledIngredientTags.has(ingredient)) {
+    link.classList.add('disabled-link');
+  }
 
-//   const searchValue = searchInput.value.toLowerCase().trim().replace(/\s/g, "");
-// // console.log(searchValue)
-//   const recipesSearch = searchRecipe(recipes, searchValue, {
-//     filteredIngredientsArray: ingredientTags,
-//     filteredAppliancesArray: [],
-//     filteredUstensilsArray: []
-//   });
-//   // console.log(ingredientTags)
-// // console.log(recipesSearch)
-//   // Affichage des recettes filtrées
-//   displayData(recipesSearch);
-// };
+  //  Ajoute un gestionnaire d'événements au lien
 
-// Gestionnaire d'événements pour la recherche principale
-// const searchInput = document.getElementById("searchInput");
-// searchInput.addEventListener("input", filterRecipes);
-
-// // Ajouter un gestionnaire d'événements pour le clic sur un tag d'ingrédient
-// // const ingredientList = document.getElementById("ingredientList");
-// ingredientList.addEventListener("click", (event) => {
-//   if (event.target.classList.contains("link-ingredient")) {
-//     const clickedIngredient = event.target.textContent;
-//     selectIngredientTag(clickedIngredient);
-//   }
-// });
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Récupère la valeur actuelle de la recherche
+    const searchValue = document.getElementById('searchInput').value.trim();
+    // Appel de la fonction pour sélectionner le tag et filtrer les recettes
+    selectIngredientTag(ingredient, li, searchValue);
+  });
+  li.appendChild(link);
+  ingredientList.appendChild(li);
+};

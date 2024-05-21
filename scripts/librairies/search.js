@@ -2,7 +2,7 @@
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-export const searchRecipe = (recipes, searchValue, tagArrays) => {
+const searchRecipe = (recipes, searchValue, tagArrays) => {
   let recipesSearch = recipes;
   // Supprimer les espaces de la valeur de recherche
   const searchValueTrimmed = searchValue
@@ -54,43 +54,55 @@ export const searchRecipe = (recipes, searchValue, tagArrays) => {
 
   // Filtrer les recettes en fonction des tags d'ingrédients sélectionnés
   if (tagArrays && tagArrays.selectedIngredientTagsArray.length > 0) {
-    recipesSearch = recipesSearch.filter((recipe) => tagArrays.selectedIngredientTagsArray.every((searchIngredient) => {
-      const escapedTag = escapeRegExp(searchIngredient.toLowerCase());
-      const tagRegex = new RegExp(escapedTag, 'i');
-      return recipe.ingredients.some((ingredientObj) => tagRegex.test(ingredientObj.ingredient.toLowerCase()));
-    }));
+    recipesSearch = recipesSearch.filter((recipe) => tagArrays.selectedIngredientTagsArray
+      .every((searchIngredient) => {
+        const escapedTag = escapeRegExp(searchIngredient.toLowerCase());
+        const tagRegex = new RegExp(escapedTag, 'i');
+        return recipe.ingredients.some((ingredientObj) => tagRegex
+          .test(ingredientObj.ingredient.toLowerCase()));
+      }));
   }
   // Filtrer les recettes en fonction des tags d'appareil sélectionnés
   if (tagArrays && tagArrays.selectedApplianceTagsArray.length > 0) {
-    recipesSearch = recipesSearch.filter((recipe) => tagArrays.selectedApplianceTagsArray.every((tag) => {
-      const escapedTag = escapeRegExp(tag.toLowerCase());
-      const tagRegex = new RegExp(escapedTag, 'i');
-      return tagRegex.test(recipe.appliance.toLowerCase());
-    }));
+    recipesSearch = recipesSearch.filter((recipe) => tagArrays.selectedApplianceTagsArray
+      .every((tag) => {
+        const escapedTag = escapeRegExp(tag.toLowerCase());
+        const tagRegex = new RegExp(escapedTag, 'i');
+        return tagRegex.test(recipe.appliance.toLowerCase());
+      }));
   }
   // Filtrer les recettes en fonction des tags ustensil sélectionnés
   if (tagArrays && tagArrays.selectedUstensilTagsArray.length > 0) {
     // console.log(tagArrays.selectedUstensilTagsArray, 'depuis searchJs')
-    recipesSearch = recipesSearch.filter((recipe) => tagArrays.selectedUstensilTagsArray.every((searchUstensil) => {
-      // console.log(typeof(searchUstensil))
-      const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
-      const ustensilRegex = new RegExp(escapedUstensil, 'i');
-      return recipe.ustensils.some((ustensil) => ustensilRegex.test(ustensil.toLowerCase()));
-    }));
+    recipesSearch = recipesSearch
+      .filter((recipe) => tagArrays.selectedUstensilTagsArray
+        .every((searchUstensil) => {
+        // console.log(typeof(searchUstensil))
+          const escapedUstensil = escapeRegExp(searchUstensil.toLowerCase());
+          const ustensilRegex = new RegExp(escapedUstensil, 'i');
+          return recipe.ustensils.some((ustensil) => ustensilRegex.test(ustensil.toLowerCase()));
+        }));
   }
 
   return recipesSearch; // Renvoyer les recettes filtrées
 };
-
-// La méthode some() teste si au moins un élément du tableau passe le test implémenté par la fonction fournie. Elle renvoie un booléen indiquant le résultat du test.
+export default searchRecipe;
+// La méthode some() teste si au moins un élément du tableau
+// passe le test implémenté par la fonction fournie. Elle renvoie
+// un booléen indiquant le résultat du test.
 // const array = [1, 2, 3, 4, 5];
 // // Checks whether an element is even
 // const even = (ele)=>ele % 2 === 0;
 
 // console.log(array.some(even))//true
-// Si on veut vérifier qu'un élément est dans un tableau, on pourra utiliser la méthode Array.prototype.includes().
+// Si on veut vérifier qu'un élément est dans un tableau, on pourra utiliser
+// la méthode Array.prototype.includes().
 
-// Par exemple, si vous recherchez "pomme" dans un tableau contenant ["pomme", "pomme de terre", "pommeau"], includes() retournerait true pour "pomme", mais aussi pour "pommeau", ce qui peut ne pas être souhaité. some() permet de spécifier des conditions plus complexes pour la recherche, ce qui peut être plus approprié dans certains cas.
+// Par exemple, si vous recherchez "pomme" dans un tableau contenant
+//  ["pomme", "pomme de terre", "pommeau"], includes() retournerait true
+// pour "pomme", mais aussi pour "pommeau", ce qui peut ne pas être souhaité.
+//  some() permet de spécifier des conditions plus complexes pour la recherche,
+// ce qui peut être plus approprié dans certains cas.
 
 // const regex = /chat/;
 // const phrase = "Les chiens sont adorables";
