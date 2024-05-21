@@ -1,4 +1,4 @@
-export default function updateSelectBox(filteredRecipes, listType, displayFunction) {
+export function updateSelectBox(filteredRecipes, listType, displayFunction) {
   const listElement = document.getElementById(`${listType}List`);
   listElement.innerHTML = '';
 
@@ -27,4 +27,13 @@ export default function updateSelectBox(filteredRecipes, listType, displayFuncti
   return {
     [listType]: sortedItems,
   };
+}
+
+// Fonction générique pour afficher les tags
+export function displayTags(tagsArray, displayFunction) {
+  tagsArray
+    .sort((a, b) => a.localeCompare(b, 'fr'))
+    .forEach((tag) => {
+      displayFunction(tag);
+    });
 }

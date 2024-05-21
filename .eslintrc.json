@@ -9,5 +9,16 @@
         "sourceType": "module"
     },
     "rules": {
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "always",
+                "jsx": "always",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "no-use-before-define": "off"
     }
 }
