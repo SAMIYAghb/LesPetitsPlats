@@ -1,10 +1,4 @@
 
-
-// Fonction pour échapper les caractères spéciaux dans une expression régulière
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 // Fonction pour échapper les caractères spéciaux dans une expression régulière
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
