@@ -52,7 +52,7 @@ const filterRecipesByUstensilTag = (
 
   updateSelectBox(filteredRecipes, 'ustensil',  manageUstensilTag);
   updateSelectBox(filteredRecipes, 'appliance', displayApplianceTag);
-  updateSelectBox(filteredRecipes, 'ingredient', displayIngredientTag);
+  updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
 
   const ustensilTags = updateSelectBox(
     filteredRecipes,
@@ -85,7 +85,7 @@ const filterRecipesByApplianceTag = (
   }
   updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
   updateSelectBox(filteredRecipes, 'appliance', displayApplianceTag);
-  updateSelectBox(filteredRecipes, 'ingredient', displayIngredientTag);
+  updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
 
   const applianceTags = updateSelectBox(filteredRecipes, 'appliance', displayApplianceTag);
   const filteredAppliance = applianceTags.appliance;
@@ -112,15 +112,15 @@ const filterRecipesByIgredientTag = (
     return;
   }
 
-
+  managIngredientTag
   updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
   updateSelectBox(filteredRecipes, 'appliance', displayApplianceTag);
-  updateSelectBox(filteredRecipes, 'ingredient', displayIngredientTag);
+  updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
 
   const ingredientTags = updateSelectBox(
     filteredRecipes,
     'ingredient',
-    displayIngredientTag,
+    managIngredientTag,
   );
   const filteredIngredient = ingredientTags.ingredient;
   ingredientInput.addEventListener('keyup', () => searchIngredientTag(filteredIngredient));
@@ -210,87 +210,155 @@ const manageUstensilTag = (ustensil) => {
 const disabledIngredientTags = new Set();
 // afficher le tag selectionner tag jaune
 const ingredientTags = [];
-const selectIngredientTag = (clickedElementContent, clickedElement, searchValue) => {
-  // console.log(clickedElementContent)
-  // console.log(clickedElement)
-  clickedElement.classList.add('disabled-link');
-  // Vérifier si l'élément a déjà été sélectionné
-  if (!ingredientTags.includes(clickedElementContent)) {
-    // console.log(clickedElementContent)
-    // Ajouter l'élément cliqué à la liste des ingrédients sélectionnés
-    ingredientTags.push(clickedElementContent);
-    // console.log(ingredientTags);
-    disabledIngredientTags.add(clickedElementContent);
-    const tagContainer = document.querySelector('.tag-container');
 
-    // Ajoute chaque ingrédient sélectionné au conteneur de tags
 
-    const tag = document.createElement('div');
-    tag.classList.add('tag');
-    tagContainer.appendChild(tag);
-
-    const newTag = document.createElement('span');
-    newTag.textContent = clickedElementContent;
-    newTag.classList.add('tag-element');
-    tag.appendChild(newTag);
-
-    const closeTag = document.createElement('i');
-    closeTag.classList.add('fa-solid', 'fa-circle-xmark');
-    tag.appendChild(closeTag);
-    // Désactiver l'élément cliqué
-    // Gestionnaire d'événements pour supprimer le tag
-    tag.addEventListener('click', () => {
-      tag.style.display = 'none'; // Cache le tag
-      clickedElement.classList.remove('disabled-link'); // Réactive le lien
-      // clickedElement.removeEventListener("click", ingredientClickHandler);
-
-      const index = ingredientTags.indexOf(clickedElementContent);
-      if (index !== -1) {
-        ingredientTags.splice(index, 1); // Supprime le tag du tableau
-        // console.log(ingredientTags)
-        // console.log(typeof(ingredientTags))
-      }
-      // Met à jour la liste des recettes en fonction des tags restants
-      const remainingTags = ingredientTags.join(',');
-      // console.log(remainingTags)
-      // console.log(typeof(remainingTags),'typeof remainingTags')
-      filterRecipesByIgredientTag(remainingTags, searchValue);
-    });
-
-    // filterRecipesByIgredientTag(clickedElementContent, searchValue);
-    filterRecipesByIgredientTag(ingredientTags.join(','), searchValue);
-    // console.log(clickedElementContent,'clickedElementContent')
-  }
-};
-// Affichage les ingrédients triés dans le dropdown menu
-const displayIngredientTag = (ingredient) => {
-  // console.log(ingredientList);
+const managIngredientTag = (ingredient) => {
   const li = document.createElement('li');
   li.classList.add('li-ingredient');
-  // li.setAttribute("id", "li-ingredient");
+  li.setAttribute('id', 'li-ingredient');
 
-  // Crée un nouvel élément a
   const link = document.createElement('a');
   link.textContent = ingredient;
   link.setAttribute('href', '#');
   link.classList.add('link-ingredient');
-  // Vérifier si le tag est désactivé et ajouter la classe en conséquence
-  if (disabledIngredientTags.has(ingredient)) {
-    link.classList.add('disabled-link');
-  }
 
-  //  Ajoute un gestionnaire d'événements au lien
+  const tagContainer = document.querySelector('.tag-container');
+
+  if (disabledIngredientTags.has(ingredient)) {
+    updateTagStatus(link, true);
+  }
 
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    // Récupère la valeur actuelle de la recherche
+    e.stopPropagation();
     const searchValue = document.getElementById('searchInput').value.trim();
-    // Appel de la fonction pour sélectionner le tag et filtrer les recettes
-    selectIngredientTag(ingredient, li, searchValue);
-  });
-  li.appendChild(link);
+    const clickedElementContent = ingredient;
+
+    if (!ingredientTags.includes(clickedElementContent)) {
+      ingredientTags.push(clickedElementContent);
+      disabledIngredientTags.add(clickedElementContent);
+      updateTagStatus(link, true);
+
+      const tag = document.createElement('div');
+      tag.classList.add('tag', 'tag-element');
+      tag.textContent = clickedElementContent;
+
+      const closeTag = document.createElement('i');
+      closeTag.classList.add('fa-solid', 'fa-circle-xmark');
+      tag.appendChild(closeTag);
+      tagContainer.appendChild(tag);
+
+      tag.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        tagContainer.removeChild(tag);
+
+        const index = ingredientTags.indexOf(clickedElementContent);
+        if (index !== -1) {
+          ingredientTags.splice(index, 1);
+          disabledIngredientTags.delete(clickedElementContent);
+          updateTagStatus(link, false);
+
+          if (disabledIngredientTags.size === 0) {
+            document.querySelectorAll('.link-ingredient').forEach(el => {
+              el.classList.remove('disabled-link');
+            });
+          }
+        }
+        filterRecipesByIgredientTag(ingredientTags.join(','), searchValue);
+      }, { once: true });
+
+      filterRecipesByIgredientTag(ingredientTags.join(','), searchValue);
+    }
+  }, { once: true });
+
   ingredientList.appendChild(li);
+  li.appendChild(link);
 };
+
+
+
+// const selectIngredientTag = (clickedElementContent, clickedElement, searchValue) => {
+//   // console.log(clickedElementContent)
+//   // console.log(clickedElement)
+//   clickedElement.classList.add('disabled-link');
+//   // Vérifier si l'élément a déjà été sélectionné
+//   if (!ingredientTags.includes(clickedElementContent)) {
+//     // console.log(clickedElementContent)
+//     // Ajouter l'élément cliqué à la liste des ingrédients sélectionnés
+//     ingredientTags.push(clickedElementContent);
+//     // console.log(ingredientTags);
+//     disabledIngredientTags.add(clickedElementContent);
+//     const tagContainer = document.querySelector('.tag-container');
+
+//     // Ajoute chaque ingrédient sélectionné au conteneur de tags
+
+//     const tag = document.createElement('div');
+//     tag.classList.add('tag');
+//     tagContainer.appendChild(tag);
+
+//     const newTag = document.createElement('span');
+//     newTag.textContent = clickedElementContent;
+//     newTag.classList.add('tag-element');
+//     tag.appendChild(newTag);
+
+//     const closeTag = document.createElement('i');
+//     closeTag.classList.add('fa-solid', 'fa-circle-xmark');
+//     tag.appendChild(closeTag);
+//     // Désactiver l'élément cliqué
+//     // Gestionnaire d'événements pour supprimer le tag
+//     tag.addEventListener('click', () => {
+//       tag.style.display = 'none'; // Cache le tag
+//       clickedElement.classList.remove('disabled-link'); // Réactive le lien
+//       // clickedElement.removeEventListener("click", ingredientClickHandler);
+
+//       const index = ingredientTags.indexOf(clickedElementContent);
+//       if (index !== -1) {
+//         ingredientTags.splice(index, 1); // Supprime le tag du tableau
+//         // console.log(ingredientTags)
+//         // console.log(typeof(ingredientTags))
+//       }
+//       // Met à jour la liste des recettes en fonction des tags restants
+//       const remainingTags = ingredientTags.join(',');
+//       // console.log(remainingTags)
+//       // console.log(typeof(remainingTags),'typeof remainingTags')
+//       filterRecipesByIgredientTag(remainingTags, searchValue);
+//     });
+
+//     // filterRecipesByIgredientTag(clickedElementContent, searchValue);
+//     filterRecipesByIgredientTag(ingredientTags.join(','), searchValue);
+//     // console.log(clickedElementContent,'clickedElementContent')
+//   }
+// };
+// // Affichage les ingrédients triés dans le dropdown menu
+// const displayIngredientTag = (ingredient) => {
+//   // console.log(ingredientList);
+//   const li = document.createElement('li');
+//   li.classList.add('li-ingredient');
+//   // li.setAttribute("id", "li-ingredient");
+
+//   // Crée un nouvel élément a
+//   const link = document.createElement('a');
+//   link.textContent = ingredient;
+//   link.setAttribute('href', '#');
+//   link.classList.add('link-ingredient');
+//   // Vérifier si le tag est désactivé et ajouter la classe en conséquence
+//   if (disabledIngredientTags.has(ingredient)) {
+//     link.classList.add('disabled-link');
+//   }
+
+//   //  Ajoute un gestionnaire d'événements au lien
+
+//   link.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     // Récupère la valeur actuelle de la recherche
+//     const searchValue = document.getElementById('searchInput').value.trim();
+//     // Appel de la fonction pour sélectionner le tag et filtrer les recettes
+//     selectIngredientTag(ingredient, li, searchValue);
+//   });
+//   li.appendChild(link);
+//   ingredientList.appendChild(li);
+// };
 
 // Définir un ensemble pour stocker les tags désactivés
 const disabledApplianceTags = new Set();
@@ -371,7 +439,8 @@ const searchIngredientTag = (filteredIngredient) => {
     // console.log(matchingTags);
     if (matchingTags.length > 0) {
       ingredientList.innerHTML = '';
-      displayTags(matchingTags, displayIngredientTag);
+      displayTags(matchingTags, managIngredientTag
+      );
     } else {
       ingredientList.innerHTML = '<li>Aucun résultat trouvé</li>';
     }
@@ -423,7 +492,7 @@ const init = async () => {
 
   // Afficher les ingrédients
   const ingredientsArray = getIngredients(recipes);
-  displayTags(ingredientsArray, displayIngredientTag);
+  displayTags(ingredientsArray, managIngredientTag);
   // Afficher les appareils
   const appliancesArray = getAppliances(recipes);
   displayTags(appliancesArray, displayApplianceTag);
@@ -453,9 +522,9 @@ const init = async () => {
       displayData(recipesSearch);
       updateSelectBox(recipesSearch, 'ustensil', manageUstensilTag);
       updateSelectBox(recipesSearch, 'appliance', displayApplianceTag);
-      updateSelectBox(recipesSearch, 'ingredient', displayIngredientTag);
+      updateSelectBox(recipesSearch, 'ingredient', managIngredientTag);
 
-      const ingredientTag = updateSelectBox(recipesSearch, 'ingredient', displayIngredientTag);
+      const ingredientTag = updateSelectBox(recipesSearch, 'ingredient', managIngredientTag);
       const filteredIngredient = ingredientTag.ingredient;
 
       const applianceTag = updateSelectBox(recipesSearch, 'appliance', displayApplianceTag);
