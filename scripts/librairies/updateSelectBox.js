@@ -1,5 +1,6 @@
 export function updateSelectBox(filteredRecipes, listType, displayFunction) {
   const listElement = document.getElementById(`${listType}List`);
+  // console.log(listElement )
   listElement.innerHTML = '';
 
   const itemSet = new Set();
@@ -24,6 +25,15 @@ export function updateSelectBox(filteredRecipes, listType, displayFunction) {
   const sortedItems = Array.from(itemSet).sort((a, b) => a.localeCompare(b, 'fr'));
 
   sortedItems.forEach((item) => { displayFunction(item); });
+
+   // Ajout de la classe "disabled" lors du clic
+  //  listElement.addEventListener('click', (event) => {
+  //   console.log(event.target)
+  //   if (event.target.tagName === 'LI') {
+  //     event.target.classList.add('disabled-link');
+  //   }
+  // });
+
   return {
     [listType]: sortedItems,
   };
