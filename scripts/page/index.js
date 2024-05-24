@@ -1,4 +1,4 @@
-import searchRecipe from '../librairies/search.js';
+import { searchRecipe } from '../librairies/search.js';
 import { getRecipes, filterUniqueData } from '../utils/api.js';
 import { displayData } from '../librairies/view.js';
 import { updateSelectBox, displayTags } from '../librairies/updateSelectBox.js';

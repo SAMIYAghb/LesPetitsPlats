@@ -2,7 +2,7 @@
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-const searchRecipe = (recipes, searchValue, tagArrays) => {
+export const searchRecipe = (recipes, searchValue, tagArrays) => {
   let recipesSearch = recipes;
   // Supprimer les espaces de la valeur de recherche
   const searchValueTrimmed = searchValue
@@ -86,7 +86,7 @@ const searchRecipe = (recipes, searchValue, tagArrays) => {
 
   return recipesSearch; // Renvoyer les recettes filtrées
 };
-export default searchRecipe;
+
 
 // La méthode some() teste si au moins un élément du tableau
 // passe le test implémenté par la fonction fournie. Elle renvoie
