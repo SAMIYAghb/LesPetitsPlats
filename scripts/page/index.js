@@ -1,4 +1,4 @@
-import { searchRecipe } from '../librairies/search.js';
+import searchRecipe from '../librairies/search.js';
 import { getRecipes, filterUniqueData } from '../utils/api.js';
 import { displayData } from '../librairies/view.js';
 import { updateSelectBox, displayTags } from '../librairies/updateSelectBox.js';
@@ -50,7 +50,7 @@ const filterRecipesByUstensilTag = (
     return;
   }
 
-  updateSelectBox(filteredRecipes, 'ustensil',  manageUstensilTag);
+  updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
   updateSelectBox(filteredRecipes, 'appliance', managApplianceTag);
   updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
 
@@ -112,7 +112,6 @@ const filterRecipesByIgredientTag = (
     return;
   }
 
-  managIngredientTag
   updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
   updateSelectBox(filteredRecipes, 'appliance', managApplianceTag);
   updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
@@ -125,7 +124,6 @@ const filterRecipesByIgredientTag = (
   const filteredIngredient = ingredientTags.ingredient;
   ingredientInput.addEventListener('keyup', () => searchIngredientTag(filteredIngredient));
 };
-
 
 const disabledUstensilTags = new Set();
 const ustensilTags = [];
@@ -174,9 +172,9 @@ const manageUstensilTag = (ustensil) => {
       tag.appendChild(closeTag);
       tagContainer.appendChild(tag);
 
-      tag.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      tag.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         tagContainer.removeChild(tag);
 
         const index = ustensilTags.indexOf(clickedElementContent);
@@ -186,12 +184,11 @@ const manageUstensilTag = (ustensil) => {
           updateTagStatus(link, false);
 
           if (disabledUstensilTags.size === 0) {
-            document.querySelectorAll('.link-ustensil').forEach(el => {
-              el.classList.remove('disabled-link');
+            document.querySelectorAll('.link-ustensil').forEach((element) => {
+              element.classList.remove('disabled-link');
             });
           }
         }
-// console.log(disabledUstensilTags)
         filterRecipesByUstensilTag(ustensilTags.join(','), searchValue);
       }, { once: true });
 
@@ -202,9 +199,6 @@ const manageUstensilTag = (ustensil) => {
   ustensilList.appendChild(li);
   li.appendChild(link);
 };
-
-
-
 
 // Définir un ensemble pour stocker les tags désactivés
 const disabledIngredientTags = new Set();
@@ -247,9 +241,9 @@ const managIngredientTag = (ingredient) => {
       tag.appendChild(closeTag);
       tagContainer.appendChild(tag);
 
-      tag.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      tag.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         tagContainer.removeChild(tag);
 
         const index = ingredientTags.indexOf(clickedElementContent);
@@ -259,8 +253,8 @@ const managIngredientTag = (ingredient) => {
           updateTagStatus(link, false);
 
           if (disabledIngredientTags.size === 0) {
-            document.querySelectorAll('.link-ingredient').forEach(el => {
-              el.classList.remove('disabled-link');
+            document.querySelectorAll('.link-ingredient').forEach((element) => {
+              element.classList.remove('disabled-link');
             });
           }
         }
@@ -274,7 +268,6 @@ const managIngredientTag = (ingredient) => {
   ingredientList.appendChild(li);
   li.appendChild(link);
 };
-
 
 // Définir un ensemble pour stocker les tags désactivés
 const disabledApplianceTags = new Set();
@@ -316,9 +309,9 @@ const managApplianceTag = (appliance) => {
       tag.appendChild(closeTag);
       tagContainer.appendChild(tag);
 
-      tag.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      tag.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         tagContainer.removeChild(tag);
 
         const index = applianceTags.indexOf(clickedElementContent);
@@ -328,8 +321,8 @@ const managApplianceTag = (appliance) => {
           updateTagStatus(link, false);
 
           if (disabledApplianceTags.size === 0) {
-            document.querySelectorAll('.link-appliance').forEach(el => {
-              el.classList.remove('disabled-link');
+            document.querySelectorAll('.link-appliance').forEach((element) => {
+              element.classList.remove('disabled-link');
             });
           }
         }
@@ -355,8 +348,7 @@ const searchIngredientTag = (filteredIngredient) => {
     // console.log(matchingTags);
     if (matchingTags.length > 0) {
       ingredientList.innerHTML = '';
-      displayTags(matchingTags, managIngredientTag
-      );
+      displayTags(matchingTags, managIngredientTag);
     } else {
       ingredientList.innerHTML = '<li>Aucun résultat trouvé</li>';
     }
