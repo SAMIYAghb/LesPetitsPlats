@@ -1,12 +1,1 @@
-{ 
-  "type": "module",
-  "scripts": {
-    "lint": "eslint scripts",
-    "lintfix": "eslint scripts --fix"
-  },
-  "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1"
-  }
-}
+{"type":"module","scripts":{"lint":"eslint scripts","lintfix":"eslint scripts --fix"},"devDependencies":{"eslint":"^8.57.0","eslint-config-airbnb-base":"^15.0.0","eslint-plugin-import":"^2.29.1"}}

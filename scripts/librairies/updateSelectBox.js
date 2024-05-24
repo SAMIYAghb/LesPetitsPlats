@@ -26,14 +26,6 @@ export function updateSelectBox(filteredRecipes, listType, displayFunction) {
 
   sortedItems.forEach((item) => { displayFunction(item); });
 
-   // Ajout de la classe "disabled" lors du clic
-  //  listElement.addEventListener('click', (event) => {
-  //   console.log(event.target)
-  //   if (event.target.tagName === 'LI') {
-  //     event.target.classList.add('disabled-link');
-  //   }
-  // });
-
   return {
     [listType]: sortedItems,
   };
