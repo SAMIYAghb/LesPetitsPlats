@@ -364,9 +364,21 @@ const init = async () => {
   searchbar.addEventListener('input', () => {
     const searchValue = searchbar.value.toLowerCase().trim().replace(/\s/g, '');
 
+    const currentIngredientSearch = ingredientInput.value.toLowerCase().trim().replace(/\s/g, '');
+    const currentApplianceSearch = appareilInput.value.toLowerCase().trim().replace(/\s/g, '');
+    const currentUstensilSearch = ustensilInput.value.toLowerCase().trim().replace(/\s/g, '');
+
     if (searchValue.length >= 3) {
       filterRecipes(searchValue);
       updateAndAddListeners(filteredRecipes);
+      // Reapply current search values in tag inputs
+      searchIngredientTag(getIngredients(filteredRecipes));
+      searchApplianceTag(getAppliances(filteredRecipes));
+      searchUstensilTag(getUstensil(filteredRecipes));
+
+      ingredientInput.value = currentIngredientSearch;
+      appareilInput.value = currentApplianceSearch;
+      ustensilInput.value = currentUstensilSearch;
     } else {
       displayData(recipes);
     }
