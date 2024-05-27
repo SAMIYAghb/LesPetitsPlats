@@ -167,6 +167,7 @@ padding: 10px;
 }
 .fa-solid.fa-circle-xmark {
     font-size: 12px;
+    padding-left: 8px;
 }
 .disabled-link {
     pointer-events: none; /* Désactive les clics */
@@ -176,4 +177,8 @@ padding: 10px;
 .not-found{
     margin-left: 30%;
     margin-bottom: 50px;
+}
+.no-result{
+    padding-left: 20px;
+    padding-top: 10px;
 }
