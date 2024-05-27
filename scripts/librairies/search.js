@@ -22,31 +22,54 @@ const searchRecipe = (recipes, searchValue, tagArrays) => {
     const regex = new RegExp(escapedSearchValue, 'i');
     const filteredRecipes = [];
     // boucle itère sur chaque recette dans le tableau recipesSearch.
+    // for (let i = 0; i < recipesSearch.length; i += 1) {
+    //   // À chaque itération, la recette actuelle est récupérée à partir
+    //   //  de recipesSearch[i] et stockée dans la variable recipe
+    //   const recipe = recipesSearch[i];
+    //   // vérifie si l'expression régulière regex correspond au
+    // nom de la recette ou à sa description
+    //   if (
+    //     regex.test(recipe.name.toLowerCase().replace(/\s/g, ''))
+    //     || regex.test(recipe.description.toLowerCase().replace(/\s/g, ''))
+    //   ) {
+    //     filteredRecipes.push(recipe);
+    //     // continue;
+    //   }
+
+    //   for (let j = 0; j < recipe.ingredients.length; j += 1) {
+    //     const ingredientObj = recipe.ingredients[j];
+    //     if (
+    //       typeof ingredientObj === 'object'
+    //        && 'ingredient' in ingredientObj
+    //        && regex.test(ingredientObj.ingredient.toLowerCase().replace(/\s/g, ''))
+    //     ) {
+    //       filteredRecipes.push(recipe);
+    //       break;
+    //     }
+    //   }
+    // }
     for (let i = 0; i < recipesSearch.length; i += 1) {
-      // À chaque itération, la recette actuelle est récupérée à partir
-      //  de recipesSearch[i] et stockée dans la variable recipe
       const recipe = recipesSearch[i];
-      // vérifie si l'expression régulière regex correspond au nom de la recette ou à sa description
-      if (
-        regex.test(recipe.name.toLowerCase().replace(/\s/g, ''))
-        || regex.test(recipe.description.toLowerCase().replace(/\s/g, ''))
-      ) {
-        filteredRecipes.push(recipe);
-        // continue;
-      }
+      const recipeName = recipe.name.toLowerCase().replace(/\s/g, '');
+      const recipeDescription = recipe.description.toLowerCase().replace(/\s/g, '');
+      let ingredientMatch = false;
 
       for (let j = 0; j < recipe.ingredients.length; j += 1) {
         const ingredientObj = recipe.ingredients[j];
-        if (
-          typeof ingredientObj === 'object'
-           && 'ingredient' in ingredientObj
-           && regex.test(ingredientObj.ingredient.toLowerCase().replace(/\s/g, ''))
-        ) {
-          filteredRecipes.push(recipe);
-          break;
+        if (typeof ingredientObj === 'object' && 'ingredient' in ingredientObj) {
+          const ingredientName = ingredientObj.ingredient.toLowerCase().replace(/\s/g, '');
+          if (regex.test(ingredientName)) {
+            ingredientMatch = true;
+            break; // Sortir de la boucle des ingrédients si une correspondance est trouvée
+          }
         }
       }
+
+      if (regex.test(recipeName) || regex.test(recipeDescription) || ingredientMatch) {
+        filteredRecipes.push(recipe);
+      }
     }
+
     recipesSearch = filteredRecipes;
   }
 
