@@ -16,9 +16,9 @@ const searchbar = document.getElementById('searchInput');
 
 let filteredRecipes;
 
-let selectedIngredientTagsArray = [];
-let selectedApplianceTagsArray = [];
-let selectedUstensilTagsArray = [];
+const selectedIngredientTagsArray = [];
+const selectedApplianceTagsArray = [];
+const selectedUstensilTagsArray = [];
 
 export const getAppliances = (recipes) => filterUniqueData(recipes, 'appliance');
 
@@ -31,98 +31,51 @@ export const getUstensil = (recipes) => filterUniqueData(recipes, 'ustensils');
 
 const recipes = await getRecipes();
 
-const filterRecipesByUstensilTag = (
-  selectedUstensilTag,
-  searchValue,
-) => {
-  // const recipesSearch = recipes;
-  selectedUstensilTagsArray = selectedUstensilTag.split(',');
+// function general pour filtrer les recettes on bason sur tags et search value
+const filterRecipes = (searchValue) => {
   filteredRecipes = searchRecipe(recipes, searchValue, {
     selectedIngredientTagsArray,
     selectedApplianceTagsArray,
     selectedUstensilTagsArray,
   });
   displayData(filteredRecipes);
-  // Vérifier si aucun tag n'est sélectionné
-  if (!selectedUstensilTag) {
-    // Retourner toutes les recettes si aucun tag n'est sélectionné
-    displayData(filteredRecipes);
-    return;
-  }
-
-  updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
-  updateSelectBox(filteredRecipes, 'appliance', managApplianceTag);
-  updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
-
-  const ustensilTags = updateSelectBox(
-    filteredRecipes,
-    'ustensil',
-    manageUstensilTag,
-  );
-  const filteredUstensil = ustensilTags.ustensil;
-  ustensilInput.addEventListener('keyup', () => searchUstensilTag(filteredUstensil));
 };
 
-const filterRecipesByApplianceTag = (
-  selectedAapplianceTag,
-  searchValue,
-) => {
-  // const recipesSearch = recipes;
-  // ajouter le tag selectionne dans selectedApplianceTagsArray
-  selectedApplianceTagsArray = selectedAapplianceTag.split(',');
-  filteredRecipes = searchRecipe(recipes, searchValue, {
-    selectedIngredientTagsArray,
-    selectedApplianceTagsArray,
-    selectedUstensilTagsArray,
-  });
-  // afficher les recettes filtrées
-  displayData(filteredRecipes);
-  // Vérifier si aucun tag n'est sélectionné
-  if (!selectedAapplianceTag) {
-    // Retourner toutes les recettes si aucun tag n'est sélectionné
-    displayData(filteredRecipes);
-    return;
-  }
-  updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
-  updateSelectBox(filteredRecipes, 'appliance', managApplianceTag);
-  updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
+// Function pour mise a jour des select boxes et ajouter event listeners pour tag searches
+const updateAndAddListeners = (recipesList) => {
+  const ingredientTags = updateSelectBox(recipesList, 'ingredient', managIngredientTag);
+  const applianceTags = updateSelectBox(recipesList, 'appliance', managApplianceTag);
+  const ustensilTags = updateSelectBox(recipesList, 'ustensil', manageUstensilTag);
 
-  const applianceTags = updateSelectBox(filteredRecipes, 'appliance', managApplianceTag);
-  const filteredAppliance = applianceTags.appliance;
-
-  appareilInput.addEventListener('keyup', () => searchApplianceTag(filteredAppliance));
+  ingredientInput.addEventListener('keyup', () => searchIngredientTag(ingredientTags.ingredient));
+  appareilInput.addEventListener('keyup', () => searchApplianceTag(applianceTags.appliance));
+  ustensilInput.addEventListener('keyup', () => searchUstensilTag(ustensilTags.ustensil));
 };
 
-const filterRecipesByIgredientTag = (
-  selectedIngredientTag,
-  searchValue,
-) => {
-  // const recipesSearch = recipes;
-  selectedIngredientTagsArray = selectedIngredientTag.split(',');
-  filteredRecipes = searchRecipe(recipes, searchValue, {
-    selectedIngredientTagsArray,
-    selectedApplianceTagsArray,
-    selectedUstensilTagsArray,
-  });
-  displayData(filteredRecipes);
-  // Vérifier si aucun tag n'est sélectionné
-  if (!selectedIngredientTag) {
-    // Retourner toutes les recettes si aucun tag n'est sélectionné
-    displayData(filteredRecipes);
-    return;
-  }
+// Function pou handle filter par tags
+const handleTagFiltering = (selectedTagArray, selectedTag, tagType, searchValue) => {
+  // eslint-disable-next-line no-param-reassign
+  selectedTagArray.length = 0;
+  if (selectedTag) selectedTagArray.push(...selectedTag.split(','));
+  filterRecipes(searchValue);
+  if (!selectedTag) return;
 
-  updateSelectBox(filteredRecipes, 'ustensil', manageUstensilTag);
-  updateSelectBox(filteredRecipes, 'appliance', managApplianceTag);
-  updateSelectBox(filteredRecipes, 'ingredient', managIngredientTag);
+  updateAndAddListeners(filteredRecipes);
+};
 
-  const ingredientTags = updateSelectBox(
-    filteredRecipes,
-    'ingredient',
-    managIngredientTag,
-  );
-  const filteredIngredient = ingredientTags.ingredient;
-  ingredientInput.addEventListener('keyup', () => searchIngredientTag(filteredIngredient));
+// filtrer les recette par par ingredient tag
+const filterRecipesByIgredientTag = (selectedIngredientTag, searchValue) => {
+  handleTagFiltering(selectedIngredientTagsArray, selectedIngredientTag, 'ingredient', searchValue);
+};
+
+// filtrer les recette par appliance tag
+const filterRecipesByApplianceTag = (selectedApplianceTag, searchValue) => {
+  handleTagFiltering(selectedApplianceTagsArray, selectedApplianceTag, 'appliance', searchValue);
+};
+
+// filtrer les recette par ustensil tag
+const filterRecipesByUstensilTag = (selectedUstensilTag, searchValue) => {
+  handleTagFiltering(selectedUstensilTagsArray, selectedUstensilTag, 'ustensil', searchValue);
 };
 
 const disabledUstensilTags = new Set();
@@ -388,62 +341,31 @@ const searchApplianceTag = (filteredAppliance) => {
 };
 
 const init = async () => {
-  // Définir les valeurs par défaut pour l'état de l'input de recherche et
-  // les résultats de la recherche
   const defaultSearchValue = '';
-  const defaultFilteredRecipes = [];
-  // Lorsque vous chargez la page, utilisez les valeurs par défaut pour afficher les résultats
   searchbar.value = defaultSearchValue;
-  displayData(defaultFilteredRecipes);
 
   // const recipes = await getRecipes();
 
-  // Afficher les ingrédients
-  const ingredientsArray = getIngredients(recipes);
-  displayTags(ingredientsArray, managIngredientTag);
-  // Afficher les appareils
-  const appliancesArray = getAppliances(recipes);
-  displayTags(appliancesArray, managApplianceTag);
-  // Afficher les ustensiles
-  const ustensilsArray = getUstensil(recipes);
-  displayTags(ustensilsArray, manageUstensilTag);
-
-  // Affichage initial des données
+  // Display initial data
   displayData(recipes);
 
-  ingredientInput.addEventListener('keyup', () => searchIngredientTag(ingredientsArray));
+  // Display tags
+  displayTags(getIngredients(recipes), managIngredientTag);
+  displayTags(getAppliances(recipes), managApplianceTag);
+  displayTags(getUstensil(recipes), manageUstensilTag);
 
-  appareilInput.addEventListener('keyup', () => searchApplianceTag(appliancesArray));
+  // Ajouter un event listeners pour tag inputs
+  ingredientInput.addEventListener('keyup', () => searchIngredientTag(getIngredients(recipes)));
+  appareilInput.addEventListener('keyup', () => searchApplianceTag(getAppliances(recipes)));
+  ustensilInput.addEventListener('keyup', () => searchUstensilTag(getUstensil(recipes)));
 
-  ustensilInput.addEventListener('keyup', () => searchUstensilTag(ustensilsArray));
-
-  // Gestionnaire d'événements pour la recherche principale
+  // Main search bar event listener
   searchbar.addEventListener('input', () => {
     const searchValue = searchbar.value.toLowerCase().trim().replace(/\s/g, '');
 
     if (searchValue.length >= 3) {
-      const recipesSearch = searchRecipe(recipes, searchValue, {
-        selectedIngredientTagsArray,
-        selectedApplianceTagsArray,
-        selectedUstensilTagsArray,
-      });
-      displayData(recipesSearch);
-      updateSelectBox(recipesSearch, 'ustensil', manageUstensilTag);
-      updateSelectBox(recipesSearch, 'appliance', managApplianceTag);
-      updateSelectBox(recipesSearch, 'ingredient', managIngredientTag);
-
-      const ingredientTag = updateSelectBox(recipesSearch, 'ingredient', managIngredientTag);
-      const filteredIngredient = ingredientTag.ingredient;
-
-      const applianceTag = updateSelectBox(recipesSearch, 'appliance', managApplianceTag);
-      const filteredAppliance = applianceTag.appliance;
-
-      const ustensilTag = updateSelectBox(recipesSearch, 'ustensil', manageUstensilTag);
-      const filteredUstensil = ustensilTag.ustensil;
-      // Ajouter un gestionnaire d'événements pour la recherche par tag
-      ingredientInput.addEventListener('keyup', () => searchIngredientTag(filteredIngredient));
-      appareilInput.addEventListener('keyup', () => searchApplianceTag(filteredAppliance));
-      ustensilInput.addEventListener('keyup', () => searchUstensilTag(filteredUstensil));
+      filterRecipes(searchValue);
+      updateAndAddListeners(filteredRecipes);
     } else {
       displayData(recipes);
     }
