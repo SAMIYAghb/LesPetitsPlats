@@ -1,5 +1,8 @@
 # projet7: Les petis plats :wave:
 
+# Author :sunglasses:
+[Samiya Brd](https://www.linkedin.com/in/samiyab/)
+
 Développez un algorithme de recherche en JavaScript
 
 Les petits plats est un site web recettes de cuisine à l’instar de Marmiton ou 750g.
