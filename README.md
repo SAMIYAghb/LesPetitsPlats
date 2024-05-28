@@ -3,7 +3,6 @@
 Développez un algorithme de recherche en JavaScript
 
 Les petits plats est un site web recettes de cuisine à l’instar de Marmiton ou 750g.
-![2024-05-28](https://github.com/SAMIYAghb/LesPetitsPlats/assets/95091637/0852c608-6847-45b1-8998-6760a6f43579)
 
 
 # Objectif:
@@ -53,4 +52,7 @@ HTML, CSS , Bootstrap 4, Javascript
 - Ajouter un tag Four 
 - Rechercher riz ou Tarte au thon
 
+# l'algorithme choisis:
+version 1: Array method
+![2024-05-28](https://github.com/SAMIYAghb/LesPetitsPlats/assets/95091637/0852c608-6847-45b1-8998-6760a6f43579)
  
