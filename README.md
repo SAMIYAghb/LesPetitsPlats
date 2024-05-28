@@ -4,6 +4,8 @@ Développez un algorithme de recherche en JavaScript
 
 Les petits plats est un site web recettes de cuisine à l’instar de Marmiton ou 750g.
 
+![Capture d’écran (2)](https://github.com/SAMIYAghb/LesPetitsPlats/assets/95091637/50cf6f51-6e62-44be-8f96-9db59bfb5327)
+
 
 # Objectif:
 Construire un site web fonctionnel de recette de cuisine en respectant le design des maquettes et développez un algorithme de recherche en JavaScript.
