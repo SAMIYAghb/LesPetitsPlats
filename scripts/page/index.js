@@ -291,12 +291,15 @@ const managApplianceTag = (appliance) => {
   li.appendChild(link);
 };
 
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 //   //**************search ingredient tag*/
 const searchIngredientTag = (filteredIngredient) => {
-  const inputIngredientValue = ingredientInput.value
+  const inputIngredientValue = escapeRegExp(ingredientInput.value
     .toLowerCase()
     .trim()
-    .replace(/\s/g, '');
+    .replace(/\s/g, ''));
   if (inputIngredientValue.length > 0) {
     const matchingTags = filteredIngredient.filter((tag) => tag.includes(inputIngredientValue));
     // console.log(matchingTags);
@@ -304,39 +307,39 @@ const searchIngredientTag = (filteredIngredient) => {
       ingredientList.innerHTML = '';
       displayTags(matchingTags, managIngredientTag);
     } else {
-      ingredientList.innerHTML = '<li>Aucun résultat trouvé</li>';
+      ingredientList.innerHTML = '<li class=\'p-3\'>Aucun résultat trouvé</li>';
     }
   }
 };
 //   //**************search ustensile tag*/
 const searchUstensilTag = (filteredUstensil) => {
-  const inputUstensilValue = ustensilInput.value
+  const inputUstensilValue = escapeRegExp(ustensilInput.value
     .toLowerCase()
     .trim()
-    .replace(/\s/g, '');
+    .replace(/\s/g, ''));
   if (inputUstensilValue.length > 0) {
     const matchingTags = filteredUstensil.filter((tag) => tag.includes(inputUstensilValue));
     if (matchingTags.length > 0) {
       ustensilList.innerHTML = '';
       displayTags(matchingTags, manageUstensilTag);
     } else {
-      ustensilList.innerHTML = '<li>Aucun résultat trouvé</li>';
+      ustensilList.innerHTML = '<li class=\'p-3\'>Aucun résultat trouvé</li>';
     }
   }
 };
 //   //**************search appliance tag*/
 const searchApplianceTag = (filteredAppliance) => {
-  const inputAppValue = appareilInput.value
+  const inputAppValue = escapeRegExp(appareilInput.value
     .toLowerCase()
     .trim()
-    .replace(/\s/g, '');
+    .replace(/\s/g, ''));
   if (inputAppValue.length > 0) {
     const matchingTags = filteredAppliance.filter((tag) => tag.includes(inputAppValue));
     if (matchingTags.length > 0) {
       applianceList.innerHTML = '';
       displayTags(matchingTags, managApplianceTag);
     } else {
-      applianceList.innerHTML = '<li>Aucun résultat trouvé</li>';
+      applianceList.innerHTML = '<li class=\'p-3\'>Aucun résultat trouvé</li>';
     }
   }
 };
