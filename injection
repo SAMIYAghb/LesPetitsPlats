@@ -1,0 +1,6 @@
+<script>alert('Injection JavaScript!')</script>
+
+
+
+Échappement des caractères spéciaux :
+Validation côté serveur et côté client :
