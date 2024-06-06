@@ -177,6 +177,12 @@ padding: 10px;
 .not-found{
     margin-left: 30%;
     margin-bottom: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.total-recipe{
+    font-size: 18px;
+    font-weight: bold;
 }
 .no-result{
     padding-left: 20px;
